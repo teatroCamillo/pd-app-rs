@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Footer from './Footer';
-import Header from './Header';
 
 const FormRisk = () => {
 
@@ -142,7 +139,6 @@ const FormRisk = () => {
 
   return (
     <Container className='h-100'>
-      <Header/>
       <Row className="justify-content-md-center">
         <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="6">
           <Form onSubmit={handleSubmit}>
@@ -203,7 +199,6 @@ const FormRisk = () => {
           </Form>
         </Col>
       </Row>
-      <Footer/>
     </Container>
   )
 };

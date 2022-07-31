@@ -1,17 +1,12 @@
-import React from 'react'
-import Container from 'react-bootstrap/Container';
-import Footer from './Footer';
-import Header from './Header';
-
+import React from "react";
+import Container from "react-bootstrap/Container";
 
 const Home = () => {
   return (
-    <Container className='h-100'>
-      <Header/>
+    <Container className="h-100">
       <h2>Home</h2>
-      <Footer/>
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

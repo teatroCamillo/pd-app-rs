@@ -1,5 +1,6 @@
-import React from "react";
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Routes, Route } from "react-router-dom";
 import Root from './components/Root';
 import FormRisk from './components/FormRisk';

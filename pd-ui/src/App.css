@@ -1,0 +1,13 @@
+
+/* FRONT PAGE */
+main{
+    min-height: 85vh;
+}
+
+footer{
+    color: rgba(255, 255, 255, 0.55); /*set the same as navbar elements*/
+}
+
+.front-page-steps-desc{
+    font-size: 24px;
+}

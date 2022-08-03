@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import WrongCredLogin from "./alerts/WrongCredLogin";
+import { Link } from "react-router-dom";
 
 import AuthenticationService from "./utils/AuthenticationService";
 
@@ -34,14 +35,17 @@ const SignInComponent = () => {
 
   return (
     <main>
-      <Container className="h-100">
+      <div className="position-absolute start-50 translate-middle">
+        <WrongCredLogin
+              showWrongCredLogin={showWrongCredLogin}
+              setShowWrongCredLogin={setShowWrongCredLogin}
+            />
+      </div>
+      <Container className="h-100 pt-5">
         <Row className="justify-content-center">
-          <WrongCredLogin
-            showWrongCredLogin={showWrongCredLogin}
-            setShowWrongCredLogin={setShowWrongCredLogin}
-          />
+          <h2 className="text-center">Let's Sign In</h2>
         </Row>
-        <Row className="justify-content-center">
+        <Row className="justify-content-center mt-4">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="4">
             <Form onSubmit={handleSubmition}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -63,9 +67,12 @@ const SignInComponent = () => {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
-                Sign in
-              </Button>
+              <div className="text-center">
+                <Button variant="success" type="submit">Sign In</Button>
+              </div>
+              <div className="forgotten-password text-center">
+                <span>Have you forgotten your password? Click <Link to="/forgotten-password">here</Link>.</span>
+              </div>
             </Form>
           </Col>
         </Row>

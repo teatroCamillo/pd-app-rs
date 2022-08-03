@@ -12,6 +12,7 @@ import FormRiskComponent from "./components/FormRiskComponent";
 import ErrorComponent from "./components/ErrorComponent";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import SignOutComponent from "./components/SignOutComponent";
+import ForgottenPasswordComponent from "./components/ForgottenPasswordComponent";
 
 import withNavigation from "./components/utils/withNavigation";
 
@@ -27,6 +28,7 @@ function App() {
       <Route path="signin" element={<LoginComponentWithNavigation />} />
       <Route path="signout" element={<SignOutComponent/>} />
       <Route path="signup" element={<SignUpComponent />} />
+      <Route path="forgotten-password" element={<ForgottenPasswordComponent />} />
       <Route path="start/:username" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
       <Route path="risk" element={<AuthenticatedRoute><FormRiskComponent /></AuthenticatedRoute>} />
       <Route path="*" element={<ErrorComponent />} />

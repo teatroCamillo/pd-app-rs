@@ -3,12 +3,25 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useState } from "react";
 
 const SignUpComponent = () => {
+
+  const [mail, setMail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  console.log(mail);
+  console.log(username);
+  console.log(password);
+
   return (
     <main>
-      <Container className="h-100">
-        <Row className="justify-content-md-center">
+      <Container className="h-100 pt-5">
+        <Row className="justify-content-center">
+          <h2 className="text-center">Let's Sign Up</h2>
+        </Row>
+        <Row className="justify-content-md-center mt-4">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="6">
             <Form>
               <Form.Group
@@ -16,7 +29,10 @@ const SignUpComponent = () => {
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" required />
+                <Form.Control
+                  type="email"
+                  required
+                  onChange={(e) => setMail(e.target.value)} />
               </Form.Group>
 
               <Form.Group
@@ -26,7 +42,10 @@ const SignUpComponent = () => {
                 controlId="validationCustomUsername"
               >
                 <Form.Label>Username</Form.Label>
-                <Form.Control type="text" required />
+                <Form.Control
+                  type="text"
+                  required
+                  onChange={(e) => setUsername(e.target.value)} />
                 <Form.Control.Feedback type="invalid">
                   Please choose a username.
                 </Form.Control.Feedback>
@@ -34,7 +53,10 @@ const SignUpComponent = () => {
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>New Password</Form.Label>
-                <Form.Control type="password" required />
+                <Form.Control
+                  type="password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPasswordRepeat">
@@ -42,9 +64,9 @@ const SignUpComponent = () => {
                 <Form.Control type="password" required />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
-                Sign up
-              </Button>
+              <div className="text-center">
+                <Button variant="success" type="submit">Sign up</Button>
+              </div>
             </Form>
           </Col>
         </Row>

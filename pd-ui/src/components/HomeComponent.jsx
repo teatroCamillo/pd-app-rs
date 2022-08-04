@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 const Root = () => {
   return (
@@ -59,9 +60,7 @@ const Root = () => {
                 <span className="front-page-steps-desc">Leave this page</span>
               </div>
               <div className="w-50 mt-2">
-                <Button variant="danger" href="https://www.google.com/">
-                  Failure
-                </Button>
+                <Button variant="danger" href="https://www.google.com/">Failure</Button>
               </div>
             </Row>
           </Col>
@@ -108,9 +107,9 @@ const Root = () => {
                 <span className="front-page-steps-desc">Sign Up right now</span>
               </div>
               <div className="w-50  mt-2">
-                <Button variant="success" href="/signup">
-                  Success
-                </Button>
+                <Link to="/signup">
+                  <Button variant="success">Success</Button>
+                </Link>
               </div>
             </Row>
           </Col>

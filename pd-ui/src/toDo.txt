@@ -1,3 +1,5 @@
 1.
 
-2.
+2. fix when I am logged in I still can put for example sighup or logiin in url and go there
+- make sure you are loging out  during doing this - maybe some wraper like  AuthenticatedRoute
+ but UNAuthenticatedRoute rather ;)

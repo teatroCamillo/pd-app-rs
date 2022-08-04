@@ -4,17 +4,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
 import WrongCredLogin from "./alerts/WrongCredLogin";
 import { Link } from "react-router-dom";
 
 import AuthenticationService from "./utils/AuthenticationService";
 
-const SignInComponent = () => {
+const SignInComponent = (props) => {
+
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
-
-  const navigate = useNavigate();
+  const [showWrongCredLogin, setShowWrongCredLogin] = useState(false);
 
   const handleSubmition = (e) => {
 
@@ -24,14 +23,12 @@ const SignInComponent = () => {
       e.preventDefault();
 
       AuthenticationService.registerSuccessfulLogin(username);
-      navigate(`/start/${username}`);
+      props.navigate(`/start/${username}`);
     } else {
       e.preventDefault();
       setShowWrongCredLogin(true);
     }
   };
-
-  const [showWrongCredLogin, setShowWrongCredLogin] = useState(false);
 
   return (
     <main>

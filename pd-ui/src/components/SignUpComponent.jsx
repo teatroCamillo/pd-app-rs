@@ -7,13 +7,11 @@ import { useState } from "react";
 
 const SignUpComponent = () => {
 
+  const FIELD_SEPARATOR = ':';
   const [mail, setMail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  console.log(mail);
-  console.log(username);
-  console.log(password);
+  const [repeatPassword, setRepeatPassword] = useState('');
 
   return (
     <main>
@@ -61,7 +59,10 @@ const SignUpComponent = () => {
 
               <Form.Group className="mb-3" controlId="formBasicPasswordRepeat">
                 <Form.Label>Repeat Password</Form.Label>
-                <Form.Control type="password" required />
+                <Form.Control
+                  type="password"
+                  required
+                  onChange={(e) => setRepeatPassword(e.target.value)} />
               </Form.Group>
 
               <div className="text-center">

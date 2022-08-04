@@ -13,24 +13,30 @@ import ErrorComponent from "./components/ErrorComponent";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import SignOutComponent from "./components/SignOutComponent";
 import ForgottenPasswordComponent from "./components/ForgottenPasswordComponent";
+import AuthenticationService from "./components/utils/AuthenticationService";
 
 import withNavigation from "./components/utils/withNavigation";
 
 function App() {
 
-  const LoginComponentWithNavigation = withNavigation(SignInComponent);
+  const SignInComponentWithNavigation = withNavigation(SignInComponent);
 
   return (
     <Routes>
-      <Route path="/" element={<HomeComponent />} />
+      {/*public paths */}
+      <Route path="/" onClick={AuthenticationService.logout} element={<HomeComponent />} />
       <Route path="getting-started" element={<GettingStartedComponent />} />
       <Route path="about-app" element={<AboutAppComponent />} />
-      <Route path="signin" element={<LoginComponentWithNavigation />} />
+      <Route path="signin" element={<SignInComponentWithNavigation />} />
       <Route path="signout" element={<SignOutComponent/>} />
       <Route path="signup" element={<SignUpComponent />} />
       <Route path="forgotten-password" element={<ForgottenPasswordComponent />} />
+
+      {/*required auth paths */}
       <Route path="start/:username" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
       <Route path="risk" element={<AuthenticatedRoute><FormRiskComponent /></AuthenticatedRoute>} />
+
+      {/*unknown paths */}
       <Route path="*" element={<ErrorComponent />} />
     </Routes>
   );

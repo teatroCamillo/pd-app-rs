@@ -1,6 +1,5 @@
 import Alert from 'react-bootstrap/Alert';
 
-
 const WrongCredLogin = ({showWrongCredLogin, setShowWrongCredLogin}) => {
 
   if(showWrongCredLogin){

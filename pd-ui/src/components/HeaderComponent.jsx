@@ -11,8 +11,8 @@ import AuthenticationService from "./utils/AuthenticationService";
 
 const HeaderComponent = () => {
 
-  let isUserSignedIn = AuthenticationService.isUserSignedIn();
   let signedInUsername = AuthenticationService.getSignedInUsername();
+  let isUserSignedIn = AuthenticationService.isUserSignedIn();
 
   return (
     <header>

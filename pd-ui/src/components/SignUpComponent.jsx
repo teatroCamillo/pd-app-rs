@@ -13,6 +13,8 @@ const SignUpComponent = () => {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
 
+  
+
   return (
     <main>
       <Container className="h-100 pt-5">

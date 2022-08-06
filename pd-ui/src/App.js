@@ -13,7 +13,7 @@ import ErrorComponent from "./components/ErrorComponent";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import SignOutComponent from "./components/SignOutComponent";
 import ForgottenPasswordComponent from "./components/ForgottenPasswordComponent";
-import AuthenticationService from "./components/utils/AuthenticationService";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
 import withNavigation from "./components/utils/withNavigation";
 
@@ -23,14 +23,16 @@ function App() {
 
   return (
     <Routes>
-      {/*public paths */}
-      <Route path="/" onClick={AuthenticationService.logout} element={<HomeComponent />} />
+      {/*public without unauth paths */}
       <Route path="getting-started" element={<GettingStartedComponent />} />
       <Route path="about-app" element={<AboutAppComponent />} />
-      <Route path="signin" element={<SignInComponentWithNavigation />} />
-      <Route path="signout" element={<SignOutComponent/>} />
-      <Route path="signup" element={<SignUpComponent />} />
-      <Route path="forgotten-password" element={<ForgottenPasswordComponent />} />
+
+      {/*public with unauth paths */}
+      <Route path="/" element={<UnauthenticatedRoute><HomeComponent /></UnauthenticatedRoute>} />
+      <Route path="signin" element={<UnauthenticatedRoute><SignInComponentWithNavigation /></UnauthenticatedRoute>} />
+      <Route path="signout" element={<UnauthenticatedRoute><SignOutComponent/></UnauthenticatedRoute>} />
+      <Route path="signup" element={<UnauthenticatedRoute><SignUpComponent /></UnauthenticatedRoute>} />
+      <Route path="forgotten-password" element={<UnauthenticatedRoute><ForgottenPasswordComponent /></UnauthenticatedRoute>} />
 
       {/*required auth paths */}
       <Route path="start/:username" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />

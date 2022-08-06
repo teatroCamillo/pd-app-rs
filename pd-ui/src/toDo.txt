@@ -2,4 +2,6 @@
 
 2. fix when I am logged in I still can put for example sighup or logiin in url and go there
 - make sure you are loging out  during doing this - maybe some wraper like  AuthenticatedRoute
- but UNAuthenticatedRoute rather ;)
+ but UNAuthenticatedRoute rather ;). Navigate dosen't help, keep trying something else...
+ SOlution: rerender header after after change status on logout - by useEffect?
+ OK it works with navigate() but appeared an error Uncaught TypeError: props.navigate is not a function

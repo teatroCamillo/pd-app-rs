@@ -16,7 +16,6 @@ const SignInComponent = (props) => {
   const [showWrongCredLogin, setShowWrongCredLogin] = useState(false);
 
   const handleSubmition = (e) => {
-
     if ((username === "test" && pass === "123") || (username === "batman" && pass === "456")) {
       //Here the e.preventDefault() solves the warning: form submission canceled because the form is not connected.
       //Check it again when connected a server.

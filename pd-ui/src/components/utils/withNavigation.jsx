@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
  *    Example: const SignInComponentWithNavigation = withNavigation(SignInComponent);
  *
  * @param Component
- * @returns Component WithNavigation
+ * @returns ComponentWithNavigation
  */
 function withNavigation(Component) {
     return props => <Component {...props} navigate={useNavigate()} />;

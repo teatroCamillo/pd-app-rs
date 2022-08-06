@@ -8,7 +8,6 @@ class AuthenticationService {
     }
 
     logout(){
-        console.log('logout');
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_KEY);
     }
 

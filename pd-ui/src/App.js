@@ -1,21 +1,45 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { Routes, Route } from "react-router-dom";
-import Root from './components/Root';
-import FormRisk from './components/FormRisk';
-import Home from './components/Home';
-import Login from './components/Login';
-import Registration from './components/Registration';
+import HomeComponent from "./components/HomeComponent";
+import GettingStartedComponent from "./components/GettingStartedComponent";
+import AboutAppComponent from "./components/AboutAppComponent";
+import SignInComponent from "./components/SignInComponent";
+import SignUpComponent from "./components/SignUpComponent";
+import StartComponent from "./components/StartComponent";
+import FormRiskComponent from "./components/FormRiskComponent";
+import ErrorComponent from "./components/ErrorComponent";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import SignOutComponent from "./components/SignOutComponent";
+import ForgottenPasswordComponent from "./components/ForgottenPasswordComponent";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
+
+import withNavigation from "./components/utils/withNavigation";
 
 function App() {
+
+  const SignInComponentWithNavigation = withNavigation(SignInComponent);
+
   return (
     <Routes>
-      <Route path='/' element={<Root />} />
-      <Route path='/home' element={<Home />} />
-      <Route path='/login' element={<Login />} />
-      <Route path='/signup' element={<Registration />} />
-      <Route path='/risk' element={<FormRisk />} />
+      {/*public without unauth paths */}
+      <Route path="getting-started" element={<GettingStartedComponent />} />
+      <Route path="about-app" element={<AboutAppComponent />} />
+
+      {/*public with unauth paths */}
+      <Route path="/" element={<UnauthenticatedRoute><HomeComponent /></UnauthenticatedRoute>} />
+      <Route path="signin" element={<UnauthenticatedRoute><SignInComponentWithNavigation /></UnauthenticatedRoute>} />
+      <Route path="signout" element={<UnauthenticatedRoute><SignOutComponent/></UnauthenticatedRoute>} />
+      <Route path="signup" element={<UnauthenticatedRoute><SignUpComponent /></UnauthenticatedRoute>} />
+      <Route path="forgotten-password" element={<UnauthenticatedRoute><ForgottenPasswordComponent /></UnauthenticatedRoute>} />
+
+      {/*required auth paths */}
+      <Route path="start/:username" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
+      <Route path="risk" element={<AuthenticatedRoute><FormRiskComponent /></AuthenticatedRoute>} />
+
+      {/*unknown paths */}
+      <Route path="*" element={<ErrorComponent />} />
     </Routes>
   );
 }

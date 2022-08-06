@@ -5,60 +5,83 @@ import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { GraphUpArrow } from "react-bootstrap-icons";
+import { LinkContainer } from "react-router-bootstrap";
+
+import AuthenticationService from "./utils/AuthenticationService";
 
 const HeaderComponent = () => {
+
+  let signedInUsername = AuthenticationService.getSignedInUsername();
+  let isUserSignedIn = AuthenticationService.isUserSignedIn();
+
   return (
     <header>
       <Navbar variant="dark">
         <Container>
-          <Navbar.Brand href="/">
-            <Container>
-              <Row>
-                <Col>
-                  <GraphUpArrow size={52} />{" "}
-                </Col>
-                <Col>
-                  <h1>R&E</h1>
-                </Col>
-              </Row>
-            </Container>
-          </Navbar.Brand>
+          {!isUserSignedIn && <LinkContainer to="/">
+            <Navbar.Brand>
+              <Container>
+                <Row>
+                  <Col>
+                    <GraphUpArrow size={52} />{" "}
+                  </Col>
+                  <Col>
+                    <h1>R&E</h1>
+                  </Col>
+                </Row>
+              </Container>
+            </Navbar.Brand>
+          </LinkContainer>}
+          {isUserSignedIn && <LinkContainer to={`/start/${signedInUsername}`}>
+            <Navbar.Brand>
+              <Container>
+                <Row>
+                  <Col>
+                    <GraphUpArrow size={52} />{" "}
+                  </Col>
+                  <Col>
+                    <h1>R&E</h1>
+                  </Col>
+                </Row>
+              </Container>
+            </Navbar.Brand>
+          </LinkContainer>}
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/gettingStarted">Getting Started</Nav.Link>
-            <Nav.Link href="/aboutApp">About App</Nav.Link>
+            {!isUserSignedIn &&
+              <LinkContainer to="/">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>}
+            {isUserSignedIn &&
+              <LinkContainer to={`/start/${signedInUsername}`}>
+                <Nav.Link>Start</Nav.Link>
+              </LinkContainer>}
+            <LinkContainer to="/getting-started">
+              <Nav.Link>Getting Started</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/about-app">
+              <Nav.Link>About App</Nav.Link>
+            </LinkContainer>
+            {isUserSignedIn &&
+              <LinkContainer to="/risk">
+                <Nav.Link>Risk</Nav.Link>
+              </LinkContainer>}
           </Nav>
           <Nav>
-            <Nav.Link href="/login">Sign In</Nav.Link>
-            <Nav.Link href="/signup">Sign Up</Nav.Link>
+            {!isUserSignedIn &&
+              <LinkContainer to="/signin">
+                <Nav.Link>Sign In</Nav.Link>
+              </LinkContainer>}
+            {isUserSignedIn &&
+              <LinkContainer to="/signout" onClick={AuthenticationService.logout}>
+                <Nav.Link>Sign Out</Nav.Link>
+              </LinkContainer>}
+            {!isUserSignedIn &&
+              <LinkContainer to="/signup">
+                <Nav.Link>Sign Up</Nav.Link>
+              </LinkContainer>}
           </Nav>
         </Container>
       </Navbar>
-      {/*<Navbar
-            style={{
-            borderBottom: "solid 1px",
-            paddingBottom: "1rem",
-            }}
-            >
-                <Container className="justify-content-center">
-                    {location.pathname === "/" ?
-                    <nav>
-                        <ul>
-                            <CustomLink to="/login" >Login</CustomLink>
-                            <CustomLink to="/signup" >Sign up</CustomLink>
-                        </ul>
-                    </nav>
-                        :
-                    <nav>
-                        <ul>
-                            <CustomLink to="/" >Root</CustomLink>
-                            <CustomLink to="/home" >Home</CustomLink>
-                            <CustomLink to="/risk" >FormRisk</CustomLink>
-                        </ul>
-
-                    </nav>}
-                </Container>
-            </Navbar>*/}
     </header>
   );
 };

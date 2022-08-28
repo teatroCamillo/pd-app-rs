@@ -14,18 +14,19 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Table(name = "AUTH_USER_DETAILS")
+@Table(name = "USERS")
 @Entity
+@Data
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "USER_NAME", unique = true)
     private String userName;
 
-    @Column(name = "USER_KEY")
+    @Column(name = "PASSWORD")
     private String password;
 
 //    @Column(name = "CREATED_ON")

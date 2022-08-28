@@ -1,5 +1,6 @@
 package pdapp.server.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,7 @@ import java.security.spec.InvalidKeySpecException;
 @RestController
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class AuthenticationController {
 
     @Autowired
@@ -34,15 +36,19 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        log.info("Start login");
 
         final Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUserName(),
                         authenticationRequest.getPassword()));
 
+        log.info(authenticationRequest.getUserName());
+        log.info(authenticationRequest.getPassword());
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = (User)authentication.getPrincipal();
-
+        log.info(user.toString());
         String jwtToken = jwtTokenHelper.generateToken(user.getUsername());
 
         LoginResponse response = new LoginResponse();

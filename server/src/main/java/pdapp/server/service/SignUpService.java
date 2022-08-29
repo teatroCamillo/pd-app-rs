@@ -9,6 +9,7 @@ import pdapp.server.ServerApplication;
 import pdapp.server.model.User;
 import pdapp.server.repository.UserDetailsRepository;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -23,11 +24,14 @@ public class SignUpService {
 
         User newUser = new User();
         newUser.setId(UUID.randomUUID());
-        log.info(user.toString());
         newUser.setUsername(user.getUsername());
-        log.info(user.getUsername());
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newUser.setMail(user.getMail());
+        newUser.setAge(user.getAge());
+        newUser.setCreated(new Date());
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
         newUser.setEnabled(true);
 
         userDetailsRepository.save(newUser);

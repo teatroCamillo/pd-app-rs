@@ -9,17 +9,20 @@ import SignUpService from "../api/SignUpService";
 
 const SignUpComponent = (props) => {
 
-  const FIELD_SEPARATOR = ':';
   const [mail, setMail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [age, setAge] = useState(0);
 
   const handleSubmitionSignUp = () => {
 
     let user = {};
-    if(password === repeatPassword) user = {username, password};
+    if(password === repeatPassword) user = {username, password, mail, firstName, lastName, age};
 
+    console.log(user);
     if(!util.isEmpty(user)){
     SignUpService.signUp(user)
       .then((resp) => {
@@ -42,11 +45,15 @@ const SignUpComponent = (props) => {
         <Row className="justify-content-md-center mt-4">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="6">
             <Formik
-                initialValues={{username, password}}
+                initialValues={{username, password, mail, firstName, lastName, age}}
                 onSubmit={handleSubmitionSignUp}
                 enableReinitialize={true}
               >
                 <Form>
+                  <fieldset className="form-group">
+                    <label>Email</label>
+                    <Field className="form-control" type="text" name="mail" onChange={(e) => setMail(e.target.value)} />
+                  </fieldset>
                   <fieldset className="form-group">
                     <label>Username</label>
                     <Field className="form-control" type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
@@ -58,6 +65,18 @@ const SignUpComponent = (props) => {
                   <fieldset className="form-group">
                     <label>Repeat Password</label>
                     <Field className="form-control" type="password" name="repeatPassword" onChange={(e) => setRepeatPassword(e.target.value)}/>
+                  </fieldset>
+                  <fieldset className="form-group">
+                    <label>First name</label>
+                    <Field className="form-control" type="text" name="firstName" onChange={(e) => setFirstName(e.target.value)} />
+                  </fieldset>
+                  <fieldset className="form-group">
+                    <label>Last name</label>
+                    <Field className="form-control" type="text" name="lastName" onChange={(e) => setLastName(e.target.value)} />
+                  </fieldset>
+                  <fieldset className="form-group">
+                    <label>Age</label>
+                    <Field className="form-control" type="number" name="age" onChange={(e) => setAge(e.target.value)} />
                   </fieldset>
 
                   <div className="text-center">

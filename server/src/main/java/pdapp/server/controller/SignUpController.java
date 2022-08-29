@@ -21,6 +21,7 @@ public class SignUpController {
 
         User savedUsr = signUpService.signUp(user);
 
+        //TODO: what should be returned? Cuz now is returned whole object with password.
         return savedUsr != null ? ResponseEntity.ok(savedUsr) : (ResponseEntity<?>) ResponseEntity.badRequest();
     }
 }

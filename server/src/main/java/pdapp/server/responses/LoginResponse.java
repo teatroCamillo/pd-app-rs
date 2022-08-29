@@ -1,10 +1,8 @@
 package pdapp.server.responses;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
-@Getter
+@Data
 public class LoginResponse {
 
     private String token;

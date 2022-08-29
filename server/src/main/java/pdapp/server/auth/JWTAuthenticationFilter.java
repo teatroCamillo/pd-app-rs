@@ -28,10 +28,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String authToken = jwtTokenHelper.getToken(request);
 
         if(null != authToken){
-            String userName = jwtTokenHelper.getUsernameFromToken(authToken);
+            String username = jwtTokenHelper.getUsernameFromToken(authToken);
 
-            if(null != userName){
-                UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+            if(null != username){
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
                 if(jwtTokenHelper.validateToken(authToken, userDetails)){
                     UsernamePasswordAuthenticationToken authentication

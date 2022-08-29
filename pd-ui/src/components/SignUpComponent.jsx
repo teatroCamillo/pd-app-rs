@@ -2,10 +2,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import { useState } from "react";
+import { Formik, Form, Field } from "formik";
+import util from "./utils/Util";
+import SignUpService from "../api/SignUpService";
 
-const SignUpComponent = () => {
+const SignUpComponent = (props) => {
 
   const FIELD_SEPARATOR = ':';
   const [mail, setMail] = useState('');
@@ -13,7 +15,23 @@ const SignUpComponent = () => {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
 
-  
+  const handleSubmitionSignUp = () => {
+
+    let user = {};
+    if(password === repeatPassword) user = {username, password};
+
+    if(!util.isEmpty(user)){
+    SignUpService.signUp(user)
+      .then((resp) => {
+        if(resp.status === 200){
+          props.navigate('/signin');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  }
 
   return (
     <main>
@@ -23,54 +41,30 @@ const SignUpComponent = () => {
         </Row>
         <Row className="justify-content-md-center mt-4">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="6">
-            <Form>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
+            <Formik
+                initialValues={{username, password}}
+                onSubmit={handleSubmitionSignUp}
+                enableReinitialize={true}
               >
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  required
-                  onChange={(e) => setMail(e.target.value)} />
-              </Form.Group>
+                <Form>
+                  <fieldset className="form-group">
+                    <label>Username</label>
+                    <Field className="form-control" type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
+                  </fieldset>
+                  <fieldset className="form-group">
+                    <label>Password</label>
+                    <Field className="form-control" type="password" name="password" onChange={(e) => setPassword(e.target.value)}/>
+                  </fieldset>
+                  <fieldset className="form-group">
+                    <label>Repeat Password</label>
+                    <Field className="form-control" type="password" name="repeatPassword" onChange={(e) => setRepeatPassword(e.target.value)}/>
+                  </fieldset>
 
-              <Form.Group
-                className="mb-3"
-                as={Col}
-                md="4"
-                controlId="validationCustomUsername"
-              >
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  onChange={(e) => setUsername(e.target.value)} />
-                <Form.Control.Feedback type="invalid">
-                  Please choose a username.
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>New Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  onChange={(e) => setPassword(e.target.value)} />
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPasswordRepeat">
-                <Form.Label>Repeat Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  onChange={(e) => setRepeatPassword(e.target.value)} />
-              </Form.Group>
-
-              <div className="text-center">
-                <Button variant="success" type="submit">Sign up</Button>
-              </div>
-            </Form>
+                  <div className="text-center">
+                    <Button variant="success" type="submit">Sign In</Button>
+                  </div>
+                </Form>
+              </Formik>
           </Col>
         </Row>
       </Container>

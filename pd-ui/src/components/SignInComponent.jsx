@@ -12,13 +12,13 @@ import { Formik, Form, Field } from "formik";
 
 const SignInComponent = (props) => {
 
-  const [userName, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showWrongCredLogin, setShowWrongCredLogin] = useState(false);
 
   const handleSubmition = () => {
 
-    const user = {userName, password};
+    const user = {username, password};
 
     AuthenticationService.signIn(user)
     .then(resp =>{
@@ -27,8 +27,8 @@ const SignInComponent = (props) => {
         //Check it again when connected a server.
         //e.preventDefault();
 
-        AuthenticationService.registerSuccessfulLogin(userName);
-        props.navigate(`/start/${userName}`);
+        AuthenticationService.registerSuccessfulLogin(username);
+        props.navigate(`/start/${username}`);
       }
     })
     .catch((error) => {
@@ -52,7 +52,7 @@ const SignInComponent = (props) => {
         <Row className="justify-content-center mt-4">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="4">
             <Formik
-              initialValues={{userName, password}}
+              initialValues={{username, password}}
               onSubmit={handleSubmition}
               enableReinitialize={true}
             >

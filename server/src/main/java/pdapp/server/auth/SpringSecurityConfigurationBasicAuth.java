@@ -31,14 +31,6 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // in-memory
-//        auth
-//                .inMemoryAuthentication()
-//                    .withUser("batman")
-//                    .password(passwordEncoder().encode("456"))
-//                    .authorities("USER", "ADMIN");
-
-        // database
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
@@ -64,7 +56,7 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
                 .and()
                 .authorizeRequests((request) ->
                         request
-                                .antMatchers("/postgres/**", "/api/v1/auth/login")
+                                .antMatchers("/postgres/**", "/api/v1/auth/login", "/signup")
                                 .permitAll()
                                 .antMatchers(HttpMethod.OPTIONS, "/**")
                                 .permitAll()
@@ -74,9 +66,6 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
                         UsernamePasswordAuthenticationFilter.class);
 
         http.cors();
-
-        //h2-console
         http.csrf().disable().headers().frameOptions().disable();
-
     }
 }

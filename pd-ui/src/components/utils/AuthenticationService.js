@@ -6,7 +6,7 @@ class AuthenticationService {
 
     signIn = (user) =>{
         return axios.post("http://localhost:8080/api/v1/auth/login", {
-                "userName": user.userName,
+                "username": user.username,
                 "password": user.password
         });
     };

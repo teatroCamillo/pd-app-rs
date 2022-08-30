@@ -43,7 +43,6 @@ const SignUpComponent = (props) => {
 
   return (
     <main>
-
       <Container className="h-100 pt-5">
         <Row className="justify-content-center">
           <h2 className="text-center">Let's Sign Up</h2>

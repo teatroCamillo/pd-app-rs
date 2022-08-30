@@ -1,11 +1,8 @@
-import Container from "react-bootstrap/Container";
+import ServiceWorkComponent from "./ServiceWorkComponent";
+
 const ForgottenPasswordComponent = () => {
     return (
-        <main>
-            <Container className="text-center">
-            Forgotten Password Component
-            </Container>
-        </main>
+        <ServiceWorkComponent />
     );
   };
 

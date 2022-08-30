@@ -35,9 +35,6 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column
-    private Integer age;
-
-    @Column
     @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date created;
     @Column

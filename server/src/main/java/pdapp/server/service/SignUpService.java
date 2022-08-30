@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pdapp.server.ServerApplication;
 import pdapp.server.model.User;
 import pdapp.server.repository.UserDetailsRepository;
 
@@ -28,7 +27,6 @@ public class SignUpService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setMail(user.getMail());
-        newUser.setAge(user.getAge());
         newUser.setCreated(new Date());
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());

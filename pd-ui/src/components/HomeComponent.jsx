@@ -10,7 +10,7 @@ const Root = () => {
     <main>
       <Container className="my-5 text-center">
         <Row>
-          <h1>Boost your revenue trading on the forex</h1>
+          <h1>Boost your revenue trading on the Forex</h1>
           <h1>with Relax & Earn</h1>
           <h3 className="mt-5">Simple to choose, simple to use.</h3>
         </Row>

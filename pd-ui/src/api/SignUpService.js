@@ -10,8 +10,7 @@ class SignUpService {
                 "password": user.password,
                 "mail": user.mail,
                 "firstName": user.firstName,
-                "lastName": user.lastName,
-                "age": user.age
+                "lastName": user.lastName
             });
     };
 

@@ -59,14 +59,14 @@ const SignInComponent = (props) => {
               <Form>
                 <fieldset className="form-group">
                   <label>Username</label>
-                  <Field className="form-control" type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
+                  <Field className="form-control" type="text" required name="username" onChange={(e) => setUsername(e.target.value)} />
                 </fieldset>
                 <fieldset className="form-group">
                   <label>Password</label>
-                  <Field className="form-control" type="password" name="pass" onChange={(e) => setPassword(e.target.value)}/>
+                  <Field className="form-control" type="password" required name="pass" onChange={(e) => setPassword(e.target.value)}/>
                 </fieldset>
 
-                <div className="text-center">
+                <div className="text-center mt-3">
                   <Button variant="success" type="submit">Sign In</Button>
                 </div>
                 <div className="forgotten-password text-center">

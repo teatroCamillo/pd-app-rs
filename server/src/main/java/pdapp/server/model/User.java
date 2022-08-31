@@ -1,23 +1,62 @@
 package pdapp.server.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
+@Table(name = "USERS")
+@Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class User {
+public class User implements UserDetails {
 
-    private UUID userId;
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    @Column
     private String mail;
-    private String userName;
+
+    @Column(name = "username", unique = true)
+    private String username;
+
+    @Column(name = "password")
     private String password;
 
-    public UUID getUserId(){
-        return userId;
+    @Column
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column
+    @DateTimeFormat(pattern="dd/MM/yyyy")
+    private Date created;
+    @Column
+    private boolean enabled;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.enabled;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.enabled;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.enabled;
+    }
 }

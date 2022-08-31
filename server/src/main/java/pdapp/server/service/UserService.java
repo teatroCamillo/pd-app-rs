@@ -1,24 +1,27 @@
 package pdapp.server.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pdapp.server.model.User;
-
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import pdapp.server.repository.UserDetailsRepository;
 
 @Service
-public class UserService {
+@Slf4j
+public class UserService implements UserDetailsService {
 
-    private final User test = new User(UUID.randomUUID(), "test@mail.com", "test", "test");
-
-    //test.getUserId();
-    //temp DB
-    private final Map<UUID, User> userMap = new HashMap<>();
-
-    //userMap.put(test.getId(), test);
-
-
-
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //log.info("Start loadUserByUsername");
+        User user = userDetailsRepository.findByUsername(username);
+        if(null == user){
+            throw new UsernameNotFoundException("User not found with userName: " + username);
+        }
+        return user;
+    }
 }

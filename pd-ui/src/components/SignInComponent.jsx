@@ -3,30 +3,38 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import WrongCredLogin from "./alerts/WrongCredLogin";
 import { Link } from "react-router-dom";
 
 import AuthenticationService from "./utils/AuthenticationService";
 
+import { Formik, Form, Field } from "formik";
+
 const SignInComponent = (props) => {
 
   const [username, setUsername] = useState("");
-  const [pass, setPass] = useState("");
+  const [password, setPassword] = useState("");
   const [showWrongCredLogin, setShowWrongCredLogin] = useState(false);
 
-  const handleSubmition = (e) => {
-    if ((username === "test" && pass === "123") || (username === "batman" && pass === "456")) {
-      //Here the e.preventDefault() solves the warning: form submission canceled because the form is not connected.
-      //Check it again when connected a server.
-      e.preventDefault();
+  const handleSubmition = () => {
 
-      AuthenticationService.registerSuccessfulLogin(username);
-      props.navigate(`/start/${username}`);
-    } else {
-      e.preventDefault();
+    const user = {username, password};
+
+    AuthenticationService.signIn(user)
+    .then(resp =>{
+      if(resp.status === 200) {
+        //Here the e.preventDefault() solves the warning: form submission canceled because the form is not connected.
+        //Check it again when connected a server.
+        //e.preventDefault();
+
+        AuthenticationService.registerSuccessfulLogin(username);
+        props.navigate(`/start/${username}`);
+      }
+    })
+    .catch((error) => {
       setShowWrongCredLogin(true);
-    }
+      console.log(error);
+    });
   };
 
   return (
@@ -43,33 +51,29 @@ const SignInComponent = (props) => {
         </Row>
         <Row className="justify-content-center mt-4">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="4">
-            <Form onSubmit={handleSubmition}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={pass}
-                  onChange={(e) => setPass(e.target.value)}
-                />
-              </Form.Group>
+            <Formik
+              initialValues={{username, password}}
+              onSubmit={handleSubmition}
+              enableReinitialize={true}
+            >
+              <Form>
+                <fieldset className="form-group">
+                  <label>Username</label>
+                  <Field className="form-control" type="text" required name="username" onChange={(e) => setUsername(e.target.value)} />
+                </fieldset>
+                <fieldset className="form-group">
+                  <label>Password</label>
+                  <Field className="form-control" type="password" required name="pass" onChange={(e) => setPassword(e.target.value)}/>
+                </fieldset>
 
-              <div className="text-center">
-                <Button variant="success" type="submit">Sign In</Button>
-              </div>
-              <div className="forgotten-password text-center">
-                <span>Have you forgotten your password? Click <Link to="/forgotten-password">here</Link>.</span>
-              </div>
-            </Form>
+                <div className="text-center mt-3">
+                  <Button variant="success" type="submit">Sign In</Button>
+                </div>
+                <div className="forgotten-password text-center">
+                  <span>Have you forgotten your password? Click <Link to="/forgotten-password">here</Link>.</span>
+                </div>
+              </Form>
+            </Formik>
           </Col>
         </Row>
       </Container>

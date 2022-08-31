@@ -1,7 +1,15 @@
+import axios from 'axios';
 
 export const USER_NAME_SESSION_ATTRIBUTE_KEY = 'authenticatedUser';
 
 class AuthenticationService {
+
+    signIn = (user) =>{
+        return axios.post("http://localhost:8080/api/v1/auth/login", {
+                "username": user.username,
+                "password": user.password
+        });
+    };
 
     registerSuccessfulLogin(username){
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_KEY, username);

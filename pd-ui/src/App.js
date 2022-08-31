@@ -20,6 +20,7 @@ import withNavigation from "./components/utils/withNavigation";
 function App() {
 
   const SignInComponentWithNavigation = withNavigation(SignInComponent);
+  const SignUpComponentWithNavigation = withNavigation(SignUpComponent);
 
   return (
     <Routes>
@@ -31,7 +32,7 @@ function App() {
       <Route path="/" element={<UnauthenticatedRoute><HomeComponent /></UnauthenticatedRoute>} />
       <Route path="signin" element={<UnauthenticatedRoute><SignInComponentWithNavigation /></UnauthenticatedRoute>} />
       <Route path="signout" element={<UnauthenticatedRoute><SignOutComponent/></UnauthenticatedRoute>} />
-      <Route path="signup" element={<UnauthenticatedRoute><SignUpComponent /></UnauthenticatedRoute>} />
+      <Route path="signup" element={<UnauthenticatedRoute><SignUpComponentWithNavigation /></UnauthenticatedRoute>} />
       <Route path="forgotten-password" element={<UnauthenticatedRoute><ForgottenPasswordComponent /></UnauthenticatedRoute>} />
 
       {/*required auth paths */}

@@ -49,6 +49,7 @@ public class AuthenticationController {
 
         LoginResponse response = new LoginResponse();
         response.setToken(jwtToken);
+        response.setUserId(user.getId().toString());
 
         return ResponseEntity.ok(response);
     }

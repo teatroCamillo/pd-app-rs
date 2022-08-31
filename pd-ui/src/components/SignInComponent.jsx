@@ -27,8 +27,8 @@ const SignInComponent = (props) => {
         //Check it again when connected a server.
         //e.preventDefault();
 
-        AuthenticationService.registerSuccessfulLogin(username);
-        props.navigate(`/start/${username}`);
+        AuthenticationService.registerSuccessfulLogin(username, resp.data.userId);
+        props.navigate('/start');
       }
     })
     .catch((error) => {

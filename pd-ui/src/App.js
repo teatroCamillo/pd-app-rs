@@ -36,7 +36,7 @@ function App() {
       <Route path="forgotten-password" element={<UnauthenticatedRoute><ForgottenPasswordComponent /></UnauthenticatedRoute>} />
 
       {/*required auth paths */}
-      <Route path="start/:username" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
+      <Route path="start" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
       <Route path="risk" element={<AuthenticatedRoute><FormRiskComponent /></AuthenticatedRoute>} />
 
       {/*unknown paths */}

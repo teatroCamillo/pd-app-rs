@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const USER_NAME_SESSION_ATTRIBUTE_KEY = 'authenticatedUser';
+export const USER_ID_SESSION_ATTRIBUTE_KEY = 'authenticatedUserId';
 
 class AuthenticationService {
 
@@ -11,8 +12,9 @@ class AuthenticationService {
         });
     };
 
-    registerSuccessfulLogin(username){
+    registerSuccessfulLogin(username, userId){
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_KEY, username);
+        sessionStorage.setItem(USER_ID_SESSION_ATTRIBUTE_KEY, userId);
     }
 
     logout(){

@@ -11,7 +11,6 @@ import AuthenticationService from "./utils/AuthenticationService";
 
 const HeaderComponent = () => {
 
-  let signedInUsername = AuthenticationService.getSignedInUsername();
   let isUserSignedIn = AuthenticationService.isUserSignedIn();
 
   return (
@@ -32,7 +31,7 @@ const HeaderComponent = () => {
               </Container>
             </Navbar.Brand>
           </LinkContainer>}
-          {isUserSignedIn && <LinkContainer to={`/start/${signedInUsername}`}>
+          {isUserSignedIn && <LinkContainer to={`/start`}>
             <Navbar.Brand>
               <Container>
                 <Row>
@@ -52,7 +51,7 @@ const HeaderComponent = () => {
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>}
             {isUserSignedIn &&
-              <LinkContainer to={`/start/${signedInUsername}`}>
+              <LinkContainer to={`/start`}>
                 <Nav.Link>Start</Nav.Link>
               </LinkContainer>}
             <LinkContainer to="/getting-started">

@@ -61,8 +61,8 @@ const HeaderComponent = () => {
               <Nav.Link>About App</Nav.Link>
             </LinkContainer>
             {isUserSignedIn &&
-              <LinkContainer to="/risk">
-                <Nav.Link>Risk</Nav.Link>
+              <LinkContainer to="/personal-ex">
+                <Nav.Link>Personal Examination</Nav.Link>
               </LinkContainer>}
           </Nav>
           <Nav>

@@ -109,7 +109,7 @@ const FormRiskComponent = () => {
       p.q === selected.id ? { ...p, value: selected.value } : p
     );
     setAnswers(newAns);
-  }, [selected]);
+  }, [selected, answers]);
 
   // support method - to observe what is storing to answers
   const printCollect = () => {
@@ -139,6 +139,7 @@ const FormRiskComponent = () => {
       <Container className="h-100">
         <Row className="justify-content-md-center">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="6">
+            <h2>Risk Test</h2>
             <Form onSubmit={handleSubmit}>
               {data.questions.map((question) => {
                 return (

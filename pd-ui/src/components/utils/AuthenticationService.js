@@ -19,6 +19,7 @@ class AuthenticationService {
 
     logout(){
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_KEY);
+        sessionStorage.removeItem(USER_ID_SESSION_ATTRIBUTE_KEY);
     }
 
     isUserSignedIn(){
@@ -30,6 +31,12 @@ class AuthenticationService {
         let username = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_KEY);
         if(username === null) return '';
         return username;
+    }
+
+    getSignedInUserId(){
+        let id = sessionStorage.getItem(USER_ID_SESSION_ATTRIBUTE_KEY);
+        if(id === null) return '';
+        return id;
     }
 }
 

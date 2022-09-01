@@ -36,9 +36,31 @@ const PersonalExaminationComponent = () => {
               <p>So now please fulfill two below forms related with risk and gambling.
               This forms are required. Otherwise the system won't work.</p>
 
-              <div>
-                <Button variant="danger" href="/personal-ex/risk">Risk Test</Button>
-                <Button variant="danger" href="/personal-ex/gambling">Gambling Test</Button>
+              <p>Remember that the green border card means the test is completed and the red is
+              not. But if you have already completed the form, you can always do it again. We recommend
+              repeating each test every six months.</p>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card border-danger border border-4">
+                    {/*Obraz <a href="https://pixabay.com/pl/users/tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Tumisu</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Pixabay</a> */}
+                    <img src="./images/personal-ex/risk0.jpg" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <h5 class="card-title">Risk</h5>
+                      <Button variant="primary" href="/personal-ex/risk">Take Test</Button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card border-danger border border-4">
+                    {/*Obraz <a href="https://pixabay.com/pl/users/stokpic-692575/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> stokpic</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> Pixabay</a> */}
+                    <img src="./images/personal-ex/gambling0.jpg" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <h5 class="card-title">Gambling</h5>
+                      <Button variant="primary" href="/personal-ex/gambling">Take Test</Button>
+                    </div>
+                  </div>
+                </div>
               </div>
           </Col>
         </Row>

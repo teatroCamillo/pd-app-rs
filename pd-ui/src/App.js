@@ -16,6 +16,7 @@ import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import PersonalExaminationComponent from "./components/PersonalExaminationComponent"
 import FormRiskComponent from "./components/FormRiskComponent";
 import FormGamblingComponent from "./components/FormGamblingComponent";
+import FormSavedCorrectlyComponent from "./components/FormSavedCorrectlyComponent";
 
 import withNavigation from "./components/utils/withNavigation";
 
@@ -23,6 +24,7 @@ function App() {
 
   const SignInComponentWithNavigation = withNavigation(SignInComponent);
   const SignUpComponentWithNavigation = withNavigation(SignUpComponent);
+  const FormRiskComponentWithNavigation = withNavigation(FormRiskComponent);
 
   return (
     <Routes>
@@ -40,8 +42,9 @@ function App() {
       {/*required auth paths */}
       <Route path="start" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
       <Route path="personal-ex" element={<AuthenticatedRoute><PersonalExaminationComponent /></AuthenticatedRoute>} />
-      <Route path="personal-ex/risk" element={<AuthenticatedRoute><FormRiskComponent /></AuthenticatedRoute>} />
+      <Route path="personal-ex/risk" element={<AuthenticatedRoute><FormRiskComponentWithNavigation /></AuthenticatedRoute>} />
       <Route path="personal-ex/gambling" element={<AuthenticatedRoute><FormGamblingComponent /></AuthenticatedRoute>} />
+      <Route path="form-saved" element={<AuthenticatedRoute><FormSavedCorrectlyComponent /></AuthenticatedRoute>} />
 
       {/*unknown paths */}
       <Route path="*" element={<ErrorComponent />} />

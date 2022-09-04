@@ -17,7 +17,8 @@ const PersonalExaminationComponent = () => {
 
               <p>Therefor here we are going to take control on our emotions like greed,
               fear, haste, uncertainty, revenge, bad mood, emotions at work, emotions at home, happy,
-              successes at life and many many more.</p>
+              successes at life and many many more. Note that it doesn't matter whether they are
+              positive or negative. If they appear, they distort the investor's perception.</p>
 
               <p><strong>You'll ask, ok but how?</strong></p>
 
@@ -40,23 +41,23 @@ const PersonalExaminationComponent = () => {
               not. But if you have already completed the form, you can always do it again. We recommend
               repeating each test every six months.</p>
 
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="card border-danger border border-4">
+              <div className="row">
+                <div className="col-sm-6">
+                  <div className="card border-danger border border-4">
                     {/*Obraz <a href="https://pixabay.com/pl/users/tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Tumisu</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Pixabay</a> */}
-                    <img src="./images/personal-ex/risk0.jpg" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                      <h5 class="card-title">Risk</h5>
+                    <img src="./images/personal-ex/risk0.jpg" className="card-img-top" alt="..." />
+                    <div className="card-body">
+                      <h5 className="card-title">Risk</h5>
                       <Button variant="primary" href="/personal-ex/risk">Take Test</Button>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-6">
-                  <div class="card border-danger border border-4">
+                <div className="col-sm-6">
+                  <div className="card border-danger border border-4">
                     {/*Obraz <a href="https://pixabay.com/pl/users/stokpic-692575/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> stokpic</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> Pixabay</a> */}
-                    <img src="./images/personal-ex/gambling0.jpg" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                      <h5 class="card-title">Gambling</h5>
+                    <img src="./images/personal-ex/gambling0.jpg" className="card-img-top" alt="..." />
+                    <div className="card-body">
+                      <h5 className="card-title">Gambling</h5>
                       <Button variant="primary" href="/personal-ex/gambling">Take Test</Button>
                     </div>
                   </div>

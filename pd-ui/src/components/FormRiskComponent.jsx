@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import FormsUtilService from "../api/FormsUtilService";
+import FormSendError from "./alerts/FormSendError";
+import IncompleteForm from "./alerts/IncompleteForm";
 
-const FormRiskComponent = () => {
+const FormRiskComponent = (props) => {
   // questions
   const data = {
     questions: [
       {
-        id: "q1",
+        id: "a1",
         q: "1. When I pursue my passions, I like those moments when I'm balancing on the verge of risk.",
         name: "q1-a",
         a1: "Truth",
@@ -20,7 +23,7 @@ const FormRiskComponent = () => {
         a5: "Not true",
       },
       {
-        id: "q2",
+        id: "a2",
         q: "2. I only take a risk when it is necessary to achieve my goal.",
         name: "q2-a",
         a1: "Truth",
@@ -30,7 +33,7 @@ const FormRiskComponent = () => {
         a5: "Not true",
       },
       {
-        id: "q3",
+        id: "a3",
         q: "3. Sometimes I tempt fate unnecessarily.",
         name: "q3-a",
         a1: "Truth",
@@ -40,7 +43,7 @@ const FormRiskComponent = () => {
         a5: "Not true",
       },
       {
-        id: "q4",
+        id: "a4",
         q: "4. When I have to take a risk, I carefully consider the possibility of failure.",
         name: "q4-a",
         a1: "Truth",
@@ -50,7 +53,7 @@ const FormRiskComponent = () => {
         a5: "Not true",
       },
       {
-        id: "q5",
+        id: "a5",
         q:
           "5. I am attracted to various dangerous activities, e.g. traversing lonely, unknown places, even when I do not know what can happen to me there.",
         name: "q5-a",
@@ -61,7 +64,7 @@ const FormRiskComponent = () => {
         a5: "Not true",
       },
       {
-        id: "q6",
+        id: "a6",
         q: "6. Before making a risky decision, I always carefully weigh the pros and cons.",
         name: "q6-a",
         a1: "Truth",
@@ -71,7 +74,7 @@ const FormRiskComponent = () => {
         a5: "Not true",
       },
       {
-        id: "q7",
+        id: "a7",
         q: "7. Sometimes I take the risk to feel the adrenaline because it makes me feel like I'm really alive.",
         name: "q7-a",
         a1: "Truth",
@@ -84,55 +87,83 @@ const FormRiskComponent = () => {
   };
 
   // colect answers
-  const [answers, setAnswers] = useState([
-    { q: "q1", value: "" },
-    { q: "q2", value: "" },
-    { q: "q3", value: "" },
-    { q: "q4", value: "" },
-    { q: "q5", value: "" },
-    { q: "q6", value: "" },
-    { q: "q7", value: "" },
-  ]);
+  const [a1, setA1] = useState('');
+  const [a2, setA2] = useState('');
+  const [a3, setA3] = useState('');
+  const [a4, setA4] = useState('');
+  const [a5, setA5] = useState('');
+  const [a6, setA6] = useState('');
+  const [a7, setA7] = useState('');
+  const [showFormSendError, setShowFormSendError] = useState(false);
+  const [showIncompleteForm, setShowIncompleteForm] = useState(false);
 
-  // store last clicked radio button and then pass to answers
-  const [selected, setSelected] = useState({});
   const handleChange = (e) => {
-    setSelected(e.target);
+
+    if('a1' === e.target.id){
+      setA1(e.target.value);
+    }
+    if('a2' === e.target.id){
+      setA2(e.target.value);
+    }
+    if('a3' === e.target.id){
+      setA3(e.target.value);
+    }
+    if('a4' === e.target.id){
+      setA4(e.target.value);
+    }
+    if('a5' === e.target.id){
+      setA5(e.target.value);
+    }
+    if('a6' === e.target.id){
+      setA6(e.target.value);
+    }
+    if('a7' === e.target.id){
+      setA7(e.target.value);
+    }
   };
-
-  // for update answers
-  useEffect(() => {
-    const newAns = answers.map((p) =>
-      p.q === selected.id ? { ...p, value: selected.value } : p
-    );
-    setAnswers(newAns);
-  }, [selected, answers]);
-
-  // support method - to observe what is storing to answers
-  const printCollect = () => {
-    let ul = document.querySelector(".res");
-    ul.innerHTML = "";
-    answers.forEach((a) => {
-      ul.innerHTML += `<li>${a.q} : ${a.value}</li>`;
-    });
-  };
-
-  // for print updated collection of answers
-  useEffect(() => {
-    printCollect();
-  }, [answers]);
-
-  // nav to TestResult page
-  //let navigateTest = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //() => navigateTest('/test')
-    console.log(answers);
+    let isComplete = true;
+    let jsonAnswers = {a1, a2, a3, a4, a5, a6, a7}
+
+    for(let e in jsonAnswers){
+      if(jsonAnswers[e].length === 0){
+        isComplete = false;
+      }
+    }
+
+    if(isComplete){
+      FormsUtilService.sendRiskFormResults(jsonAnswers)
+      .then((response) => {
+        if(response.status === 200){
+          props.navigate('/form-saved');
+        }
+      })
+      .catch((error) => {
+        setShowFormSendError(true);
+        console.log(error);
+        window.scrollTo(0, 0);
+      });
+    }
+    else{
+      setShowIncompleteForm(true);
+      window.scrollTo(0, 0);
+    }
   };
 
   return (
     <main>
+      <div className="position-absolute start-50 translate-middle">
+        <FormSendError
+            showFormSendError={showFormSendError}
+            setShowFormSendError={setShowFormSendError}
+        />
+        <IncompleteForm
+            showIncompleteForm={showIncompleteForm}
+            setShowIncompleteForm={setShowIncompleteForm}
+        />
+      </div>
       <Container className="h-100">
         <Row className="justify-content-md-center">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="6">
@@ -196,10 +227,6 @@ const FormRiskComponent = () => {
                 >
                   Confirm
                 </Button>
-                <p>
-                  {selected.id} : {selected.value}
-                </p>
-                <ul className="res"></ul>
               </div>
             </Form>
           </Col>

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import pdapp.server.model.User;
 import pdapp.server.repository.UserDetailsRepository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
@@ -17,11 +20,14 @@ public class UserService implements UserDetailsService {
     private UserDetailsRepository userDetailsRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //log.info("Start loadUserByUsername");
         User user = userDetailsRepository.findByUsername(username);
         if(null == user){
             throw new UsernameNotFoundException("User not found with userName: " + username);
         }
         return user;
+    }
+
+    public Optional<User> getUserById(UUID userId){
+        return userDetailsRepository.findById(userId);
     }
 }

@@ -27,7 +27,7 @@ public class SignUpService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setMail(user.getMail());
-        newUser.setCreated(new Date());
+        newUser.setCreatedAt(new Date());
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setEnabled(true);

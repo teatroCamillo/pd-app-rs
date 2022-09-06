@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
 
-@Table(name = "USERS")
+@Table(name = "users")
 @Entity
 @Data
 public class User implements UserDetails {
@@ -36,9 +36,12 @@ public class User implements UserDetails {
 
     @Column
     @DateTimeFormat(pattern="dd/MM/yyyy")
-    private Date created;
+    private Date createdAt;
     @Column
     private boolean enabled;
+
+    @OneToOne(mappedBy = "user")
+    private RiskTest riskTest;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

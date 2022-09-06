@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Table(name = "RISK_TEST")
+@Table(name = "risk_tests")
 @Entity
 @Data
 public class RiskTest {
@@ -28,5 +28,9 @@ public class RiskTest {
 
     @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date createdAt;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 }

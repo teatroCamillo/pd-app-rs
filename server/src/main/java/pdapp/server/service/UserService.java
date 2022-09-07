@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public Optional<User> getUserById(UUID userId){
+    public Optional<User> getUserById(String userId){
         return userDetailsRepository.findById(userId);
     }
 }

@@ -8,9 +8,7 @@ import pdapp.server.model.User;
 import pdapp.server.repository.RiskTestRepository;
 import pdapp.server.repository.UserDetailsRepository;
 
-import java.util.Date;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -23,15 +21,23 @@ public class RiskTestService {
     private UserDetailsRepository userDetailsRepository;
 
 
-    public Optional<RiskTest> saveRiskTest(UUID userId, RiskTest riskTest){
+    public Optional<RiskTest> saveRiskTest(String userId, RiskTest riskTest){
 
         log.info("Risk test UUID");
-        log.info(userId.toString());
+        log.info(userId);
 
+        Optional<List<RiskTest>> d = hasUserCompletedRiskTest(userId);
+
+        if(d.isPresent()) {
+            for (RiskTest e : d.get()) {
+                log.info("list");
+                log.info(e.getId());
+            }
+        }
         Optional<User> user = userDetailsRepository.findById(userId);
 
         if(user.isPresent()) {
-            riskTest.setId(UUID.randomUUID());
+            riskTest.setId(UUID.randomUUID().toString());
             riskTest.setRtResult(analyzeAnswers());
             riskTest.setCreatedAt(new Date());
             riskTest.setUser(user.get());
@@ -47,4 +53,7 @@ public class RiskTestService {
         return "temp result";
     }
 
+    public Optional<List<RiskTest>> hasUserCompletedRiskTest(String userId){
+        return Optional.ofNullable(riskTestRepository.hasUserCompletedRiskTest(userId));
+    }
 }

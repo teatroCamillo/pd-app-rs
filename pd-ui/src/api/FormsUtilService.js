@@ -1,9 +1,11 @@
 import axios from "axios";
+import AuthenticationService from "../components/utils/AuthenticationService";
 
 class FormsUtilService {
 
     sendRiskFormResults = (answers) => {
-        return axios.post("http://localhost:8080/risk", answers);
+        const userId = AuthenticationService.getSignedInUserId();
+        return axios.post(`http://localhost:8080/${userId}/risk`, answers);
     };
 
 }

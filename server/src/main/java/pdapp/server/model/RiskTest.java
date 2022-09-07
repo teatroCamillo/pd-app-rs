@@ -1,11 +1,11 @@
 package pdapp.server.model;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Table(name = "risk_tests")
 @Entity
@@ -13,8 +13,10 @@ import java.util.UUID;
 public class RiskTest {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @Column(length = 36, nullable = false, updatable = false)
+    private String id;
 
     private String a1;
     private String a2;

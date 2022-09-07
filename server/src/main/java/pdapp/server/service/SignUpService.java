@@ -22,7 +22,7 @@ public class SignUpService {
     public User signUp(User user){
 
         User newUser = new User();
-        newUser.setId(UUID.randomUUID());
+        newUser.setId(UUID.randomUUID().toString());
         newUser.setUsername(user.getUsername());
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));

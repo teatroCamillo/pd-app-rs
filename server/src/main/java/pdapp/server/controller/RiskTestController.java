@@ -19,7 +19,7 @@ public class RiskTestController {
     private RiskTestService riskTestService;
 
     @PostMapping("/{userId}/risk")
-    public ResponseEntity<?> saveRiskTestAnswers(@PathVariable UUID userId, @RequestBody RiskTest riskTest){
+    public ResponseEntity<?> saveRiskTestAnswers(@PathVariable String userId, @RequestBody RiskTest riskTest){
 
         Optional<RiskTest> savedRiskTest = riskTestService.saveRiskTest(userId, riskTest);
 

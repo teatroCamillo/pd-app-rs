@@ -7,8 +7,14 @@ import Button from "react-bootstrap/Button";
 import FormsUtilService from "../api/FormsUtilService";
 import FormSendError from "./alerts/FormSendError";
 import IncompleteForm from "./alerts/IncompleteForm";
+import { useLocation } from 'react-router-dom'
 
 const FormRiskComponent = (props) => {
+
+  // get passed info from PersonalExaminationComponent about has user completed risk test?
+  const location = useLocation()
+  const { hasCompletedRiskTest } = location.state;
+
   // questions
   const data = {
     questions: [
@@ -134,17 +140,36 @@ const FormRiskComponent = (props) => {
     }
 
     if(isComplete){
-      FormsUtilService.sendRiskFormResults(jsonAnswers)
-      .then((response) => {
-        if(response.status === 200){
-          props.navigate('/form-saved');
-        }
-      })
-      .catch((error) => {
-        setShowFormSendError(true);
-        console.log(error);
-        window.scrollTo(0, 0);
-      });
+
+      //perform POST
+      if(!hasCompletedRiskTest){
+        FormsUtilService.sendRiskFormResults(jsonAnswers)
+        .then((response) => {
+          if(response.status === 200){
+            props.navigate('/form-saved');
+          }
+        })
+        .catch((error) => {
+          setShowFormSendError(true);
+          console.log(error);
+          window.scrollTo(0, 0);
+        });
+      }
+      //perform PUT
+      else{
+        console.log("I'm putting ;)")
+        FormsUtilService.updateRiskFormResults(jsonAnswers)
+        .then((response) => {
+          if(response.status === 200){
+            props.navigate('/form-saved');
+          }
+        })
+        .catch((error) => {
+          setShowFormSendError(true);
+          console.log(error);
+          window.scrollTo(0, 0);
+        });
+      }
     }
     else{
       setShowIncompleteForm(true);
@@ -218,7 +243,6 @@ const FormRiskComponent = (props) => {
                   </Form.Group>
                 );
               })}
-
               <div className="justify-content-center">
                 <Button
                   className="align-middle"

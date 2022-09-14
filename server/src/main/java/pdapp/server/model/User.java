@@ -43,9 +43,6 @@ public class User implements UserDetails {
     @Column
     private boolean enabled;
 
-    @OneToOne(mappedBy = "user")
-    private RiskTest riskTest;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

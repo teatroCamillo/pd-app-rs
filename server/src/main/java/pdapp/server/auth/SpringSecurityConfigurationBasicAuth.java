@@ -56,7 +56,9 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
                 .and()
                 .authorizeRequests((request) ->
                         request
-                                .antMatchers("/postgres/**", "/api/v1/auth/login", "/signup", "/{userId}/risk")
+                                .antMatchers("/postgres/**", "/api/v1/auth/login", "/signup", "/{userId}/risk",
+                                        "/{userId}/has-completed-risk-test",
+                                        "/test", "/test2")
                                 .permitAll()
                                 .antMatchers(HttpMethod.OPTIONS, "/**")
                                 .permitAll()

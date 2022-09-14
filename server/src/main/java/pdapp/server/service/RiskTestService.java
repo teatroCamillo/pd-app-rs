@@ -22,18 +22,6 @@ public class RiskTestService {
 
 
     public Optional<RiskTest> saveRiskTest(String userId, RiskTest riskTest){
-
-        log.info("Risk test UUID");
-        log.info(userId);
-
-        Optional<List<RiskTest>> d = hasUserCompletedRiskTest(userId);
-
-        if(d.isPresent()) {
-            for (RiskTest e : d.get()) {
-                log.info("list");
-                log.info(e.getId());
-            }
-        }
         Optional<User> user = userDetailsRepository.findById(userId);
 
         if(user.isPresent()) {
@@ -49,11 +37,34 @@ public class RiskTestService {
         return Optional.empty();
     }
 
+    public RiskTest updateRiskTest(String userId, RiskTest riskTest) {
+
+        RiskTest testToUpdate = riskTestRepository.findByUserId(userId);
+
+        if(testToUpdate != null){
+            testToUpdate.setA1(riskTest.getA1());
+            testToUpdate.setA2(riskTest.getA2());
+            testToUpdate.setA3(riskTest.getA3());
+            testToUpdate.setA4(riskTest.getA4());
+            testToUpdate.setA5(riskTest.getA5());
+            testToUpdate.setA6(riskTest.getA6());
+            testToUpdate.setA7(riskTest.getA7());
+            testToUpdate.setRtResult(analyzeAnswers());
+            riskTestRepository.save(testToUpdate);
+        }
+        return testToUpdate;
+    }
+
     private String analyzeAnswers(){
         return "temp result";
     }
 
-    public Optional<List<RiskTest>> hasUserCompletedRiskTest(String userId){
-        return Optional.ofNullable(riskTestRepository.hasUserCompletedRiskTest(userId));
+    public Boolean hasUserCompletedRiskTest(String userId){
+        RiskTest riskTests = riskTestRepository.findByUserId(userId);
+        return riskTests != null;
+    }
+
+    public Optional<List<RiskTest>> getAll(){
+        return Optional.ofNullable(riskTestRepository.findAll());
     }
 }

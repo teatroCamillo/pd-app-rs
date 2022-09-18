@@ -10,6 +10,19 @@ import { Link } from "react-router-dom";
 const PersonalExaminationComponent = () => {
 
   const [hasCompletedRiskTest, setHasCompletedRiskTest] = useState(false);
+  const [riskQuestions, setRiskQuestions] = useState([])
+
+  useEffect(() => {
+    FormsUtilService.getAllRiskQuestions()
+      .then((response) => {
+        if(response.status === 200){
+          setRiskQuestions(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, [])
 
   useEffect(() => {
     FormsUtilService.hasUserCompletedRiskTest()
@@ -67,7 +80,7 @@ const PersonalExaminationComponent = () => {
                     <img src="./images/personal-ex/risk0.jpg" className="card-img-top" alt="..." />
                     <div className="card-body">
                       <h5 className="card-title">Risk</h5>
-                      <Link to="/personal-ex/risk" state={{ hasCompletedRiskTest : hasCompletedRiskTest}} ><Button variant="primary">Take Test</Button></Link>
+                      <Link to="/personal-ex/risk" state={{ hasCompletedRiskTest : hasCompletedRiskTest, riskQuestions : riskQuestions}} ><Button variant="primary">Take Test</Button></Link>
                     </div>
                   </div>}
                   {!hasCompletedRiskTest &&
@@ -76,7 +89,7 @@ const PersonalExaminationComponent = () => {
                     <img src="./images/personal-ex/risk0.jpg" className="card-img-top" alt="..." />
                     <div className="card-body">
                       <h5 className="card-title">Risk</h5>
-                      <Link to="/personal-ex/risk" state={{ hasCompletedRiskTest : hasCompletedRiskTest}} ><Button variant="primary">Take Test</Button></Link>
+                      <Link to="/personal-ex/risk" state={{ hasCompletedRiskTest : hasCompletedRiskTest, riskQuestions : riskQuestions}} ><Button variant="primary">Take Test</Button></Link>
                     </div>
                   </div>}
                 </div>

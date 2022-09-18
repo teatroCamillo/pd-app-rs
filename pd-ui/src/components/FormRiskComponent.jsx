@@ -13,83 +13,11 @@ const FormRiskComponent = (props) => {
 
   // get passed info from PersonalExaminationComponent about has user completed risk test?
   const location = useLocation()
-  const { hasCompletedRiskTest } = location.state;
+  const { hasCompletedRiskTest, riskQuestions } = location.state;
 
   // questions
   const data = {
-    questions: [
-      {
-        id: "a1",
-        q: "1. When I pursue my passions, I like those moments when I'm balancing on the verge of risk.",
-        name: "q1-a",
-        a1: "Truth",
-        a2: "Rather true",
-        a3: "Hard to say",
-        a4: "Rather not true",
-        a5: "Not true",
-      },
-      {
-        id: "a2",
-        q: "2. I only take a risk when it is necessary to achieve my goal.",
-        name: "q2-a",
-        a1: "Truth",
-        a2: "Rather true",
-        a3: "Hard to say",
-        a4: "Rather not true",
-        a5: "Not true",
-      },
-      {
-        id: "a3",
-        q: "3. Sometimes I tempt fate unnecessarily.",
-        name: "q3-a",
-        a1: "Truth",
-        a2: "Rather true",
-        a3: "Hard to say",
-        a4: "Rather not true",
-        a5: "Not true",
-      },
-      {
-        id: "a4",
-        q: "4. When I have to take a risk, I carefully consider the possibility of failure.",
-        name: "q4-a",
-        a1: "Truth",
-        a2: "Rather true",
-        a3: "Hard to say",
-        a4: "Rather not true",
-        a5: "Not true",
-      },
-      {
-        id: "a5",
-        q:
-          "5. I am attracted to various dangerous activities, e.g. traversing lonely, unknown places, even when I do not know what can happen to me there.",
-        name: "q5-a",
-        a1: "Truth",
-        a2: "Rather true",
-        a3: "Hard to say",
-        a4: "Rather not true",
-        a5: "Not true",
-      },
-      {
-        id: "a6",
-        q: "6. Before making a risky decision, I always carefully weigh the pros and cons.",
-        name: "q6-a",
-        a1: "Truth",
-        a2: "Rather true",
-        a3: "Hard to say",
-        a4: "Rather not true",
-        a5: "Not true",
-      },
-      {
-        id: "a7",
-        q: "7. Sometimes I take the risk to feel the adrenaline because it makes me feel like I'm really alive.",
-        name: "q7-a",
-        a1: "Truth",
-        a2: "Rather true",
-        a3: "Hard to say",
-        a4: "Rather not true",
-        a5: "Not true",
-      },
-    ],
+    questions: riskQuestions
   };
 
   // colect answers
@@ -157,7 +85,6 @@ const FormRiskComponent = (props) => {
       }
       //perform PUT
       else{
-        console.log("I'm putting ;)")
         FormsUtilService.updateRiskFormResults(jsonAnswers)
         .then((response) => {
           if(response.status === 200){
@@ -202,7 +129,7 @@ const FormRiskComponent = (props) => {
                     key={question.id}
                     controlId={question.id}
                   >
-                    <Form.Label as="legend">{question.q}</Form.Label>
+                    <Form.Label as="legend">{question.question}</Form.Label>
                     <Col>
                       <Form.Check
                         type="radio"

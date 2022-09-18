@@ -2,12 +2,8 @@ package pdapp.server.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pdapp.server.model.RiskTest;
+import pdapp.server.model.RiskQuestion;
 
 @Repository
-public interface RiskTestRepository extends JpaRepository<RiskTest, String> {
-
-    RiskTest findByUserId(String userId);
-
-
+public interface RiskQuestionsRepository extends JpaRepository<RiskQuestion, String> {
 }

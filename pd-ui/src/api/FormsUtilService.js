@@ -5,6 +5,10 @@ const API_URL = 'http://localhost:8080';
 
 class FormsUtilService {
 
+    getAllRiskQuestions = () => {
+        return axios.get(`${API_URL}/get-all-risk-questions`)
+    }
+
     hasUserCompletedRiskTest = () => {
         const userId = AuthenticationService.getSignedInUserId();
         return axios.get(`${API_URL}/${userId}/has-completed-risk-test`);

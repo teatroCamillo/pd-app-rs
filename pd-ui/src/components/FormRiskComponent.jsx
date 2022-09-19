@@ -7,11 +7,11 @@ import Button from "react-bootstrap/Button";
 import FormsUtilService from "../api/FormsUtilService";
 import FormSendError from "./alerts/FormSendError";
 import IncompleteForm from "./alerts/IncompleteForm";
-import { useLocation } from 'react-router-dom'
+import { useLocation } from "react-router-dom"
 
 const FormRiskComponent = (props) => {
 
-  // get passed info from PersonalExaminationComponent about has user completed risk test?
+  // get passed info from PersonalExaminationComponent about user completed risk test?
   const location = useLocation()
   const { hasCompletedRiskTest, riskQuestions } = location.state;
 

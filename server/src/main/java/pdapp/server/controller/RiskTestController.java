@@ -49,7 +49,7 @@ public class RiskTestController {
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all-risk-tests")
     public ResponseEntity<?> findAll(){
         Optional<?> riskTests = riskTestService.getAll();
         return new ResponseEntity<>(riskTests, HttpStatus.OK);

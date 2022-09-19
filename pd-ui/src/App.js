@@ -25,6 +25,7 @@ function App() {
   const SignInComponentWithNavigation = withNavigation(SignInComponent);
   const SignUpComponentWithNavigation = withNavigation(SignUpComponent);
   const FormRiskComponentWithNavigation = withNavigation(FormRiskComponent);
+  const FormGamblingComponentWithNavigation = withNavigation(FormGamblingComponent);
 
   return (
     <Routes>
@@ -43,7 +44,7 @@ function App() {
       <Route path="start" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
       <Route path="personal-ex" element={<AuthenticatedRoute><PersonalExaminationComponent /></AuthenticatedRoute>} />
       <Route path="personal-ex/risk" element={<AuthenticatedRoute><FormRiskComponentWithNavigation /></AuthenticatedRoute>} />
-      <Route path="personal-ex/gambling" element={<AuthenticatedRoute><FormGamblingComponent /></AuthenticatedRoute>} />
+      <Route path="personal-ex/gambling" element={<AuthenticatedRoute><FormGamblingComponentWithNavigation /></AuthenticatedRoute>} />
       <Route path="form-saved" element={<AuthenticatedRoute><FormSavedCorrectlyComponent /></AuthenticatedRoute>} />
 
       {/*unknown paths */}

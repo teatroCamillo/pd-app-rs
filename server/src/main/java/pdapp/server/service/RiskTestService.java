@@ -60,8 +60,8 @@ public class RiskTestService {
     }
 
     public Boolean hasUserCompletedRiskTest(String userId){
-        RiskTest riskTests = riskTestRepository.findByUserId(userId);
-        return riskTests != null;
+        RiskTest riskTest = riskTestRepository.findByUserId(userId);
+        return riskTest != null;
     }
 
     public Optional<List<RiskTest>> getAll(){

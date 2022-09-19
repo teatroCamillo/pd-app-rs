@@ -1,20 +1,214 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import FormSendError from "./alerts/FormSendError";
+import IncompleteForm from "./alerts/IncompleteForm";
+import FormsUtilService from "../api/FormsUtilService";
+import { useLocation } from "react-router-dom";
 
-const FormGamblingComponent = () => {
+const FormGamblingComponent = (props) => {
 
+  // get passed info from PersonalExaminationComponent about user completed risk test?
+  const location = useLocation()
+  const { hasCompletedGamblingTest, gamblingQuestions } = location.state;
+
+  // questions
+  const data = {
+    questions: gamblingQuestions
+  };
+
+  // colect answers
+  const [a1, setA1] = useState('');
+  const [a2, setA2] = useState('');
+  const [a3, setA3] = useState('');
+  const [a4, setA4] = useState('');
+  const [a5, setA5] = useState('');
+  const [a6, setA6] = useState('');
+  const [a7, setA7] = useState('');
+  const [a8, setA8] = useState('');
+  const [a9, setA9] = useState('');
+  const [a10, setA10] = useState('');
+  const [a11, setA11] = useState('');
+  const [a12, setA12] = useState('');
+  const [a13, setA13] = useState('');
+  const [a14, setA14] = useState('');
+  const [a15, setA15] = useState('');
+  const [a16, setA16] = useState('');
+  const [a17, setA17] = useState('');
+  const [a18, setA18] = useState('');
+  const [a19, setA19] = useState('');
+  const [a20, setA20] = useState('');
+  const [showFormSendError, setShowFormSendError] = useState(false);
+  const [showIncompleteForm, setShowIncompleteForm] = useState(false);
+
+  const handleChange = (e) => {
+    if('a1' === e.target.id){
+      setA1(e.target.value);
+    }
+    if('a2' === e.target.id){
+      setA2(e.target.value);
+    }
+    if('a3' === e.target.id){
+      setA3(e.target.value);
+    }
+    if('a4' === e.target.id){
+      setA4(e.target.value);
+    }
+    if('a5' === e.target.id){
+      setA5(e.target.value);
+    }
+    if('a6' === e.target.id){
+      setA6(e.target.value);
+    }
+    if('a7' === e.target.id){
+      setA7(e.target.value);
+    }
+    if('a8' === e.target.id){
+      setA8(e.target.value);
+    }
+    if('a9' === e.target.id){
+      setA9(e.target.value);
+    }
+    if('a10' === e.target.id){
+      setA10(e.target.value);
+    }
+    if('a11' === e.target.id){
+      setA11(e.target.value);
+    }
+    if('a12' === e.target.id){
+      setA12(e.target.value);
+    }
+    if('a13' === e.target.id){
+      setA13(e.target.value);
+    }
+    if('a14' === e.target.id){
+      setA14(e.target.value);
+    }
+    if('a15' === e.target.id){
+      setA15(e.target.value);
+    }
+    if('a16' === e.target.id){
+      setA16(e.target.value);
+    }
+    if('a17' === e.target.id){
+      setA17(e.target.value);
+    }
+    if('a18' === e.target.id){
+      setA18(e.target.value);
+    }
+    if('a19' === e.target.id){
+      setA19(e.target.value);
+    }
+    if('a20' === e.target.id){
+      setA20(e.target.value);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let isComplete = true;
+    let jsonAnswers = {a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20}
+
+    for(let e in jsonAnswers){
+      if(jsonAnswers[e].length === 0){
+        isComplete = false;
+      }
+    }
+
+    if(isComplete){
+      //perform POST
+      if(!hasCompletedGamblingTest){
+        FormsUtilService.sendGamblingFormResults(jsonAnswers)
+        .then((response) => {
+          if(response.status === 200){
+            props.navigate('/form-saved');
+          }
+        })
+        .catch((error) => {
+          setShowFormSendError(true);
+          console.log(error);
+          window.scrollTo(0, 0);
+        });
+      }
+      //perform PUT
+      else{
+        FormsUtilService.updateGamblingFormResults(jsonAnswers)
+        .then((response) => {
+          if(response.status === 200){
+            props.navigate('/form-saved');
+          }
+        })
+        .catch((error) => {
+          setShowFormSendError(true);
+          console.log(error);
+          window.scrollTo(0, 0);
+        });
+      }
+    }
+    else{
+      setShowIncompleteForm(true);
+      window.scrollTo(0, 0);
+    }
+  };
 
   return (
     <main>
+      <div className="position-absolute start-50 translate-middle">
+        <FormSendError
+            showFormSendError={showFormSendError}
+            setShowFormSendError={setShowFormSendError}
+        />
+        <IncompleteForm
+            showIncompleteForm={showIncompleteForm}
+            setShowIncompleteForm={setShowIncompleteForm}
+        />
+      </div>
       <Container className="h-100">
         <Row className="justify-content-md-center">
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="6">
             <h2>Gambling Test</h2>
-            
+            <Form onSubmit={handleSubmit}>
+              {data.questions.map((question) => {
+                return (
+                  <Form.Group
+                    as={Row}
+                    className="mb-5"
+                    key={question.id}
+                    controlId={question.id}
+                  >
+                    <Form.Label as="legend">{question.question}</Form.Label>
+                    <Col>
+                      <Form.Check
+                        type="radio"
+                        label={question.a1}
+                        name={question.name}
+                        value={question.a1}
+                        onChange={handleChange}
+                      />
+                      <Form.Check
+                        type="radio"
+                        label={question.a2}
+                        name={question.name}
+                        value={question.a2}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </Form.Group>
+                );
+              })}
+              <div className="justify-content-center">
+                <Button
+                  className="align-middle"
+                  variant="primary"
+                  type="submit"
+                >
+                  Confirm
+                </Button>
+              </div>
+            </Form>
           </Col>
         </Row>
       </Container>

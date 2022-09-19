@@ -13,5 +13,6 @@ public class UserInfo {
 
     private String username;
     private Boolean hasCompletedRiskTest;
+    private Boolean hasCompletedGamblingTest;
 
 }

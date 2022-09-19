@@ -10,8 +10,33 @@ import { Link } from "react-router-dom";
 const PersonalExaminationComponent = () => {
 
   const [hasCompletedRiskTest, setHasCompletedRiskTest] = useState(false);
+  const [hasCompletedGamblingTest, setHasCompletedGamblingTest] = useState(false);
   const [riskQuestions, setRiskQuestions] = useState([])
+  const [gamblingQuestions, setGamblingQuestions] = useState([])
 
+  useEffect(() => {
+    FormsUtilService.hasUserCompletedRiskTest()
+      .then((response) => {
+        if(response.status === 200){
+          setHasCompletedRiskTest(response.data.hasCompletedRiskTest);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    FormsUtilService.hasUserCompletedGamblingTest()
+      .then((response) => {
+        if(response.status === 200){
+          setHasCompletedGamblingTest(response.data.hasCompletedGamblingTest);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   useEffect(() => {
     FormsUtilService.getAllRiskQuestions()
       .then((response) => {
@@ -25,16 +50,16 @@ const PersonalExaminationComponent = () => {
   }, [])
 
   useEffect(() => {
-    FormsUtilService.hasUserCompletedRiskTest()
+    FormsUtilService.getAllGamblingQuestions()
       .then((response) => {
         if(response.status === 200){
-          setHasCompletedRiskTest(response.data.hasCompletedRiskTest);
+          setGamblingQuestions(response.data);
         }
       })
       .catch((error) => {
         console.log(error);
-      });
-  }, []);
+      })
+  }, [])
 
   return (
     <main>
@@ -76,7 +101,7 @@ const PersonalExaminationComponent = () => {
                 <div className="col-sm-6">
                   {hasCompletedRiskTest &&
                   <div className="card border-success border border-4">
-                    {/*Obraz <a href="https://pixabay.com/pl/users/tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Tumisu</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Pixabay</a> */}
+                    {/*Image <a href="https://pixabay.com/pl/users/tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Tumisu</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Pixabay</a> */}
                     <img src="./images/personal-ex/risk0.jpg" className="card-img-top" alt="..." />
                     <div className="card-body">
                       <h5 className="card-title">Risk</h5>
@@ -85,7 +110,7 @@ const PersonalExaminationComponent = () => {
                   </div>}
                   {!hasCompletedRiskTest &&
                   <div className="card border-danger border border-4">
-                    {/*Obraz <a href="https://pixabay.com/pl/users/tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Tumisu</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Pixabay</a> */}
+                    {/*Image <a href="https://pixabay.com/pl/users/tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Tumisu</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4757854"> Pixabay</a> */}
                     <img src="./images/personal-ex/risk0.jpg" className="card-img-top" alt="..." />
                     <div className="card-body">
                       <h5 className="card-title">Risk</h5>
@@ -95,14 +120,24 @@ const PersonalExaminationComponent = () => {
                 </div>
 
                 <div className="col-sm-6">
-                  <div className="card border-danger border border-4">
-                    {/*Obraz <a href="https://pixabay.com/pl/users/stokpic-692575/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> stokpic</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> Pixabay</a> */}
+                  {hasCompletedGamblingTest &&
+                  <div className="card border-success border border-4">
+                    {/*Image <a href="https://pixabay.com/pl/users/stokpic-692575/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> stokpic</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> Pixabay</a> */}
                     <img src="./images/personal-ex/gambling0.jpg" className="card-img-top" alt="..." />
                     <div className="card-body">
                       <h5 className="card-title">Gambling</h5>
-                      <Button variant="primary" href="/personal-ex/gambling">Take Test</Button>
+                      <Link to="/personal-ex/gambling" state={{ hasCompletedGamblingTest : hasCompletedGamblingTest, gamblingQuestions : gamblingQuestions}} ><Button variant="primary">Take Test</Button></Link>
                     </div>
-                  </div>
+                  </div>}
+                  {!hasCompletedGamblingTest &&
+                  <div className="card border-danger border border-4">
+                    {/*Image <a href="https://pixabay.com/pl/users/stokpic-692575/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> stokpic</a> z <a href="https://pixabay.com/pl//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=602976"> Pixabay</a> */}
+                    <img src="./images/personal-ex/gambling0.jpg" className="card-img-top" alt="..." />
+                    <div className="card-body">
+                      <h5 className="card-title">Gambling</h5>
+                      <Link to="/personal-ex/gambling" state={{ hasCompletedGamblingTest : hasCompletedGamblingTest, gamblingQuestions : gamblingQuestions}} ><Button variant="primary">Take Test</Button></Link>
+                    </div>
+                  </div>}
                 </div>
               </div>
           </Col>

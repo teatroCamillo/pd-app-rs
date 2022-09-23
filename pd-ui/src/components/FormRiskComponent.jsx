@@ -28,6 +28,12 @@ const FormRiskComponent = (props) => {
   const [a5, setA5] = useState('');
   const [a6, setA6] = useState('');
   const [a7, setA7] = useState('');
+  const [a8, setA8] = useState('');
+  const [a9, setA9] = useState('');
+  const [a10, setA10] = useState('');
+  const [a11, setA11] = useState('');
+  const [a12, setA12] = useState('');
+  const [a13, setA13] = useState('');
   const [showFormSendError, setShowFormSendError] = useState(false);
   const [showIncompleteForm, setShowIncompleteForm] = useState(false);
 
@@ -54,12 +60,30 @@ const FormRiskComponent = (props) => {
     if('a7' === e.target.id){
       setA7(e.target.value);
     }
+    if('a8' === e.target.id){
+      setA8(e.target.value);
+    }
+    if('a9' === e.target.id){
+      setA9(e.target.value);
+    }
+    if('a10' === e.target.id){
+      setA10(e.target.value);
+    }
+    if('a11' === e.target.id){
+      setA11(e.target.value);
+    }
+    if('a12' === e.target.id){
+      setA12(e.target.value);
+    }
+    if('a13' === e.target.id){
+      setA13(e.target.value);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let isComplete = true;
-    let jsonAnswers = {a1, a2, a3, a4, a5, a6, a7}
+    let jsonAnswers = {a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13}
 
     for(let e in jsonAnswers){
       if(jsonAnswers[e].length === 0){
@@ -145,27 +169,22 @@ const FormRiskComponent = (props) => {
                         value={question.a2}
                         onChange={handleChange}
                       />
+                      {question.a3 &&
                       <Form.Check
                         type="radio"
                         label={question.a3}
                         name={question.name}
                         value={question.a3}
                         onChange={handleChange}
-                      />
+                      />}
+                      {question.a4 &&
                       <Form.Check
                         type="radio"
                         label={question.a4}
                         name={question.name}
                         value={question.a4}
                         onChange={handleChange}
-                      />
-                      <Form.Check
-                        type="radio"
-                        label={question.a5}
-                        name={question.name}
-                        value={question.a5}
-                        onChange={handleChange}
-                      />
+                      />}
                     </Col>
                   </Form.Group>
                 );

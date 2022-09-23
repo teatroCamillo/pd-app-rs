@@ -19,6 +19,5 @@ public class RiskQuestion {
     private String a2;
     private String a3;
     private String a4;
-    private String a5;
 
 }

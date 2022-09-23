@@ -26,6 +26,12 @@ public class RiskTest {
     private String a5;
     private String a6;
     private String a7;
+    private String a8;
+    private String a9;
+    private String a10;
+    private String a11;
+    private String a12;
+    private String a13;
 
     private String rtResult;
 

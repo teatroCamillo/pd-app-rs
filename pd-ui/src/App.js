@@ -8,12 +8,15 @@ import AboutAppComponent from "./components/AboutAppComponent";
 import SignInComponent from "./components/SignInComponent";
 import SignUpComponent from "./components/SignUpComponent";
 import StartComponent from "./components/StartComponent";
-import FormRiskComponent from "./components/FormRiskComponent";
 import ErrorComponent from "./components/ErrorComponent";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import SignOutComponent from "./components/SignOutComponent";
 import ForgottenPasswordComponent from "./components/ForgottenPasswordComponent";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
+import PersonalExaminationComponent from "./components/PersonalExaminationComponent"
+import FormRiskComponent from "./components/FormRiskComponent";
+import FormGamblingComponent from "./components/FormGamblingComponent";
+import FormSavedCorrectlyComponent from "./components/FormSavedCorrectlyComponent";
 
 import withNavigation from "./components/utils/withNavigation";
 
@@ -21,6 +24,8 @@ function App() {
 
   const SignInComponentWithNavigation = withNavigation(SignInComponent);
   const SignUpComponentWithNavigation = withNavigation(SignUpComponent);
+  const FormRiskComponentWithNavigation = withNavigation(FormRiskComponent);
+  const FormGamblingComponentWithNavigation = withNavigation(FormGamblingComponent);
 
   return (
     <Routes>
@@ -36,8 +41,11 @@ function App() {
       <Route path="forgotten-password" element={<UnauthenticatedRoute><ForgottenPasswordComponent /></UnauthenticatedRoute>} />
 
       {/*required auth paths */}
-      <Route path="start/:username" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
-      <Route path="risk" element={<AuthenticatedRoute><FormRiskComponent /></AuthenticatedRoute>} />
+      <Route path="start" element={<AuthenticatedRoute><StartComponent/></AuthenticatedRoute>} />
+      <Route path="personal-ex" element={<AuthenticatedRoute><PersonalExaminationComponent /></AuthenticatedRoute>} />
+      <Route path="personal-ex/risk" element={<AuthenticatedRoute><FormRiskComponentWithNavigation /></AuthenticatedRoute>} />
+      <Route path="personal-ex/gambling" element={<AuthenticatedRoute><FormGamblingComponentWithNavigation /></AuthenticatedRoute>} />
+      <Route path="form-saved" element={<AuthenticatedRoute><FormSavedCorrectlyComponent /></AuthenticatedRoute>} />
 
       {/*unknown paths */}
       <Route path="*" element={<ErrorComponent />} />

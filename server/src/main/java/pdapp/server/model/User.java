@@ -1,6 +1,7 @@
 package pdapp.server.model;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,14 +11,16 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
 
-@Table(name = "USERS")
+@Table(name = "users")
 @Entity
 @Data
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @Column(length = 36, nullable = false, updatable = false)
+    private String id;
 
     @Column
     private String mail;
@@ -36,7 +39,7 @@ public class User implements UserDetails {
 
     @Column
     @DateTimeFormat(pattern="dd/MM/yyyy")
-    private Date created;
+    private Date createdAt;
     @Column
     private boolean enabled;
 

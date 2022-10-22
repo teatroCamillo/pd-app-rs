@@ -5,11 +5,8 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import WrongCredLogin from "./alerts/WrongCredLogin";
 import { Link } from "react-router-dom";
-
 import AuthenticationService from "./utils/AuthenticationService";
-
 import { Formik, Form, Field } from "formik";
-
 const SignInComponent = (props) => {
 
   const [username, setUsername] = useState("");
@@ -27,8 +24,8 @@ const SignInComponent = (props) => {
         //Check it again when connected a server.
         //e.preventDefault();
 
-        AuthenticationService.registerSuccessfulLogin(username);
-        props.navigate(`/start/${username}`);
+        AuthenticationService.registerSuccessfulLogin(username, resp.data.userId);
+        props.navigate('/start');
       }
     })
     .catch((error) => {

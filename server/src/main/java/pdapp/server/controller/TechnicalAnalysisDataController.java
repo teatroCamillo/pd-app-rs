@@ -5,23 +5,22 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import pdapp.server.model.TechData;
+import pdapp.server.service.TechnicalAnalysisDataService;
 
 import java.io.File;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -33,62 +32,72 @@ public class TechnicalAnalysisDataController {
             ".com/";
 
     private final WebClient webClient;
+    private final ObjectMapper om;
+    private final TechnicalAnalysisDataService tads;
+
 
     public TechnicalAnalysisDataController(WebClient.Builder builder){
         webClient = builder.baseUrl(EXCHANGE_RATES_API).build();
+        om = new ObjectMapper();
+        tads = new TechnicalAnalysisDataService();
     }
 
     @GetMapping("/{userId}/tech-analysis")
     public ResponseEntity<?> getAllQuestions() throws JsonProcessingException {
         log.info("Response Client");
-        String url = EXCHANGE_RATES_API + "/timeseries?start_date=2022-04-01&end_date=2022-05-01";
+        String url = EXCHANGE_RATES_API + "/timeseries?start_date=2022-09-01&end_date=2022-10-31";
 
-//        TechData resp = webClient
+        // this "resp" can be return as body for this ResponeEntity as json
+//        HashMap resp = webClient
 //                .get()
-//                .uri(EXCHANGE_RATES_API)
+//                .uri(url)
 //                .headers(httpHeaders -> {
 //                    httpHeaders.set("X-RapidAPI-Key", "9d9a08ee00msh6744e3e63ba8dc3p1fe26bjsnec162205585c");
 //                    httpHeaders.set("X-RapidAPI-Host", "currency-conversion-and-exchange-rates.p.rapidapi.com");
 //                })
 //                .retrieve()
-//                .bodyToMono(TechData.class)
+//                .bodyToMono(HashMap.class)
 //                .block();
-        ObjectMapper om = new ObjectMapper();
 
 
-        String jsonStr = "";
-        Map<String,Object> result = new HashMap();
+        Map<String,Object> input = new HashMap<>();
         try {
-            // Use file from static resources
-            //Resource resource = new ClassPathResource("/static/response.json");
-            Resource resource = new ClassPathResource("/static/response-short.json");
-            // Path to resource for jar
-            //InputStream input = resource.getInputStream();
-
-            // Path to resource if you want simply get a file
+            Resource resource = new ClassPathResource("/static/response.json");
             File file = resource.getFile();
-
-            // here you can map to object TechData
-            //TechData resp = om.readValue(file, TechData.class);
-            //jsonStr = om.writeValueAsString(resp);
-
-            // or map to HashMap
-            result = new ObjectMapper().readValue(file, new TypeReference<HashMap<String, Object>>() {});
+            input = om.readValue(file, new TypeReference<HashMap<String, Object>>() {});
 
         }catch (Exception e){
             log.info(e.getMessage());
         }
 
-        result.forEach((k,v) -> log.info(k + " : " + v));
+        //input.forEach((k,v) -> log.info(k + " : " + v));
 
-        // take value from map from rates key and by Gson convert to string and then to new Map
-        Gson gson = new Gson();
-        String ent = gson.toJson(result.get("rates"), LinkedHashMap.class);
+        // treeMap is auto-sorting data by key
+        TreeMap<LocalDate, String> tm = tads.getSortedRatesMapForEURUSD(input);
 
-        Map<String, Object> rats = new ObjectMapper().readValue(ent, new TypeReference<HashMap<String, Object>>() {});
-        rats.forEach((k,v) -> log.info(k + " : " + v));
+        tm.forEach((k,v) -> log.info(k + " : " + v));
 
-        return new ResponseEntity<>(rats, HttpStatus.OK);
+        // *******************************************************************************************
+        // prepare data
+//        BarSeries series = new BaseBarSeriesBuilder().withName("mySeries").build();
+//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        ZonedDateTime zdt = LocalDate.parse("2022-04-26", dateTimeFormatter).atStartOfDay(ZoneId.of("UTC"));
+//        log.info("zone date time: " + zdt);
+//
+//        series.addBar(zdt, "1.920125", "1.920125","1.920125","1.920125");
+//        series.addBar(zdt.plusDays(1), "1.920125", "1.920125","1.920125","1.920125");
+//        series.addBar(zdt.plusDays(2), "1.920125", "1.920125","1.920125","1.920125");
+//        series.addBar(zdt.plusDays(3), "1.920125", "1.920125","1.920125","1.920125");
+
+        // use indicator
+//        ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
+//        SMAIndicator shortSma = new SMAIndicator(closePrice, 4);
+//        log.info("SMA Indicator: " + shortSma.getValue(0));
+//        log.info("SMA Indicator: " + shortSma.getValue(1));
+//        log.info("SMA Indicator: " + shortSma.getValue(2));
+//        log.info("SMA Indicator: " + shortSma.getValue(3));
+
+        return new ResponseEntity<>(input, HttpStatus.OK);
     }
 
 }

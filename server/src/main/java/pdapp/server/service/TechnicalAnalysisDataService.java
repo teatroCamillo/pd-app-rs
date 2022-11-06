@@ -8,8 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ta4j.core.BarSeries;
+import org.ta4j.core.BaseBarSeriesBuilder;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,6 +29,21 @@ public class TechnicalAnalysisDataService {
 
     public TechnicalAnalysisDataService() {
         this.om = new ObjectMapper();
+    }
+
+    public BarSeries createBarSeriesFromRatesMap(TreeMap<LocalDate, String> sortedRatesMap){
+        BarSeries series = new BaseBarSeriesBuilder().withName("mySeries").build();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
+        //ZonedDateTime zdt = LocalDate.parse("2022-04-26", dateTimeFormatter).atStartOfDay(ZoneId.of("UTC"));
+        //log.info("zone date time: " + zdt);
+
+        for(Map.Entry entry : sortedRatesMap.entrySet()){
+            ZonedDateTime zdt = LocalDate.parse(entry.getKey().toString(), dateTimeFormatter).atStartOfDay(ZoneId.of("UTC"));
+            series.addBar(zdt, entry.getValue().toString(), entry.getValue().toString(),entry.getValue().toString(),entry.getValue().toString());
+        }
+
+        return series;
     }
 
     public TreeMap<LocalDate, String> getSortedRatesMapForEURUSD(Map<String,Object> response) throws JsonProcessingException {

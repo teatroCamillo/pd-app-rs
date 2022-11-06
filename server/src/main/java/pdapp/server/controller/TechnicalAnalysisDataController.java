@@ -14,6 +14,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.ta4j.core.Bar;
+import org.ta4j.core.BarSeries;
+import org.ta4j.core.Rule;
+import org.ta4j.core.indicators.RSIIndicator;
+import org.ta4j.core.indicators.SMAIndicator;
+import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
+import org.ta4j.core.rules.CrossedDownIndicatorRule;
+import org.ta4j.core.rules.OverIndicatorRule;
 import pdapp.server.service.TechnicalAnalysisDataService;
 
 import java.io.File;
@@ -44,6 +52,7 @@ public class TechnicalAnalysisDataController {
 
     @GetMapping("/{userId}/tech-analysis")
     public ResponseEntity<?> getAllQuestions() throws JsonProcessingException {
+        Map<String, String> resutlMap = new HashMap<>();
         log.info("Response Client");
         String url = EXCHANGE_RATES_API + "/timeseries?start_date=2022-09-01&end_date=2022-10-31";
 
@@ -72,32 +81,35 @@ public class TechnicalAnalysisDataController {
 
         //input.forEach((k,v) -> log.info(k + " : " + v));
 
+        // prepare data *******************************************************************************************
+
         // treeMap is auto-sorting data by key
         TreeMap<LocalDate, String> tm = tads.getSortedRatesMapForEURUSD(input);
 
-        tm.forEach((k,v) -> log.info(k + " : " + v));
+        //tm.forEach((k,v) -> log.info(k + " : " + v));
 
+        BarSeries series = tads.createBarSeriesFromRatesMap(tm);
+        int quantity = series.getBarCount();
+        for(int i=0; i<quantity; i++){
+            log.info(series.getBar(i).toString());
+        }
         // *******************************************************************************************
-        // prepare data
-//        BarSeries series = new BaseBarSeriesBuilder().withName("mySeries").build();
-//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        ZonedDateTime zdt = LocalDate.parse("2022-04-26", dateTimeFormatter).atStartOfDay(ZoneId.of("UTC"));
-//        log.info("zone date time: " + zdt);
-//
-//        series.addBar(zdt, "1.920125", "1.920125","1.920125","1.920125");
-//        series.addBar(zdt.plusDays(1), "1.920125", "1.920125","1.920125","1.920125");
-//        series.addBar(zdt.plusDays(2), "1.920125", "1.920125","1.920125","1.920125");
-//        series.addBar(zdt.plusDays(3), "1.920125", "1.920125","1.920125","1.920125");
 
-        // use indicator
-//        ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-//        SMAIndicator shortSma = new SMAIndicator(closePrice, 4);
-//        log.info("SMA Indicator: " + shortSma.getValue(0));
-//        log.info("SMA Indicator: " + shortSma.getValue(1));
-//        log.info("SMA Indicator: " + shortSma.getValue(2));
-//        log.info("SMA Indicator: " + shortSma.getValue(3));
+        // RSI *******************************************************************************************
+        int barCount = series.getBarCount();
+        ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
+        RSIIndicator rsi = new RSIIndicator(closePrice, 14);
 
-        return new ResponseEntity<>(input, HttpStatus.OK);
+        for(int i = 0; i < rsi.getBarSeries().getBarCount(); i++){
+            log.info("RSI: " + " index: " + i + " : "  + rsi.getValue(i) + " : " + rsi.getBarSeries().getBar(i));
+        }
+        resutlMap.put("actualRSI", String.valueOf(rsi.getValue(rsi.getBarSeries().getEndIndex())));
+        // *******************************************************************************************
+
+        // 2-period cross RSI ************************************************************************
+        // *******************************************************************************************
+
+        return new ResponseEntity<>(resutlMap, HttpStatus.OK);
     }
 
 }

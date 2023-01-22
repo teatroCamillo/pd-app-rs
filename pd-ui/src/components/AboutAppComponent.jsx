@@ -19,13 +19,13 @@ const AboutAppComponent = () => {
                             approximately 80% of retail accounts recorded
                             losses from 2017 to 2019.</p>
                         <p>This app is the response to these uninviting statistics.</p>
-                        <p>The main goals of the service are:
+                        <p>The main goals of the service are:</p>
                         <ul>
                             <li>relieving the investor of emotions</li>
                             <li>technical analysis</li>
                             <li>fundamental analysis</li>
                             <li>estimating the probability of a profitable transaction on the basis of the above steps</li>
-                        </ul></p>
+                        </ul>
                     </Col>
                 </Row>
             </Container>

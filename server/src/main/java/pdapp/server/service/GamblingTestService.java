@@ -151,6 +151,11 @@ public class GamblingTestService {
         return gamblingTest != null;
     }
 
+    public String getUserGamblingTestResult(String userId){
+        GamblingTest gamblingTest = gamblingTestRepository.findByUserId(userId);
+        return gamblingTest.getGtResult();
+    }
+
     public Optional<List<GamblingTest>> getAll(){
         return Optional.ofNullable(gamblingTestRepository.findAll());
     }

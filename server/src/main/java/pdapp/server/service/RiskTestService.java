@@ -3,6 +3,7 @@ package pdapp.server.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pdapp.server.model.GamblingTest;
 import pdapp.server.model.RiskTest;
 import pdapp.server.model.User;
 import pdapp.server.repository.RiskTestRepository;
@@ -136,6 +137,11 @@ public class RiskTestService {
     public Boolean hasUserCompletedRiskTest(String userId){
         RiskTest riskTest = riskTestRepository.findByUserId(userId);
         return riskTest != null;
+    }
+
+    public String getUserRiskTestResult(String userId){
+        RiskTest riskTest = riskTestRepository.findByUserId(userId);
+        return riskTest.getRtResult();
     }
 
     public Optional<List<RiskTest>> getAll(){

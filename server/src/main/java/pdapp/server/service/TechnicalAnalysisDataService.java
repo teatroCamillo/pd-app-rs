@@ -1,6 +1,5 @@
 package pdapp.server.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.ta4j.core.BarSeries;
@@ -28,7 +27,7 @@ public class TechnicalAnalysisDataService {
      * 1. Game for growth
      * 2. RSI 14 (daily interval) is lower than or equal 30.
      * 3. Don't focus on details or single bar
-     * 4. Long-term transaction
+     * 4. Short-term transaction (few hours - max 4 days)
      * 5. MACD below 0 level
      * 6. Thanks the platform trader doesn't see a chart
      */
@@ -52,15 +51,21 @@ public class TechnicalAnalysisDataService {
 //        for(int i = 0; i < rsi.getBarSeries().getBarCount(); i++){
 //            log.info("RSI-14: " + " index: " + i + " : "  + rsi.getValue(i) + " : " + rsi.getBarSeries().getBar(i));
 //        }
-        resultMap.put("actualRSI-14", String.valueOf(rsi.getValue(rsi.getBarSeries().getEndIndex())));
+        String rsiValue = String.valueOf(rsi.getValue(rsi.getBarSeries().getEndIndex()));
+        int floatPointIndex = rsiValue.indexOf(".");
+        rsiValue = rsiValue.substring(0, floatPointIndex + 5);
+        resultMap.put("actualRSI14", rsiValue);
         // *******************************************************************************************
 
         // MACD ************************************************************************
         MACDIndicator macd = new MACDIndicator(closePrice);
-        for(int i = 0; i < macd.getBarSeries().getBarCount(); i++){
-            log.info("macd: " + " index: " + i + " : "  + macd.getValue(i) + " : " + macd.getBarSeries().getBar(i));
-        }
-        resultMap.put("macd", String.valueOf(macd.getValue(macd.getBarSeries().getEndIndex())));
+//        for(int i = 0; i < macd.getBarSeries().getBarCount(); i++){
+//            log.info("macd: " + " index: " + i + " : "  + macd.getValue(i) + " : " + macd.getBarSeries().getBar(i));
+//        }
+        String macdValue = String.valueOf(macd.getValue(macd.getBarSeries().getEndIndex()));
+        floatPointIndex = macdValue.indexOf(".");
+        macdValue = macdValue.substring(0, floatPointIndex + 5);
+        resultMap.put("macd", macdValue);
         // ************************************************************************
 
         return resultMap;

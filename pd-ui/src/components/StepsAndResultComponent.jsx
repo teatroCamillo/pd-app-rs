@@ -1,4 +1,5 @@
-import AnalysisService from "../api/AnalysisService";
+import PersonalExaminationService from "../api/PersonalExaminationService";
+import TechnicalAnalysisService from "../api/TechnicalAnalysisService";
 import { useState } from "react"
 
 const StepsAndResultComponent = () => {
@@ -8,12 +9,8 @@ const StepsAndResultComponent = () => {
     const [gambling, setGambling] = useState('');
     const [risk, setRisk] = useState('');
 
-    //tech data
-
-    //macro data
-
     const getPersonalResults = () => {
-        AnalysisService.getPersonalResult()
+        PersonalExaminationService.getPersonalResult()
             .then((resp) => {
                 if(resp.status === 200){
                     setPrsonalRespStatus(true)
@@ -23,6 +20,29 @@ const StepsAndResultComponent = () => {
             })
             .catch(error => console.log(error))
     }
+
+    //tech data
+    const [techRespStatus, setTechRespStatus] = useState(false);
+    const [rsi14, setRsi14] = useState('');
+    const [macd, setMacd] = useState('');
+    const [closePrice, setClosePrice] = useState('');
+
+    const getTechResults = () => {
+        TechnicalAnalysisService.runTechAnalysis()
+            .then((resp) => {
+                if(resp.status === 200){
+                    setTechRespStatus(true)
+                    setRsi14(resp.data.actualRSI14)
+                    setMacd(resp.data.macd)
+                    setClosePrice(resp.data.closePrice)
+                }
+            })
+            .catch(error => console.log(error))
+    }
+
+    //macro data
+
+
 
     return (
         <div className="d-flex start-container text-center justify-content-center align-items-center">
@@ -47,6 +67,22 @@ const StepsAndResultComponent = () => {
                 </div>
                 <div className="start-tech bg-light text-dark rounded-4 mx-2 mb-2">
                     <h6>Technical Analysis</h6>
+                    {techRespStatus &&
+                        <ul className="text-start">
+                            <li>RSI 14: {rsi14}</li>
+                            <li>MACD: {macd}</li>
+                            <li>Close price: {closePrice}</li>
+                        </ul>
+                    }
+                    {!techRespStatus &&
+                        <button
+                            className="btn btn-primary"
+                            type="button"
+                            onClick={getTechResults}
+                        >
+                            Check
+                        </button>
+                    }
                 </div>
                 <div className="start-macro bg-light text-dark rounded-4 mx-2">
                     <h6>Macrodata Analysis</h6>

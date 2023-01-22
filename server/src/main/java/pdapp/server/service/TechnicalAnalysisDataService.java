@@ -23,12 +23,6 @@ import java.util.TreeMap;
 @Slf4j
 public class TechnicalAnalysisDataService {
 
-    private final ObjectMapper om;
-
-    public TechnicalAnalysisDataService() {
-        this.om = new ObjectMapper();
-    }
-
     /**
      * Assumptions
      * 1. Game for growth

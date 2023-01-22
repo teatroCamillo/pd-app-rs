@@ -1,37 +1,32 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
 import AuthenticationService from "./utils/AuthenticationService";
+import StepsAndResultComponent from "./StepsAndResultComponent";
 import { Navigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import TechnicalAnalysisService from "../api/TechnicalAnalysisService";
+import { useState } from "react";
 
 const StartComponent = () => {
 
-    const handleGetDataButton = () => {
-        TechnicalAnalysisService.getExchangeRateData()
-        .then((response) => {
-            console.log(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-    }
+    const [onOff, setOnOff] = useState(false);
 
     if('' !== AuthenticationService.getSignedInUsername()){
         return (
             <main>
-                <Container className="h-100 text-center">
-                    <h2>Start</h2>
-                    <Button
-                        variant="primary"
-                        type="button"
-                        onClick={handleGetDataButton}
-                    >
-                        Get Data from Service
-                    </Button>
-
-
-                </Container>
+                    {!onOff &&
+                        <div className="d-flex start-container text-center justify-content-center align-items-center">
+                            <Button
+                                className="btnStart fw-bold fs-3 rounded-circle"
+                                variant="primary"
+                                type="button"
+                                onClick={setOnOff}
+                            >
+                                START
+                            </Button>
+                        </div>
+                    }
+                    {onOff &&
+                        <StepsAndResultComponent/>
+                    }
             </main>
         );
     }

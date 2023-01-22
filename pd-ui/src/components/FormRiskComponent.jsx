@@ -11,7 +11,6 @@ import { useLocation } from "react-router-dom"
 
 const FormRiskComponent = (props) => {
 
-  // get passed info from PersonalExaminationComponent about user completed risk test?
   const location = useLocation()
   const { hasCompletedRiskTest, riskQuestions } = location.state;
 

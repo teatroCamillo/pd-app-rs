@@ -4,8 +4,34 @@ main{
     min-height: 85vh;
 }
 
+.start-container{
+    min-height: 85vh;
+}
+
+.left-right{
+    min-height: 65vh;
+}
+
+.start-personal{
+    min-height: 13vh;
+}
+
+.start-tech{
+    min-height: 20vh;
+}
+.start-macro{
+    min-height: 33vh;
+}
+
+
+
 footer{
     color: rgba(255, 255, 255, 0.55); /*set the same as navbar elements*/
+}
+
+.btnStart{
+    width: 150px;
+    height: 150px;
 }
 
 .front-page-steps-desc{
@@ -14,4 +40,8 @@ footer{
 
 .forgotten-password{
     font-size: 14px;
+}
+
+.form-label{
+    font-size: 1rem;
 }

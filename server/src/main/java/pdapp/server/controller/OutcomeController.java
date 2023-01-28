@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 public class OutcomeController {
 
-    private OutcomeService os;
+    private final OutcomeService os;
 
     @Autowired
     public OutcomeController(OutcomeService os){

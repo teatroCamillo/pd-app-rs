@@ -1,5 +1,6 @@
 import PersonalExaminationService from "../api/PersonalExaminationService";
 import TechnicalAnalysisService from "../api/TechnicalAnalysisService";
+import MacroAnalysisService from "../api/MacroAnalysisService";
 import { useState } from "react"
 
 const StepsAndResultComponent = () => {
@@ -41,8 +42,20 @@ const StepsAndResultComponent = () => {
     }
 
     //macro data
+    const [macroRespStatus, setMacroRespStatus] = useState(false);
+    const [gdpGrowth, setGdpGrowth] = useState('');
 
+    const getMacroResults = () => {
+        MacroAnalysisService.runMacroAnalysis()
+            .then((resp) => {
+                if(resp.status === 200){
+                    setMacroRespStatus(true)
+                    setGdpGrowth(resp.data.latestQ)
 
+                }
+            })
+            .catch(error => console.log(error))
+    }
 
     return (
         <div className="d-flex start-container text-center justify-content-center align-items-center">
@@ -86,6 +99,20 @@ const StepsAndResultComponent = () => {
                 </div>
                 <div className="start-macro bg-light text-dark rounded-4 mx-2">
                     <h6>Macrodata Analysis</h6>
+                    {macroRespStatus &&
+                        <ul className="text-start">
+                            <li>GDP growth: {gdpGrowth}</li>
+                        </ul>
+                    }
+                    {!macroRespStatus &&
+                        <button
+                            className="btn btn-primary"
+                            type="button"
+                            onClick={getMacroResults}
+                        >
+                            Check
+                        </button>
+                    }
                 </div>
             </div>
             <div className="left-right col-5 bg-light text-dark rounded-4 mx-2">

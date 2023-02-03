@@ -48,8 +48,8 @@ public class MacroAnalysisDataService {
             }
         }
 
-        output.put("latestQ", qValues.get(0).toString());
-        output.put("previousQ", qValues.get(1).toString());
+        output.put("latestQ", qValues.get(0).toString() + "%");
+        output.put("previousQ", qValues.get(1).toString() + "%");
 
         /** 40 points for 2 macro indicator, 20 points each
          * GDP growth

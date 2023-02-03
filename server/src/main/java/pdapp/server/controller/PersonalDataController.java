@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import pdapp.server.service.GamblingTestService;
+import pdapp.server.service.OutcomeService;
 import pdapp.server.service.RiskTestService;
 
 import java.util.HashMap;
@@ -19,10 +20,18 @@ import java.util.Map;
 @Slf4j
 public class PersonalDataController {
 
+
+    private final GamblingTestService gamblingTestService;
+
+    private final RiskTestService riskTestService;
+
+    private final OutcomeService os;
     @Autowired
-    private GamblingTestService gamblingTestService;
-    @Autowired
-    private RiskTestService riskTestService;
+    public PersonalDataController(GamblingTestService gamblingTestService, RiskTestService riskTestService, OutcomeService os) {
+        this.gamblingTestService = gamblingTestService;
+        this.riskTestService = riskTestService;
+        this.os = os;
+    }
 
     @GetMapping("/{userId}/get-personal-result")
     public ResponseEntity<?> getUserGamblingTestResult(@PathVariable String userId){
@@ -34,6 +43,9 @@ public class PersonalDataController {
         results.put("gambling", gamblingResult);
         results.put("risk", riskResult);
 
+        Map<String, String> osMap = new HashMap<>(results);
+        osMap.put("personalCal", String.valueOf(os.calculatePersonal(gamblingResult, riskResult)));
+        os.setPersonal(osMap);
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 }

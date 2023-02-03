@@ -10,30 +10,21 @@ import pdapp.server.repository.UserDetailsRepository;
 
 import java.util.*;
 
+import static pdapp.server.util.Consts.*;
+
 @Service
 @Slf4j
 public class GamblingTestService {
 
-    /**
-     * A positive answer to at least 7 questions indicates a high risk of addiction
-     * to gambling and is an indication for consultation with an addiction therapist.
-     *
-     * Scoring:
-     * highly addicted: at least 7
-     * moderately addicted: at least 4 and less than 7
-     * not addicted: less than 4
-     */
-
-    private final String HIGHLY_ADDICTED = "highly addicted";
-    private final String MODERATELY_ADDICTED = "moderately addicted";
-    private final String NOT_ADDICTED = "not addicted";
-
-    @Autowired
     private GamblingTestRepository gamblingTestRepository;
 
-    @Autowired
     private UserDetailsRepository userDetailsRepository;
 
+    @Autowired
+    public GamblingTestService(GamblingTestRepository gamblingTestRepository, UserDetailsRepository userDetailsRepository) {
+        this.gamblingTestRepository = gamblingTestRepository;
+        this.userDetailsRepository = userDetailsRepository;
+    }
 
     public Optional<GamblingTest> saveGamblingTest(String userId, GamblingTest gamblingTest){
         Optional<User> user = userDetailsRepository.findById(userId);

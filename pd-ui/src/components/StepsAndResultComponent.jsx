@@ -1,6 +1,7 @@
 import PersonalExaminationService from "../api/PersonalExaminationService";
 import TechnicalAnalysisService from "../api/TechnicalAnalysisService";
 import MacroAnalysisService from "../api/MacroAnalysisService";
+import OutcomeService from "../api/OutcomeService";
 import { useState } from "react"
 
 const StepsAndResultComponent = () => {
@@ -52,6 +53,20 @@ const StepsAndResultComponent = () => {
                     setMacroRespStatus(true)
                     setGdpGrowth(resp.data.latestQ)
 
+                }
+            })
+            .catch(error => console.log(error))
+    }
+
+    //outcome data
+    const [test, setTest] = useState('');
+
+    const getOutcome = () => {
+        OutcomeService.getOutcome()
+            .then(resp => {
+                if(resp.status === 200){
+                    setTest(resp.data.personalCal)
+                    console.log(resp.data)
                 }
             })
             .catch(error => console.log(error))
@@ -117,6 +132,14 @@ const StepsAndResultComponent = () => {
             </div>
             <div className="left-right col-5 bg-light text-dark rounded-4 mx-2">
                 <h4>Outcome</h4>
+                <h1>{test}</h1>
+                <button
+                    className="btn btn-primary"
+                    type="button"
+                    onClick={getOutcome}
+                >
+                    Check
+                </button>
             </div>
         </div>
     );

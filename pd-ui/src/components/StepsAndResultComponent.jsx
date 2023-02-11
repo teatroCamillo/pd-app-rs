@@ -16,8 +16,8 @@ const StepsAndResultComponent = () => {
             .then((resp) => {
                 if(resp.status === 200){
                     setPrsonalRespStatus(true)
-                    setGambling(resp.data.gambling)
-                    setRisk(resp.data.risk)
+                    setGambling(resp.data.gamblingResult)
+                    setRisk(resp.data.riskResult)
                 }
             })
             .catch(error => console.log(error))
@@ -45,6 +45,8 @@ const StepsAndResultComponent = () => {
     //macro data
     const [macroRespStatus, setMacroRespStatus] = useState(false);
     const [gdpGrowth, setGdpGrowth] = useState('');
+    const [eaInf, setEaInf] = useState('');
+    const [usInf, setUsInf] = useState('');
 
     const getMacroResults = () => {
         MacroAnalysisService.runMacroAnalysis()
@@ -52,7 +54,8 @@ const StepsAndResultComponent = () => {
                 if(resp.status === 200){
                     setMacroRespStatus(true)
                     setGdpGrowth(resp.data.gdpGrowthLatestQ)
-
+                    setEaInf(resp.data.eaInf)
+                    setUsInf(resp.data.usInf)
                 }
             })
             .catch(error => console.log(error))
@@ -117,6 +120,8 @@ const StepsAndResultComponent = () => {
                     {macroRespStatus &&
                         <ul className="text-start">
                             <li>GDP growth: {gdpGrowth}</li>
+                            <li>EA inflation: {eaInf}</li>
+                            <li>US inflation: {usInf}</li>
                         </ul>
                     }
                     {!macroRespStatus &&

@@ -15,7 +15,7 @@ import pdapp.server.service.RiskTestService;
 import java.util.HashMap;
 import java.util.Map;
 
-import static pdapp.server.util.Constant.PERSONAL_POINTS;
+import static pdapp.server.util.Constant.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -42,12 +42,11 @@ public class PersonalDataController {
         String riskResult = riskTestService.getUserRiskTestResult(userId);
 
         Map<String, String> results = new HashMap<>();
-        results.put("gambling", gamblingResult);
-        results.put("risk", riskResult);
+        results.put(GAMBLING_RESULT, gamblingResult);
+        results.put(RISK_RESULT, riskResult);
+        results.put(PERSONAL_POINTS, String.valueOf(os.calculatePersonal(gamblingResult, riskResult)));
+        os.setPersonal(results);
 
-        Map<String, String> osMap = new HashMap<>(results);
-        osMap.put(PERSONAL_POINTS, String.valueOf(os.calculatePersonal(gamblingResult, riskResult)));
-        os.setPersonal(osMap);
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 }

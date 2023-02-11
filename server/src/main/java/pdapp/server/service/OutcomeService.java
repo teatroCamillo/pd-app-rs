@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pdapp.server.model.Outcome;
 import static pdapp.server.util.Constant.*;
 
-import java.util.List;
 import java.util.Map;
 
 @Service

@@ -1,6 +1,5 @@
 package pdapp.server.controller;
 
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pdapp.server.service.MacroAnalysisDataService;
+import pdapp.server.service.OutcomeService;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +27,14 @@ public class MacroAnalysisDataController {
 
     private final MacroAnalysisDataService mads;
     private final ObjectMapper om;
+    private final OutcomeService os;
 
     @Autowired
-    public MacroAnalysisDataController(MacroAnalysisDataService mads, ObjectMapper om){
+    public MacroAnalysisDataController(final MacroAnalysisDataService mads, final ObjectMapper om,
+                                       final OutcomeService os){
         this.mads = mads;
         this.om = om;
+        this.os = os;
     }
 
     @GetMapping("/{userId}/macro-analysis")
@@ -50,8 +53,9 @@ public class MacroAnalysisDataController {
         } catch (IOException e) {
             log.info(e.getMessage());
         }
-
-        return new ResponseEntity<>(mads.macroStrategy(gdp, inf), HttpStatus.OK);
+        Map<String, String> macroResult = mads.macroStrategy(gdp, inf);
+        os.setMacro(macroResult);
+        return new ResponseEntity<>(macroResult, HttpStatus.OK);
     }
 
 }

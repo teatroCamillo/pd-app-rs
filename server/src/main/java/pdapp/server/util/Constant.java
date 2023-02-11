@@ -32,20 +32,25 @@ public class Constant {
     public final static String HIGH_RISK_TOLERANCE = "high";
 
     /**
-     * Keys for outcome.
+     * Personal
      */
     public final static String PERSONAL_POINTS = "personalPoints";
+    public final static String GAMBLING_RESULT = "gamblingResult";
+    public final static String RISK_RESULT = "riskResult";
+
+    /**
+     * Tech
+     */
     public final static String TECH_POINTS = "techPoints";
 
     /**
      * Macro
      */
     public final static String MACRO_POINTS = "macroPoints";
-    public final static String GDP_POINTS = "gdp-points";
-    public final static String INF_POINTS = "inf-points";
-    public final static String EA_INF = "ea-inf";
-    public final static String US_INF = "us-inf";
+    public final static String GDP_POINTS = "gdpPoints";
+    public final static String INF_POINTS = "infPoints";
+    public final static String EA_INF = "eaInf";
+    public final static String US_INF = "usInf";
     public final static String GDP_GROWTH_LATEST_Q = "gdpGrowthLatestQ";
-    public final static String GDP_GROWTH_PREVIOUS_Q = "gdpGrowthPreviousQ";
     public final static String SCORE = "score";
 }

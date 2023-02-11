@@ -66,7 +66,6 @@ public class MacroAnalysisDataService {
          */
         int points = os.scoreMacroGdpGrowth(qGDPLatest);
         output.put(GDP_POINTS, String.valueOf(points));
-        os.setMacro(output);
 
         return output;
     }
@@ -98,7 +97,6 @@ public class MacroAnalysisDataService {
 
         int points = os.compareMacroInflation(eaV, usV);
         output.put(INF_POINTS, String.valueOf(points));
-        os.setMacro(output);
 
         return output;
     }

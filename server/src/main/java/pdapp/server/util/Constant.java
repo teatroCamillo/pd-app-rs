@@ -1,6 +1,6 @@
 package pdapp.server.util;
 
-public class Consts {
+public class Constant {
 
     /**
      * A positive answer to at least 7 questions indicates a high risk of addiction
@@ -30,4 +30,27 @@ public class Consts {
     public final static String AVERAGE_RISK_TOLERANCE = "average";
     public final static String ABOVE_AVERAGE_RISK_TOLERANCE = "above_average";
     public final static String HIGH_RISK_TOLERANCE = "high";
+
+    /**
+     * Personal
+     */
+    public final static String PERSONAL_POINTS = "personalPoints";
+    public final static String GAMBLING_RESULT = "gamblingResult";
+    public final static String RISK_RESULT = "riskResult";
+
+    /**
+     * Tech
+     */
+    public final static String TECH_POINTS = "techPoints";
+
+    /**
+     * Macro
+     */
+    public final static String MACRO_POINTS = "macroPoints";
+    public final static String GDP_POINTS = "gdpPoints";
+    public final static String INF_POINTS = "infPoints";
+    public final static String EA_INF = "eaInf";
+    public final static String US_INF = "usInf";
+    public final static String GDP_GROWTH_LATEST_Q = "gdpGrowthLatestQ";
+    public final static String SCORE = "score";
 }

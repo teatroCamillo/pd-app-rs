@@ -16,8 +16,8 @@ const StepsAndResultComponent = () => {
             .then((resp) => {
                 if(resp.status === 200){
                     setPrsonalRespStatus(true)
-                    setGambling(resp.data.gambling)
-                    setRisk(resp.data.risk)
+                    setGambling(resp.data.gamblingResult)
+                    setRisk(resp.data.riskResult)
                 }
             })
             .catch(error => console.log(error))
@@ -45,27 +45,30 @@ const StepsAndResultComponent = () => {
     //macro data
     const [macroRespStatus, setMacroRespStatus] = useState(false);
     const [gdpGrowth, setGdpGrowth] = useState('');
+    const [eaInf, setEaInf] = useState('');
+    const [usInf, setUsInf] = useState('');
 
     const getMacroResults = () => {
         MacroAnalysisService.runMacroAnalysis()
             .then((resp) => {
                 if(resp.status === 200){
                     setMacroRespStatus(true)
-                    setGdpGrowth(resp.data.latestQ)
-
+                    setGdpGrowth(resp.data.gdpGrowthLatestQ)
+                    setEaInf(resp.data.eaInf)
+                    setUsInf(resp.data.usInf)
                 }
             })
             .catch(error => console.log(error))
     }
 
     //outcome data
-    const [test, setTest] = useState('');
+    const [score, setScore] = useState('');
 
     const getOutcome = () => {
         OutcomeService.getOutcome()
             .then(resp => {
                 if(resp.status === 200){
-                    setTest(resp.data.personalCal)
+                    setScore(resp.data.score)
                     console.log(resp.data)
                 }
             })
@@ -117,6 +120,8 @@ const StepsAndResultComponent = () => {
                     {macroRespStatus &&
                         <ul className="text-start">
                             <li>GDP growth: {gdpGrowth}</li>
+                            <li>EA inflation: {eaInf}</li>
+                            <li>US inflation: {usInf}</li>
                         </ul>
                     }
                     {!macroRespStatus &&
@@ -132,7 +137,7 @@ const StepsAndResultComponent = () => {
             </div>
             <div className="left-right col-5 bg-light text-dark rounded-4 mx-2">
                 <h4>Outcome</h4>
-                <h1>{test}</h1>
+                <h1>{score}</h1>
                 <button
                     className="btn btn-primary"
                     type="button"

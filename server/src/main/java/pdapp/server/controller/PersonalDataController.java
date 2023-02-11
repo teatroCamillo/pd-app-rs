@@ -15,11 +15,12 @@ import pdapp.server.service.RiskTestService;
 import java.util.HashMap;
 import java.util.Map;
 
+import static pdapp.server.util.Constant.PERSONAL_POINTS;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class PersonalDataController {
-
 
     private final GamblingTestService gamblingTestService;
 
@@ -27,7 +28,8 @@ public class PersonalDataController {
 
     private final OutcomeService os;
     @Autowired
-    public PersonalDataController(GamblingTestService gamblingTestService, RiskTestService riskTestService, OutcomeService os) {
+    public PersonalDataController(final GamblingTestService gamblingTestService, final RiskTestService riskTestService,
+                                  final OutcomeService os) {
         this.gamblingTestService = gamblingTestService;
         this.riskTestService = riskTestService;
         this.os = os;
@@ -44,7 +46,7 @@ public class PersonalDataController {
         results.put("risk", riskResult);
 
         Map<String, String> osMap = new HashMap<>(results);
-        osMap.put("personalCal", String.valueOf(os.calculatePersonal(gamblingResult, riskResult)));
+        osMap.put(PERSONAL_POINTS, String.valueOf(os.calculatePersonal(gamblingResult, riskResult)));
         os.setPersonal(osMap);
         return new ResponseEntity<>(results, HttpStatus.OK);
     }

@@ -10,7 +10,7 @@ import pdapp.server.repository.UserDetailsRepository;
 
 import java.util.*;
 
-import static pdapp.server.util.Consts.*;
+import static pdapp.server.util.Constant.*;
 
 @Service
 @Slf4j

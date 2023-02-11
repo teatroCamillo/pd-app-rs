@@ -51,7 +51,7 @@ const StepsAndResultComponent = () => {
             .then((resp) => {
                 if(resp.status === 200){
                     setMacroRespStatus(true)
-                    setGdpGrowth(resp.data.latestQ)
+                    setGdpGrowth(resp.data.gdpGrowthLatestQ)
 
                 }
             })
@@ -59,13 +59,13 @@ const StepsAndResultComponent = () => {
     }
 
     //outcome data
-    const [test, setTest] = useState('');
+    const [score, setScore] = useState('');
 
     const getOutcome = () => {
         OutcomeService.getOutcome()
             .then(resp => {
                 if(resp.status === 200){
-                    setTest(resp.data.personalCal)
+                    setScore(resp.data.score)
                     console.log(resp.data)
                 }
             })
@@ -132,7 +132,7 @@ const StepsAndResultComponent = () => {
             </div>
             <div className="left-right col-5 bg-light text-dark rounded-4 mx-2">
                 <h4>Outcome</h4>
-                <h1>{test}</h1>
+                <h1>{score}</h1>
                 <button
                     className="btn btn-primary"
                     type="button"

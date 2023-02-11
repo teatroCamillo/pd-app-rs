@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import static pdapp.server.util.Constant.*;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
@@ -29,9 +31,23 @@ public class OutcomeController {
     public ResponseEntity<?> getOutcome(){
 
         Map<String, String> results = new HashMap<>(os.getPersonal());
-
+        results.putAll(os.getMacro());
+        results.put(SCORE, sumUpPoints(results).toString());
         results.put("hora", LocalDateTime.now().toString());
+
         return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    private Integer sumUpPoints(Map<String, String> input){
+
+        return input.entrySet().stream()
+                .filter(entry ->
+                        entry.getKey().equals(PERSONAL_POINTS) ||
+                                entry.getKey().equals(TECH_POINTS) ||
+                                entry.getKey().equals(MACRO_POINTS))
+                .map(entry -> Integer.valueOf(entry.getValue()))
+                .reduce(Integer::sum)
+                .get();
     }
 
 }

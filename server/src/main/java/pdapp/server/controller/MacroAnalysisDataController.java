@@ -53,7 +53,7 @@ public class MacroAnalysisDataController {
         } catch (IOException e) {
             log.info(e.getMessage());
         }
-        Map<String, String> macroResult = mads.macroStrategy(gdp, inf);
+        Map<String, String> macroResult = mads.strategy(gdp, inf);
         os.setMacro(macroResult);
         return new ResponseEntity<>(macroResult, HttpStatus.OK);
     }

@@ -3,40 +3,27 @@ package pdapp.server.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pdapp.server.model.GamblingTest;
 import pdapp.server.model.RiskTest;
 import pdapp.server.model.User;
 import pdapp.server.repository.RiskTestRepository;
 import pdapp.server.repository.UserDetailsRepository;
 
 import java.util.*;
+import static pdapp.server.util.Constant.*;
 
 @Service
 @Slf4j
 public class RiskTestService {
 
-    /**
-     * The score that you receive on the Investment Risk Test can be interpreted as follows:
-     * 18 or below = Low risk tolerance (i.e., conservative investor)
-     * 19 to 22 = Below-average risk tolerance
-     * 23 to 28 = Average/moderate risk tolerance
-     * 29 to 32 = Above-average risk tolerance
-     * 33 and above = High risk tolerance (i.e., aggressive investor)
-     */
+    private final RiskTestRepository riskTestRepository;
 
-    private final String LOW_RISK_TOLERANCE = "low";
-    private final String BELOW_AVERAGE_RISK_TOLERANCE = "below_average";
-    private final String AVERAGE_RISK_TOLERANCE = "average";
-    private final String ABOVE_AVERAGE_RISK_TOLERANCE = "above_average";
-    private final String HIGH_RISK_TOLERANCE = "high";
-
+    private final UserDetailsRepository userDetailsRepository;
 
     @Autowired
-    private RiskTestRepository riskTestRepository;
-
-    @Autowired
-    private UserDetailsRepository userDetailsRepository;
-
+    public RiskTestService(RiskTestRepository riskTestRepository, UserDetailsRepository userDetailsRepository) {
+        this.riskTestRepository = riskTestRepository;
+        this.userDetailsRepository = userDetailsRepository;
+    }
 
     public Optional<RiskTest> saveRiskTest(String userId, RiskTest riskTest){
         Optional<User> user = userDetailsRepository.findById(userId);

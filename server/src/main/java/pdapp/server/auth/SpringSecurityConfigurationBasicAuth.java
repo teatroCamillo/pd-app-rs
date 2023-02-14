@@ -68,7 +68,8 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
                                         "/get-all-gambling-questions",
                                         "/{userId}/tech-analysis",
                                         "/{userId}/macro-analysis",
-                                        "/{userId}/get-personal-result")
+                                        "/{userId}/get-personal-result",
+                                        "/{userId}/get-outcome")
                                 .permitAll()
                                 .antMatchers(HttpMethod.OPTIONS, "/**")
                                 .permitAll()

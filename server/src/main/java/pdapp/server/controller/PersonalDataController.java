@@ -9,20 +9,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import pdapp.server.service.GamblingTestService;
+import pdapp.server.service.OutcomeService;
 import pdapp.server.service.RiskTestService;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static pdapp.server.util.Constant.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class PersonalDataController {
 
+    private final GamblingTestService gamblingTestService;
+
+    private final RiskTestService riskTestService;
+
+    private final OutcomeService os;
     @Autowired
-    private GamblingTestService gamblingTestService;
-    @Autowired
-    private RiskTestService riskTestService;
+    public PersonalDataController(final GamblingTestService gamblingTestService, final RiskTestService riskTestService,
+                                  final OutcomeService os) {
+        this.gamblingTestService = gamblingTestService;
+        this.riskTestService = riskTestService;
+        this.os = os;
+    }
 
     @GetMapping("/{userId}/get-personal-result")
     public ResponseEntity<?> getUserGamblingTestResult(@PathVariable String userId){
@@ -31,8 +42,10 @@ public class PersonalDataController {
         String riskResult = riskTestService.getUserRiskTestResult(userId);
 
         Map<String, String> results = new HashMap<>();
-        results.put("gambling", gamblingResult);
-        results.put("risk", riskResult);
+        results.put(GAMBLING_RESULT, gamblingResult);
+        results.put(RISK_RESULT, riskResult);
+        results.put(PERSONAL_POINTS, String.valueOf(os.calculatePersonal(gamblingResult, riskResult)));
+        os.setPersonal(results);
 
         return new ResponseEntity<>(results, HttpStatus.OK);
     }

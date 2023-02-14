@@ -14,16 +14,13 @@ import static pdapp.server.util.Constant.*;
 
 @Service
 @Slf4j
-public class MacroAnalysisDataService {
+public class MacroAnalysisDataService extends DataService {
 
-    private final OutcomeService os;
-
-    @Autowired
-    public MacroAnalysisDataService(final OutcomeService os){
-        this.os = os;
+    public MacroAnalysisDataService(OutcomeService os) {
+        super(os);
     }
 
-    public Map<String, String> macroStrategy(Map<String, Map<String, List<Float>>> gdp,
+    public Map<String, String> strategy(Map<String, Map<String, List<Float>>> gdp,
                                              Map<String, Map<String, List<Float>>> inf){
         Map<String, String> output = new HashMap<>();
 

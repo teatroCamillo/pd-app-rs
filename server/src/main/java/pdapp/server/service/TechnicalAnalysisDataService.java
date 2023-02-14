@@ -1,9 +1,11 @@
 package pdapp.server.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseBarSeriesBuilder;
+import org.ta4j.core.Indicator;
 import org.ta4j.core.indicators.MACDIndicator;
 import org.ta4j.core.indicators.RSIIndicator;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
@@ -18,9 +20,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static pdapp.server.util.Constant.*;
+
 @Service
 @Slf4j
-public class TechnicalAnalysisDataService {
+public class TechnicalAnalysisDataService extends DataService {
+
+    public TechnicalAnalysisDataService(OutcomeService os) {
+        super(os);
+    }
 
     /**
      * Assumptions
@@ -37,36 +45,20 @@ public class TechnicalAnalysisDataService {
 
         // prepare data
         TreeMap<LocalDate, TechData> tm = getSortedRatesMapForEURUSD(input);
+        //log.info("print getSorted");
+        //tm.forEach((k,v) -> log.info(k.toString() + " : " + v.toString()));
 
         // create barSeries
         BarSeries series = createBarSeriesFromRatesMap(tm);
+        //int count = series.getBarCount();
+        //for(int i=0; i < count; i++) log.info(series.getBar(i).toString());
 
         // ClosePriceIndicator
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-        resultMap.put("closePrice", closePrice.getValue(series.getEndIndex()).toString());
+        resultMap.put(CLOSE_PRICE, closePrice.getValue(series.getEndIndex()).toString());
 
-
-        // RSI-14 *******************************************************************************************
-        RSIIndicator rsi = new RSIIndicator(closePrice, 14);
-//        for(int i = 0; i < rsi.getBarSeries().getBarCount(); i++){
-//            log.info("RSI-14: " + " index: " + i + " : "  + rsi.getValue(i) + " : " + rsi.getBarSeries().getBar(i));
-//        }
-        String rsiValue = String.valueOf(rsi.getValue(rsi.getBarSeries().getEndIndex()));
-        int floatPointIndex = rsiValue.indexOf(".");
-        rsiValue = rsiValue.substring(0, floatPointIndex + 5);
-        resultMap.put("actualRSI14", rsiValue);
-        // *******************************************************************************************
-
-        // MACD ************************************************************************
-        MACDIndicator macd = new MACDIndicator(closePrice);
-//        for(int i = 0; i < macd.getBarSeries().getBarCount(); i++){
-//            log.info("macd: " + " index: " + i + " : "  + macd.getValue(i) + " : " + macd.getBarSeries().getBar(i));
-//        }
-        String macdValue = String.valueOf(macd.getValue(macd.getBarSeries().getEndIndex()));
-        floatPointIndex = macdValue.indexOf(".");
-        macdValue = macdValue.substring(0, floatPointIndex + 5);
-        resultMap.put("macd", macdValue);
-        // ************************************************************************
+        resultMap.put(ACTUAL_RSI_14, rsi14(closePrice));
+        resultMap.put(MACD, macd(closePrice));
 
         return resultMap;
     }
@@ -91,9 +83,30 @@ public class TechnicalAnalysisDataService {
         TreeMap<LocalDate, TechData> rats = new TreeMap<>();
 
         for (TechData techData : response) {
-            rats.put(LocalDate.parse(techData.getDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")), techData);
+            rats.put(LocalDate.parse(techData.getDate(), DateTimeFormatter.ofPattern(DATE_MDY_PATTERN)), techData);
         }
         return rats;
     }
 
+    private String rsi14(ClosePriceIndicator closePrice){
+        RSIIndicator rsi = new RSIIndicator(closePrice, 14);
+//        for(int i = 0; i < rsi.getBarSeries().getBarCount(); i++){
+//            log.info("RSI-14: " + " index: " + i + " : "  + rsi.getValue(i) + " : " + rsi.getBarSeries().getBar(i));
+//        }
+        return getLastIndicatorValueAndSubstring(rsi);
+    }
+
+    private String macd(ClosePriceIndicator closePrice){
+        MACDIndicator macd = new MACDIndicator(closePrice);
+//        for(int i = 0; i < macd.getBarSeries().getBarCount(); i++){
+//            log.info("macd: " + " index: " + i + " : "  + macd.getValue(i) + " : " + macd.getBarSeries().getBar(i));
+//        }
+        return getLastIndicatorValueAndSubstring(macd);
+    }
+
+    private String getLastIndicatorValueAndSubstring(Indicator indicator){
+        String indicatorValue = String.valueOf(indicator.getValue(indicator.getBarSeries().getEndIndex()));
+        int floatPointIndex = indicatorValue.indexOf(".");
+        return indicatorValue.substring(0, floatPointIndex + 5);
+    }
 }

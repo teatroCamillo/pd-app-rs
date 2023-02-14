@@ -42,6 +42,9 @@ public class Constant {
      * Tech
      */
     public final static String TECH_POINTS = "techPoints";
+    public final static String CLOSE_PRICE = "closePrice";
+    public final static String ACTUAL_RSI_14 = "actualRSI14";
+    public final static String MACD = "macd";
 
     /**
      * Macro
@@ -53,4 +56,9 @@ public class Constant {
     public final static String US_INF = "usInf";
     public final static String GDP_GROWTH_LATEST_Q = "gdpGrowthLatestQ";
     public final static String SCORE = "score";
+
+    /**
+     * Date & datetime patterns
+     */
+    public final static String DATE_MDY_PATTERN = "MM/dd/yyyy";
 }

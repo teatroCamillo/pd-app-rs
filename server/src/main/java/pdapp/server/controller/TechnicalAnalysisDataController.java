@@ -31,7 +31,8 @@ public class TechnicalAnalysisDataController {
 
     @Autowired
     public TechnicalAnalysisDataController(final TechnicalAnalysisDataService tads,
-                                           final ObjectMapper om, final OutcomeService os){
+                                           final ObjectMapper om,
+                                           final OutcomeService os){
         this.tads = tads;
         this.om = om;
         this.os = os;

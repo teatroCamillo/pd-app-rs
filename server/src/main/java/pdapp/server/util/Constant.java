@@ -44,7 +44,9 @@ public class Constant {
     public final static String TECH_POINTS = "techPoints";
     public final static String CLOSE_PRICE = "closePrice";
     public final static String ACTUAL_RSI_14 = "actualRSI14";
+    public final static String RSI_14_POINTS = "rsi14Points";
     public final static String MACD = "macd";
+    public final static String MACD_POINTS = "macdPoints";
 
     /**
      * Macro
@@ -58,7 +60,8 @@ public class Constant {
     public final static String SCORE = "score";
 
     /**
-     * Date & datetime patterns
+     * Date & datetime
      */
     public final static String DATE_MDY_PATTERN = "MM/dd/yyyy";
+    public final static String DATE_TIME = "dateTime";
 }

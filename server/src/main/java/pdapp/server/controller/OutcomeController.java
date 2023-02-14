@@ -32,8 +32,9 @@ public class OutcomeController {
 
         Map<String, String> results = new HashMap<>(os.getPersonal());
         results.putAll(os.getMacro());
+        results.putAll(os.getTech());
         results.put(SCORE, sumUpPoints(results).toString());
-        results.put("hora", LocalDateTime.now().toString());
+        results.put(DATE_TIME, LocalDateTime.now().toString());
 
         return new ResponseEntity<>(results, HttpStatus.OK);
     }

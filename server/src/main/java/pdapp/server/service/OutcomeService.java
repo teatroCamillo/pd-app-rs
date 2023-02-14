@@ -83,4 +83,23 @@ public class OutcomeService {
 
         return points;
     }
+
+    /**
+     * Return rsi14 points. The lower the rsi, the higher the score.
+     * Max 20.
+     *
+     * @param rsiResult
+     * @return
+     */
+    public int scoreRSI14(String rsiResult) {
+        int rsi = (int)Float.parseFloat(rsiResult);
+        int points = rsi > 30 ? 0 : Math.abs(rsi - 31);
+        if(points > 20) points = 20;
+        return points;
+    }
+
+    public int scoreMACD(String macdResult) {
+        float macd = Float.parseFloat(macdResult);
+        return macd >= 0.0f ? 0 : macd < -0.01f ? 20 : 10;
+    }
 }

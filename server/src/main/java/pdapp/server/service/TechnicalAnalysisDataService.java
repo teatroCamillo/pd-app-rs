@@ -1,7 +1,6 @@
 package pdapp.server.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseBarSeriesBuilder;
@@ -45,20 +44,23 @@ public class TechnicalAnalysisDataService extends DataService {
 
         // prepare data
         TreeMap<LocalDate, TechData> tm = getSortedRatesMapForEURUSD(input);
-        //log.info("print getSorted");
-        //tm.forEach((k,v) -> log.info(k.toString() + " : " + v.toString()));
 
-        // create barSeries
         BarSeries series = createBarSeriesFromRatesMap(tm);
-        //int count = series.getBarCount();
-        //for(int i=0; i < count; i++) log.info(series.getBar(i).toString());
 
-        // ClosePriceIndicator
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         resultMap.put(CLOSE_PRICE, closePrice.getValue(series.getEndIndex()).toString());
 
-        resultMap.put(ACTUAL_RSI_14, rsi14(closePrice));
-        resultMap.put(MACD, macd(closePrice));
+        String rsiResult = rsi14(closePrice);
+        resultMap.put(ACTUAL_RSI_14, rsiResult);
+        int rsi14Points = os.scoreRSI14(rsiResult);
+        resultMap.put(RSI_14_POINTS, String.valueOf(rsi14Points));
+
+        String macdResult = macd(closePrice);
+        resultMap.put(MACD, macdResult);
+        int macdPoints = os.scoreMACD(macdResult);
+        resultMap.put(MACD_POINTS, String.valueOf(macdPoints));
+
+        resultMap.put(TECH_POINTS, String.valueOf(rsi14Points + macdPoints));
 
         return resultMap;
     }
@@ -90,17 +92,11 @@ public class TechnicalAnalysisDataService extends DataService {
 
     private String rsi14(ClosePriceIndicator closePrice){
         RSIIndicator rsi = new RSIIndicator(closePrice, 14);
-//        for(int i = 0; i < rsi.getBarSeries().getBarCount(); i++){
-//            log.info("RSI-14: " + " index: " + i + " : "  + rsi.getValue(i) + " : " + rsi.getBarSeries().getBar(i));
-//        }
         return getLastIndicatorValueAndSubstring(rsi);
     }
 
     private String macd(ClosePriceIndicator closePrice){
         MACDIndicator macd = new MACDIndicator(closePrice);
-//        for(int i = 0; i < macd.getBarSeries().getBarCount(); i++){
-//            log.info("macd: " + " index: " + i + " : "  + macd.getValue(i) + " : " + macd.getBarSeries().getBar(i));
-//        }
         return getLastIndicatorValueAndSubstring(macd);
     }
 

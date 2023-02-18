@@ -2,10 +2,12 @@ import PersonalExaminationService from "../api/PersonalExaminationService";
 import TechnicalAnalysisService from "../api/TechnicalAnalysisService";
 import MacroAnalysisService from "../api/MacroAnalysisService";
 import OutcomeService from "../api/OutcomeService";
+import Util from "../components/utils/Util";
 import { useState } from "react"
 
-const StepsAndResultComponent = () => {
+const StepsAndResultComponent = (props) => {
 
+    const pair = props.pair;
     //prsonal data
     const [personalRespStatus, setPrsonalRespStatus] = useState(false);
     const [gambling, setGambling] = useState('');
@@ -62,14 +64,15 @@ const StepsAndResultComponent = () => {
     }
 
     //outcome data
+    const [outcomeResp, setOutcomeResp] = useState(false);
     const [score, setScore] = useState('');
 
     const getOutcome = () => {
         OutcomeService.getOutcome()
             .then(resp => {
                 if(resp.status === 200){
+                    setOutcomeResp(true)
                     setScore(resp.data.score)
-                    console.log(resp.data)
                 }
             })
             .catch(error => console.log(error))
@@ -110,6 +113,7 @@ const StepsAndResultComponent = () => {
                             className="btn btn-primary"
                             type="button"
                             onClick={getTechResults}
+                            disabled={!personalRespStatus}
                         >
                             Check
                         </button>
@@ -129,6 +133,7 @@ const StepsAndResultComponent = () => {
                             className="btn btn-primary"
                             type="button"
                             onClick={getMacroResults}
+                            disabled={!techRespStatus}
                         >
                             Check
                         </button>
@@ -136,15 +141,24 @@ const StepsAndResultComponent = () => {
                 </div>
             </div>
             <div className="left-right col-5 bg-light text-dark rounded-4 mx-2">
-                <h4>Outcome</h4>
-                <h1>{score}</h1>
-                <button
-                    className="btn btn-primary"
-                    type="button"
-                    onClick={getOutcome}
-                >
-                    Check
-                </button>
+                <h2>Outcome for {pair}</h2>
+                {outcomeResp &&
+                    <div>
+                        <h4>Regard to actual data and your predispositions.</h4>
+                        <h4>The chances of success are around</h4>
+                        <h1 style={{color: Util.setColorForOutcomeScore(score)}} >{score}%</h1>
+                    </div>
+                }
+                {!outcomeResp &&
+                    <button
+                        className="btn btn-primary"
+                        type="button"
+                        onClick={getOutcome}
+                        disabled={!macroRespStatus}
+                    >
+                        Recap
+                    </button>
+                }
             </div>
         </div>
     );

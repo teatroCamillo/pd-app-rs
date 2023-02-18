@@ -23,15 +23,12 @@ main{
     min-height: 33vh;
 }
 
-
+.pairGroup{
+    width: 30vh;
+}
 
 footer{
     color: rgba(255, 255, 255, 0.55); /*set the same as navbar elements*/
-}
-
-.btnStart{
-    width: 150px;
-    height: 150px;
 }
 
 .front-page-steps-desc{

@@ -12,16 +12,14 @@ main{
     min-height: 65vh;
 }
 
-.start-personal{
-    min-height: 13vh;
-}
-
-.start-tech{
-    min-height: 20vh;
-}
-.start-macro{
-    min-height: 33vh;
-}
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;
+    font-size: 30vh;
+  }
 
 .pairGroup{
     width: 30vh;

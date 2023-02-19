@@ -159,6 +159,11 @@ const StepsAndResultComponent = (props) => {
                         <h5>Regard to actual data and your predispositions,</h5>
                         <h5>the chances of success are around</h5>
                         <h1 style={{color: Util.setColorForOutcomeScore(score)}} >{score}%</h1>
+                        <div>
+                            Rekomendowane strategia
+                        Sugerowana strategia????? stop loss take profic proporcje zysku do strat itp
+                        w oparciu o wynik
+                        </div>
                     </div>
                 }
                 {!outcomeResp &&

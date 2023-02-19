@@ -45,10 +45,29 @@ const GettingStartedComponent = () => {
                         <p>Remember that the green border card means the test is completed and the red is
                         not. But if you have already completed the form, you can always do it again. We recommend
                         repeating each test every six months.</p>
-                        <h4>Step 2</h4>
-                        <h4>Step 3</h4>
 
-                        <p></p>
+                        <h4>Second step - tech analysis</h4>
+                        <p>Here the algorithm takes the controel and perfoms implemented the technical analise.
+                        In shortcut, it fetchs the actual data and uses on them the certain technical indicatiors.
+                        Like RSI, MACD or others.
+                        Then the results are calculated and the probalility is set base on them.</p>
+
+                        <p>Please remember that indicatior are not perfect tools and don't garantee any success on the
+                        market. These are only helper which work on historical data and can more or less point the direction
+                        of thingking about certain transaction.</p>
+
+                        <h4>Third step - macro analysis</h4>
+                        <p>Personal research and technical analysis are not everything. We also need to examin the macroeconomic factors too.
+                        Like GDP, inflation, unemployment and others.</p>
+
+                        <p>Here is the part resposible for that. The service
+                        automaticly downloads the most important data and processes at the transaction angle.</p>
+
+                        <h4>Last thing</h4>
+                        <p>When the all steps are fulfilled. Last thing is to recap whole analisis. This is the point
+                            where service summarize everything and suggests the best action to take.</p>
+
+                        <p>The rest depends on you, good luck!</p>
                     </Col>
                 </Row>
             </Container>

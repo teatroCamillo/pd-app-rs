@@ -48,7 +48,8 @@ const StepsAndResultComponent = (props) => {
 
     //macro data
     const [macroRespStatus, setMacroRespStatus] = useState(false);
-    const [gdpGrowth, setGdpGrowth] = useState('');
+    const [eaGdpGrowth, setEaGdpGrowth] = useState('');
+    const [usGdpGrowth, setUsGdpGrowth] = useState('');
     const [eaInf, setEaInf] = useState('');
     const [usInf, setUsInf] = useState('');
 
@@ -56,8 +57,10 @@ const StepsAndResultComponent = (props) => {
         MacroAnalysisService.runMacroAnalysis()
             .then((resp) => {
                 if(resp.status === 200){
+                    console.log(resp)
                     setMacroRespStatus(true)
-                    setGdpGrowth(resp.data.gdpGrowthLatestQ)
+                    setEaGdpGrowth(resp.data.eaGdpGrowthLatestQ)
+                    setUsGdpGrowth(resp.data.usGdpGrowthLatestQ)
                     setEaInf(resp.data.eaInf)
                     setUsInf(resp.data.usInf)
                 }
@@ -68,13 +71,15 @@ const StepsAndResultComponent = (props) => {
     //outcome data
     const [outcomeResp, setOutcomeResp] = useState(false);
     const [score, setScore] = useState('');
+    const [desc, setDesc] = useState('');
 
     const getOutcome = () => {
         OutcomeService.getOutcome()
             .then(resp => {
                 if(resp.status === 200){
-                    setOutcomeResp(true)
-                    setScore(resp.data.score)
+                    setOutcomeResp(true);
+                    setScore(resp.data.score);
+                    setDesc(resp.data.description);
                 }
             })
             .catch(error => console.log(error))
@@ -131,7 +136,8 @@ const StepsAndResultComponent = (props) => {
                         <Accordion.Body>
                             {macroRespStatus &&
                                 <ul className="text-start">
-                                    <li>GDP growth: {gdpGrowth}</li>
+                                    <li>EA GDP growth: {eaGdpGrowth}</li>
+                                    <li>US GDP growth: {usGdpGrowth}</li>
                                     <li>EA inflation: {eaInf}</li>
                                     <li>US inflation: {usInf}</li>
                                 </ul>
@@ -155,12 +161,15 @@ const StepsAndResultComponent = (props) => {
                     <h2>Outcome for {pair}</h2>
                 </div>
                 {outcomeResp &&
-                    <div className="mt-3">
+                    <div className="mt-3 mx-3">
                         <h5>Regard to actual data and your predispositions,</h5>
-                        <h5>the chances of success are around</h5>
+                        <h5>the chances of success for long transaction are around</h5>
                         <h1 style={{color: Util.setColorForOutcomeScore(score)}} >{score}%</h1>
-                        <div>
-                            Rekomendowane strategia
+                        <div className="d-flex flex-column justify-content-end align-items-start">
+                            <h5>Recommendation</h5>
+                            <h6>Description: </h6>
+                            <p>{desc}</p>
+
                         Sugerowana strategia????? stop loss take profic proporcje zysku do strat itp
                         w oparciu o wynik
                         </div>

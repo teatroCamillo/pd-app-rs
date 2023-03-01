@@ -1,7 +1,6 @@
 package pdapp.server.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,33 +34,54 @@ public class MacroAnalysisDataService extends DataService {
     }
 
     /**
-     * @description: Pull out the last quarterly GDP growth value and set the points score.
-     * @param gdp
+     * @description: Pull out the last quarterly GDP growth values and set the points score.
+     * @param gdpSource
      * @return Map<String, String> output
      */
-    private Map<String, String> scoreLatestQGDP(Map<String, Map<String, List<Float>>> gdp){
+    private Map<String, String> scoreLatestQGDP(Map<String, Map<String, List<Float>>> gdpSource){
         Map<String, String> output = new HashMap<>();
-        Map<String, List<Float>> eaGDP = new HashMap<>(gdp.get("ea"));
-        List<Float> qGDPValues = new ArrayList<>();
+        Map<String, List<Float>> eaGDP = new HashMap<>(gdpSource.get("ea"));
+        Map<String, List<Float>> usGDP = new HashMap<>(gdpSource.get("us"));
+        float qGdpEA = 0.0f;
+        float qGdpUS = 0.0f;
         String yearNow = String.valueOf(LocalDate.now().getYear());
         String yearPrev = String.valueOf(LocalDate.now().getYear() - 1 );
         try {
-            if(eaGDP.containsKey(yearNow)) qGDPValues.addAll(eaGDP.get(yearNow));
-            else qGDPValues.addAll(eaGDP.get(yearPrev));
+            List<Float> qGdpEAList;
+            if(eaGDP.containsKey(yearNow)){
+                qGdpEAList = eaGDP.get(yearNow);
+                qGdpEA = qGdpEAList.get(qGdpEAList.size() - 1);
+            }
+            else {
+                qGdpEAList = eaGDP.get(yearPrev);
+                qGdpEA = qGdpEAList.get(qGdpEAList.size() - 1);
+            }
+
+            List<Float> qGdpUSList;
+            if(usGDP.containsKey(yearNow)){
+                qGdpUSList = usGDP.get(yearNow);
+                qGdpUS = qGdpUSList.get(qGdpUSList.size() - 1);
+            }
+            else {
+                qGdpUSList = usGDP.get(yearPrev);
+                qGdpUS = qGdpUSList.get(qGdpUSList.size() - 1);
+            }
         }
         catch (Exception e){
             log.info(e.getMessage());
         }
 
-        log.info(qGDPValues.toString());
-        float qGDPLatest = qGDPValues.get(0);
-        output.put(GDP_GROWTH_LATEST_Q, qGDPLatest + "%");
+        log.info(String.valueOf(qGdpEA));
+        log.info(String.valueOf(qGdpUS));
+
+        output.put(EA_GDP_GROWTH_LATEST_Q, qGdpEA + "%");
+        output.put(US_GDP_GROWTH_LATEST_Q, qGdpUS + "%");
 
         /** 40 points for 2 macro indicator, 20 points each
          * GDP growth
          * Calculating by formula:
          */
-        int points = os.scoreMacroGdpGrowth(qGDPLatest);
+        int points = os.compareMacroGdpGrowth(qGdpEA, qGdpUS);
         output.put(GDP_POINTS, String.valueOf(points));
 
         return output;

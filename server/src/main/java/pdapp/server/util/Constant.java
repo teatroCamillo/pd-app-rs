@@ -56,7 +56,8 @@ public class Constant {
     public final static String INF_POINTS = "infPoints";
     public final static String EA_INF = "eaInf";
     public final static String US_INF = "usInf";
-    public final static String GDP_GROWTH_LATEST_Q = "gdpGrowthLatestQ";
+    public final static String EA_GDP_GROWTH_LATEST_Q = "eaGdpGrowthLatestQ";
+    public final static String US_GDP_GROWTH_LATEST_Q = "usGdpGrowthLatestQ";
     public final static String SCORE = "score";
 
     /**

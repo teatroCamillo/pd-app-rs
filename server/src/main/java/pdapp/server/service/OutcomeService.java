@@ -88,21 +88,28 @@ public class OutcomeService {
 
     /**
      * Return rsi14 points. The lower the rsi, the higher the score.
-     * Max 20.
+     * Max 10.
      *
      * @param rsiResult
-     * @return
+     * @return points
      */
     public int scoreRSI14(String rsiResult) {
         int rsi = (int)Float.parseFloat(rsiResult);
         int points = rsi > 30 ? 0 : Math.abs(rsi - 31);
-        if(points > 20) points = 20;
+        if(points > 10) points = 10;
         return points;
     }
 
+    /**
+     * Return macd points. Based on 0 level.
+     * Max 10.
+     *
+     * @param macdResult
+     * @return pionts
+     */
     public int scoreMACD(String macdResult) {
         float macd = Float.parseFloat(macdResult);
-        return macd >= 0.0f ? 0 : macd < -0.01f ? 20 : 10;
+        return macd >= 0.0f ? 0 : macd < -0.01f ? 10 : 5;
     }
 
     public Map<String, String> prepareRecommendation(int points){

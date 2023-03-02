@@ -42,11 +42,14 @@ public class Constant {
      * Tech
      */
     public final static String TECH_POINTS = "techPoints";
+    public final static String STRATEGY_MET = "strategyMet";
+    public final static String STRATEGY_MET_POINTS = "strategyMetPoints";
     public final static String CLOSE_PRICE = "closePrice";
-    public final static String ACTUAL_RSI_14 = "actualRSI14";
+    public final static String RSI_14 = "rsi14";
     public final static String RSI_14_POINTS = "rsi14Points";
     public final static String MACD = "macd";
     public final static String MACD_POINTS = "macdPoints";
+    public final static Double SELL_OUT_LINE_70_RSI = 70.0D;
 
     /**
      * Macro

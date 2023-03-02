@@ -32,14 +32,17 @@ const StepsAndResultComponent = (props) => {
     const [rsi14, setRsi14] = useState('');
     const [macd, setMacd] = useState('');
     const [closePrice, setClosePrice] = useState('');
+    const [strategyMet, setStrategyMet] = useState('false');
 
     const getTechResults = () => {
         TechnicalAnalysisService.runTechAnalysis()
             .then((resp) => {
                 if(resp.status === 200){
+                    console.log(resp)
                     setTechRespStatus(true)
-                    setRsi14(resp.data.actualRSI14)
+                    setRsi14(resp.data.rsi14)
                     setMacd(resp.data.macd)
+                    setStrategyMet(resp.data.strategyMet)
                     setClosePrice(resp.data.closePrice)
                 }
             })
@@ -116,6 +119,7 @@ const StepsAndResultComponent = (props) => {
                                 <ul className="text-start">
                                     <li>RSI 14: {rsi14}</li>
                                     <li>MACD: {macd}</li>
+                                    <li>Strategy met: {strategyMet}</li>
                                     <li>Close price: {closePrice}</li>
                                 </ul>
                             }

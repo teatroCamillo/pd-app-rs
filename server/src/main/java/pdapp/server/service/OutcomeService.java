@@ -24,9 +24,6 @@ public class OutcomeService {
     public void setMacro(Map<String, String> input){
         outcome.setMacroMap(input);
     }
-//    public void setRecommendation(Map<String, String> input){
-//        outcome.setRecommendationMap(input);
-//    }
 
     public Map<String, String> getPersonal() {
         return outcome.getPersonalMap();
@@ -37,9 +34,6 @@ public class OutcomeService {
     public Map<String, String> getMacro() {
         return outcome.getMacroMap();
     }
-//    public Map<String, String> getRecommendation() {
-//        return outcome.getRecommendationMap();
-//    }
 
     public int calculatePersonal(String gamblingResult, String riskResult){
         int result = 0;
@@ -65,7 +59,7 @@ public class OutcomeService {
     public int compareMacroGdpGrowth(float qGdpEA, float qGdpUS){
         int points = 0;
         int diff = Math.round(qGdpEA - qGdpUS);
-        if(diff > 0) points = Math.min(Math.abs(diff), 20);
+        if(diff > 0) points = Math.min(diff, 20);
         return points;
     }
 

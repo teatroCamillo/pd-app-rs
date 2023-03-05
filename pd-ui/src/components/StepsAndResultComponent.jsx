@@ -179,9 +179,13 @@ const StepsAndResultComponent = (props) => {
                             <h6>Description: </h6>
                             <p>{desc}</p>
                             <h6>Current price: {currentPrice}</h6>
-                            <h6>Take Profit: {takeProfit}</h6>
-                            <h6>Stop Loss: {stopLoss}</h6>
-                            <h6>Max amount to invest: {maxAmountToInvest}</h6>
+                            {score >= 50 &&
+                                <div className="d-flex flex-column align-items-start">
+                                    <h6>Take Profit: {takeProfit}</h6>
+                                    <h6>Stop Loss: {stopLoss}</h6>
+                                    <h6>Max amount to invest: {maxAmountToInvest}</h6>
+                                </div>
+                            }
                         </div>
                     </div>
                 }

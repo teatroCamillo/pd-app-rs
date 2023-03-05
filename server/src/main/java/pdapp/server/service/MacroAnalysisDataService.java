@@ -71,9 +71,6 @@ public class MacroAnalysisDataService extends DataService {
             log.info(e.getMessage());
         }
 
-        log.info(String.valueOf(qGdpEA));
-        log.info(String.valueOf(qGdpUS));
-
         output.put(EA_GDP_GROWTH_LATEST_Q, qGdpEA + "%");
         output.put(US_GDP_GROWTH_LATEST_Q, qGdpUS + "%");
 

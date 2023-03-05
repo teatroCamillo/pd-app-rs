@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pdapp.server.model.TechData;
+import pdapp.server.model.CoreBar;
 import pdapp.server.service.OutcomeService;
 import pdapp.server.service.TechnicalAnalysisDataService;
 
@@ -41,9 +41,10 @@ public class TechnicalAnalysisDataController {
     @GetMapping("/{userId}/tech-analysis")
     public ResponseEntity<?> getTechResults() {
 
-        List<TechData> input = new ArrayList<>();
+        List<CoreBar> input = new ArrayList<>();
         try {
-            Resource resource = new ClassPathResource("/static/data-eur-usd.json");
+            //Resource resource = new ClassPathResource("/static/tech/data-eur-usd-29-days-REAL.json");
+            Resource resource = new ClassPathResource("/static/tech/data-eur-usd-29-days-CUSTOM.json");
             File file = resource.getFile();
             input = om.readValue(file, new TypeReference<>(){});
         } catch (Exception e){

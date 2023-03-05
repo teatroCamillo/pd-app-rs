@@ -12,26 +12,33 @@ main{
     min-height: 65vh;
 }
 
-.start-personal{
-    min-height: 13vh;
+.material-icons-query-stats {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;
+    font-size: 30vh;
 }
 
-.start-tech{
-    min-height: 20vh;
-}
-.start-macro{
-    min-height: 33vh;
+.material-icons-done {
+    color: green;
+    font-weight: bold;
+    font-size: 3vh;
 }
 
+.material-icons-close {
+    color: red;
+    font-weight: bold;
+    font-size: 3vh;
+}
 
+.pairGroup{
+    width: 30vh;
+}
 
 footer{
     color: rgba(255, 255, 255, 0.55); /*set the same as navbar elements*/
-}
-
-.btnStart{
-    width: 150px;
-    height: 150px;
 }
 
 .front-page-steps-desc{

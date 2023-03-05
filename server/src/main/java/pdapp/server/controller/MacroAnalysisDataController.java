@@ -30,7 +30,8 @@ public class MacroAnalysisDataController {
     private final OutcomeService os;
 
     @Autowired
-    public MacroAnalysisDataController(final MacroAnalysisDataService mads, final ObjectMapper om,
+    public MacroAnalysisDataController(final MacroAnalysisDataService mads,
+                                       final ObjectMapper om,
                                        final OutcomeService os){
         this.mads = mads;
         this.om = om;
@@ -43,10 +44,12 @@ public class MacroAnalysisDataController {
         Map<String, Map<String, List<Float>>> gdp = new HashMap<>();
         Map<String, Map<String, List<Float>>> inf = new HashMap<>();
         try{
-            Resource resourceGDP = new ClassPathResource("/static/GDP-growth-2020-22-Q.json");
+            //Resource resourceGDP = new ClassPathResource("/static/macro/GDP-growth-2020-22-Q-REAL.json");
+            Resource resourceGDP = new ClassPathResource("/static/macro/GDP-growth-2020-22-Q-CUSTOM.json");
             File fileGDP = resourceGDP.getFile();
 
-            Resource resourceINF = new ClassPathResource("/static/inflation-rate.json");
+            //Resource resourceINF = new ClassPathResource("/static/macro/inflation-rate-REAL.json");
+            Resource resourceINF = new ClassPathResource("/static/macro/inflation-rate-CUSTOM.json");
             File fileINF = resourceINF.getFile();
             gdp = om.readValue(fileGDP, new TypeReference<>() {});
             inf = om.readValue(fileINF, new TypeReference<>() {});
@@ -57,5 +60,4 @@ public class MacroAnalysisDataController {
         os.setMacro(macroResult);
         return new ResponseEntity<>(macroResult, HttpStatus.OK);
     }
-
 }

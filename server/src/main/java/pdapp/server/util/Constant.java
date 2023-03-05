@@ -41,10 +41,10 @@ public class Constant {
     /**
      * Tech
      */
+    public final static String CURRENT_PRICE = "currentPrice";
     public final static String TECH_POINTS = "techPoints";
     public final static String STRATEGY_MET = "strategyMet";
     public final static String STRATEGY_MET_POINTS = "strategyMetPoints";
-    public final static String CLOSE_PRICE = "closePrice";
     public final static String RSI_14 = "rsi14";
     public final static String RSI_14_POINTS = "rsi14Points";
     public final static String MACD = "macd";
@@ -62,6 +62,14 @@ public class Constant {
     public final static String EA_GDP_GROWTH_LATEST_Q = "eaGdpGrowthLatestQ";
     public final static String US_GDP_GROWTH_LATEST_Q = "usGdpGrowthLatestQ";
     public final static String SCORE = "score";
+
+    /**
+     * Recommendations
+     */
+    public final static String REC_DESCRIPTION = "description";
+    public final static String TAKE_PROFIT = "takeProfit";
+    public final static String STOP_LOSS = "stopLoss";
+    public final static String MAX_AMOUNT_TO_INVEST = "maxAmountToInvest";
 
     /**
      * Date & datetime

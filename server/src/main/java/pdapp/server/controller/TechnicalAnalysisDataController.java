@@ -43,7 +43,8 @@ public class TechnicalAnalysisDataController {
 
         List<CoreBar> input = new ArrayList<>();
         try {
-            Resource resource = new ClassPathResource("/static/data-eur-usd-30-days.json");
+            //Resource resource = new ClassPathResource("/static/tech/data-eur-usd-29-days-REAL.json");
+            Resource resource = new ClassPathResource("/static/tech/data-eur-usd-29-days-CUSTOM.json");
             File file = resource.getFile();
             input = om.readValue(file, new TypeReference<>(){});
         } catch (Exception e){

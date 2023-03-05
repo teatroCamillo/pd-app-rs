@@ -31,7 +31,6 @@ const StepsAndResultComponent = (props) => {
     const [techRespStatus, setTechRespStatus] = useState(false);
     const [rsi14, setRsi14] = useState('');
     const [macd, setMacd] = useState('');
-    const [closePrice, setClosePrice] = useState('');
     const [strategyMet, setStrategyMet] = useState('false');
 
     const getTechResults = () => {
@@ -43,7 +42,6 @@ const StepsAndResultComponent = (props) => {
                     setRsi14(resp.data.rsi14)
                     setMacd(resp.data.macd)
                     setStrategyMet(resp.data.strategyMet)
-                    setClosePrice(resp.data.closePrice)
                 }
             })
             .catch(error => console.log(error))
@@ -75,6 +73,10 @@ const StepsAndResultComponent = (props) => {
     const [outcomeResp, setOutcomeResp] = useState(false);
     const [score, setScore] = useState('');
     const [desc, setDesc] = useState('');
+    const [currentPrice, setCurrentPrice] = useState('');
+    const [takeProfit, setTakeProfit] = useState('');
+    const [stopLoss, setStopLoss] = useState('');
+    const [maxAmountToInvest, setMaxAmountToInvest] = useState('');
 
     const getOutcome = () => {
         OutcomeService.getOutcome()
@@ -83,6 +85,10 @@ const StepsAndResultComponent = (props) => {
                     setOutcomeResp(true);
                     setScore(resp.data.score);
                     setDesc(resp.data.description);
+                    setCurrentPrice(resp.data.currentPrice);
+                    setTakeProfit(resp.data.takeProfit);
+                    setStopLoss(resp.data.stopLoss);
+                    setMaxAmountToInvest(resp.data.maxAmountToInvest);
                 }
             })
             .catch(error => console.log(error))
@@ -120,7 +126,6 @@ const StepsAndResultComponent = (props) => {
                                     <li>RSI 14: {rsi14}</li>
                                     <li>MACD: {macd}</li>
                                     <li>Strategy met: {strategyMet}</li>
-                                    <li>Close price: {closePrice}</li>
                                 </ul>
                             }
                             {!techRespStatus &&
@@ -173,9 +178,10 @@ const StepsAndResultComponent = (props) => {
                             <h5>Recommendation</h5>
                             <h6>Description: </h6>
                             <p>{desc}</p>
-
-                        Sugerowana strategia????? stop loss take profic proporcje zysku do strat itp
-                        w oparciu o wynik
+                            <h6>Current price: {currentPrice}</h6>
+                            <h6>Take Profit: {takeProfit}</h6>
+                            <h6>Stop Loss: {stopLoss}</h6>
+                            <h6>Max amount to invest: {maxAmountToInvest}</h6>
                         </div>
                     </div>
                 }

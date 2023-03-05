@@ -39,7 +39,7 @@ public class TechnicalAnalysisDataService extends DataService {
         TreeMap<LocalDate, CoreBar> barSortedByDateMap = getSortedRatesMapForEURUSD(input);
         BarSeries series = createBarSeriesFromRatesMap(barSortedByDateMap);
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-        resultMap.put(CLOSE_PRICE, closePrice.getValue(series.getEndIndex()).toString());
+        resultMap.put(CURRENT_PRICE, closePrice.getValue(series.getEndIndex()).toString());
 
         //RSI
         RSIIndicator rsi = new RSIIndicator(closePrice, 14);
@@ -47,7 +47,6 @@ public class TechnicalAnalysisDataService extends DataService {
         resultMap.put(RSI_14, rsiResult);
         int rsi14Points = os.scoreRSI14(rsiResult);
         resultMap.put(RSI_14_POINTS, String.valueOf(rsi14Points));
-
 
         //MACD - 26 & 12 by default
         MACDIndicator macd = new MACDIndicator(closePrice);

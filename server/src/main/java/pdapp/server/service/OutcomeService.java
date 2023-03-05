@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pdapp.server.model.Outcome;
 import static pdapp.server.util.Constant.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -116,18 +117,38 @@ public class OutcomeService {
         Map<String, String> output = new HashMap<>();
 
         if(points >= 70){
-            output.put("description", "?");
-            output.put("closePrice", "?");
-            output.put("takeProfit", "?");
-            output.put("stopLoss", "?");
-            output.put("maxAmount", "5% of your balance");
-
+            output.put(REC_DESCRIPTION, "The probability of success is very high. " +
+                    "Approximate daily movement on that pair estimates around 80 - 120 pips. " +
+                    "The best risk to reward ratio in this case is 1:3. Based on that all we " +
+                    "are suggesting to apply the following assumptions:");
+            output.put(TAKE_PROFIT, takeProfitLevel(points));
+            output.put(STOP_LOSS, stopLossLevel(points));
+            output.put(MAX_AMOUNT_TO_INVEST, "5% of your balance");
+        }
+        else if(points >= 50){
+            output.put(REC_DESCRIPTION, "The probability of success is around 50%. " +
+                    "Approximate daily movement on that pair estimates around 80 - 120 pips. " +
+                    "The best risk to reward ratio in this case is 1:2. Based on that all we " +
+                    "are suggesting to apply the following assumptions:");
+            output.put(TAKE_PROFIT, takeProfitLevel(points));
+            output.put(STOP_LOSS, stopLossLevel(points));
+            output.put(MAX_AMOUNT_TO_INVEST, "2% of your balance");
         }
         else {
-            output.put("description", "The probability of success is dangerously low. We recommend to do not invest " +
-                    "in that moment. Please notice that sometime the best investment is not to invest.");
+            output.put(REC_DESCRIPTION, "The probability of success is dangerously low. We recommend to do not invest " +
+                    "in that moment. Please notice that sometime the best investment is not investing.");
         }
-
         return output;
+    }
+
+    private String takeProfitLevel(int points){
+        BigDecimal actualPrice = new BigDecimal(getTech().get(CURRENT_PRICE));
+        if(points >= 70) return actualPrice.add(new BigDecimal("0.0150")).toString();
+        return actualPrice.add(new BigDecimal("0.0100")).toString();
+    }
+
+    private String stopLossLevel(int points){
+        BigDecimal actualPrice = new BigDecimal(getTech().get(CURRENT_PRICE));
+        return actualPrice.subtract(new BigDecimal("0.0050")).toString();
     }
 }

@@ -3,6 +3,7 @@ import TechnicalAnalysisService from "../api/TechnicalAnalysisService";
 import MacroAnalysisService from "../api/MacroAnalysisService";
 import OutcomeService from "../api/OutcomeService";
 import Util from "../components/utils/Util";
+import LackOfPersonalExaminationError from "../components/alerts/LackOfPersonalExaminationError";
 import { useState } from "react";
 import Accordion from 'react-bootstrap/Accordion';
 
@@ -12,6 +13,7 @@ const StepsAndResultComponent = (props) => {
 
     //prsonal data
     const [personalRespStatus, setPrsonalRespStatus] = useState(false);
+    const [lackOfExamination, setLackOfExamination] = useState(false);
     const [gambling, setGambling] = useState('');
     const [risk, setRisk] = useState('');
 
@@ -24,7 +26,10 @@ const StepsAndResultComponent = (props) => {
                     setRisk(resp.data.riskResult)
                 }
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                setLackOfExamination(true);
+                console.log(error)
+            });
     }
 
     //tech data
@@ -96,6 +101,12 @@ const StepsAndResultComponent = (props) => {
 
     return (
         <div className="d-flex start-container text-center justify-content-center align-items-center">
+            <div className="position-absolute top-0 start-50 translate-middle-x">
+                <LackOfPersonalExaminationError
+                    lackOfExamination={lackOfExamination}
+                    setLackOfExamination={setLackOfExamination}
+                />
+            </div>
             <div className="left-right col-4 mx-2">
                 <Accordion alwaysOpen>
                     <Accordion.Item eventKey="0" className="bg-light text-dark mx-2 mb-2">
@@ -192,7 +203,7 @@ const StepsAndResultComponent = (props) => {
                 {!outcomeResp &&
                     <div className="d-flex flex-column justify-content-center align-items-center flex-grow-1">
                         <h6>First of all, gather data and then recap</h6>
-                        <span className="material-symbols-outlined">query_stats</span>
+                        <i className="material-icons material-icons-query-stats">query_stats</i>
                         <button
                             className="btn btn-primary mt-3"
                             type="button"

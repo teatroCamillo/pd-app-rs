@@ -6,8 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { GraphUpArrow } from "react-bootstrap-icons";
 import { LinkContainer } from "react-router-bootstrap";
-
-import AuthenticationService from "./utils/AuthenticationService";
+import AuthenticationService from "../utils/AuthenticationService";
 
 const HeaderComponent = () => {
 

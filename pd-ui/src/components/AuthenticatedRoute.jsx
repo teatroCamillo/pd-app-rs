@@ -1,4 +1,4 @@
-import AuthenticationService from "./utils/AuthenticationService";
+import AuthenticationService from "../utils/AuthenticationService";
 import { Navigate } from "react-router-dom";
 
 const AuthenticatedRoute = (props) => {

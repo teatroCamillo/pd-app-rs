@@ -2,8 +2,8 @@ import PersonalExaminationService from "../api/PersonalExaminationService";
 import TechnicalAnalysisService from "../api/TechnicalAnalysisService";
 import MacroAnalysisService from "../api/MacroAnalysisService";
 import OutcomeService from "../api/OutcomeService";
-import Util from "../components/utils/Util";
-import LackOfPersonalExaminationError from "../components/alerts/LackOfPersonalExaminationError";
+import Util from "../utils/Util";
+import LackOfPersonalExaminationError from "./alerts/LackOfPersonalExaminationError";
 import { useState } from "react";
 import Accordion from 'react-bootstrap/Accordion';
 
@@ -11,7 +11,7 @@ const StepsAndResultComponent = (props) => {
 
     const pair = props.pair;
 
-    //prsonal data
+    //prsonal results
     const [personalRespStatus, setPrsonalRespStatus] = useState(false);
     const [lackOfExamination, setLackOfExamination] = useState(false);
     const [gambling, setGambling] = useState('');

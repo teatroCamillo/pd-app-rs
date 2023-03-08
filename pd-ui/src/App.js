@@ -18,7 +18,7 @@ import FormRiskComponent from "./components/FormRiskComponent";
 import FormGamblingComponent from "./components/FormGamblingComponent";
 import FormSavedCorrectlyComponent from "./components/FormSavedCorrectlyComponent";
 
-import withNavigation from "./components/utils/withNavigation";
+import withNavigation from "./utils/withNavigation";
 
 function App() {
 

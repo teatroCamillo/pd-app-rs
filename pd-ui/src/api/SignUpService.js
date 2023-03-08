@@ -1,5 +1,5 @@
 import axios from "axios";
-import Constant from "./Constant";
+import Constant from "../utils/Constant.js";
 
 class SignUpService {
     signUp = (user) => {

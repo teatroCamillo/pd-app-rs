@@ -1,6 +1,6 @@
 import axios from "axios";
-import AuthenticationService from "../components/utils/AuthenticationService";
-import Constant from "./Constant.js";
+import AuthenticationService from "../utils/AuthenticationService";
+import Constant from "../utils/Constant.js";
 
 class FormsUtilService {
 

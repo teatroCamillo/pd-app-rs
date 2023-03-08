@@ -6,7 +6,6 @@ import React, { useState, useEffect } from "react";
 import FormsUtilService from "../api/FormsUtilService";
 import { Link } from "react-router-dom";
 
-
 const PersonalExaminationComponent = () => {
 
   const [hasCompletedRiskTest, setHasCompletedRiskTest] = useState(false);

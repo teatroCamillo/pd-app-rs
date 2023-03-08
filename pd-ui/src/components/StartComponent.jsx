@@ -1,5 +1,5 @@
 import React from "react";
-import AuthenticationService from "./utils/AuthenticationService";
+import AuthenticationService from "../utils/AuthenticationService";
 import StepsAndResultComponent from "./StepsAndResultComponent";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";

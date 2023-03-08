@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { Formik, Form, Field } from "formik";
-import util from "./utils/Util";
+import util from "../utils/Util";
 import SignUpService from "../api/SignUpService";
 import DifferentPasswords from "../components/alerts/DifferentPasswords";
 

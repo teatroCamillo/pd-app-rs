@@ -1,13 +1,12 @@
 import axios from "axios";
 import AuthenticationService from "../utils/AuthenticationService";
-
-const API_URL = 'http://localhost:8080';
+import Constant from "../utils/Constant.js";
 
 class MacroAnalysisService {
 
     runMacroAnalysis = () => {
         const userId = AuthenticationService.getSignedInUserId();
-        return axios.get(`${API_URL}/${userId}/macro-analysis`);
+        return axios.get(`${Constant.API_URL}/${userId}/macro-analysis`);
     }
 
 }

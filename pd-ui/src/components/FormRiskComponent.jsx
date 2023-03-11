@@ -7,7 +7,8 @@ import Button from "react-bootstrap/Button";
 import FormsUtilService from "../api/FormsUtilService";
 import FormSendError from "./alerts/FormSendError";
 import IncompleteForm from "./alerts/IncompleteForm";
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom";
+import Util from "../utils/Util";
 
 const FormRiskComponent = (props) => {
 
@@ -32,18 +33,9 @@ const FormRiskComponent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let isComplete = true;
-    for(let e in formDetails){
-      if(formDetails[e].length === 0){
-        isComplete = false;
-      }
-    }
-
-    if(isComplete){
-
-      //perform POST
-      if(!hasCompletedRiskTest){
-        FormsUtilService.sendRiskFormResults(formDetails)
+    let numberQuestions = Object.keys(riskQuestions).length;
+    if(Util.isFormComlete(formDetails, numberQuestions)){
+      FormsUtilService.sendRiskFormResults(formDetails, hasCompletedRiskTest)
         .then((response) => {
           if(response.status === 200){
             props.navigate('/form-saved');
@@ -54,21 +46,6 @@ const FormRiskComponent = (props) => {
           console.log(error);
           window.scrollTo(0, 0);
         });
-      }
-      //perform PUT
-      else{
-        FormsUtilService.updateRiskFormResults(formDetails)
-        .then((response) => {
-          if(response.status === 200){
-            props.navigate('/form-saved');
-          }
-        })
-        .catch((error) => {
-          setShowFormSendError(true);
-          console.log(error);
-          window.scrollTo(0, 0);
-        });
-      }
     }
     else{
       setShowIncompleteForm(true);

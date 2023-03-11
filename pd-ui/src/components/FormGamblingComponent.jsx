@@ -8,6 +8,7 @@ import FormSendError from "./alerts/FormSendError";
 import IncompleteForm from "./alerts/IncompleteForm";
 import FormsUtilService from "../api/FormsUtilService";
 import { useLocation } from "react-router-dom";
+import Util from "../utils/Util";
 
 const FormGamblingComponent = (props) => {
 
@@ -34,17 +35,9 @@ const FormGamblingComponent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let isComplete = true;
-    for(let e in formDetails){
-      if(formDetails[e].length === 0){
-        isComplete = false;
-      }
-    }
-
-    if(isComplete){
-      //perform POST
-      if(!hasCompletedGamblingTest){
-        FormsUtilService.sendGamblingFormResults(formDetails)
+    let numberQuestions = Object.keys(gamblingQuestions).length;
+    if(Util.isFormComlete(formDetails, numberQuestions)){
+      FormsUtilService.sendGamblingFormResults(formDetails, hasCompletedGamblingTest)
         .then((response) => {
           if(response.status === 200){
             props.navigate('/form-saved');
@@ -55,21 +48,6 @@ const FormGamblingComponent = (props) => {
           console.log(error);
           window.scrollTo(0, 0);
         });
-      }
-      //perform PUT
-      else{
-        FormsUtilService.updateGamblingFormResults(formDetails)
-        .then((response) => {
-          if(response.status === 200){
-            props.navigate('/form-saved');
-          }
-        })
-        .catch((error) => {
-          setShowFormSendError(true);
-          console.log(error);
-          window.scrollTo(0, 0);
-        });
-      }
     }
     else{
       setShowIncompleteForm(true);

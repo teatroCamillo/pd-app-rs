@@ -42,7 +42,6 @@ const StepsAndResultComponent = (props) => {
         TechnicalAnalysisService.runTechAnalysis()
             .then((resp) => {
                 if(resp.status === 200){
-                    console.log(resp)
                     setTechRespStatus(true)
                     setRsi14(resp.data.rsi14)
                     setMacd(resp.data.macd)

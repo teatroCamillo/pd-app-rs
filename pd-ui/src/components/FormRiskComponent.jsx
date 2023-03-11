@@ -33,8 +33,8 @@ const FormRiskComponent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let numberQuestions = Object.keys(riskQuestions).length;
-    if(Util.isFormComlete(formDetails, numberQuestions)){
+    let numberOfQuestions = Object.keys(riskQuestions).length;
+    if(Util.isFormComlete(formDetails, numberOfQuestions)){
       FormsUtilService.sendRiskFormResults(formDetails, hasCompletedRiskTest)
         .then((response) => {
           if(response.status === 200){

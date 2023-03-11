@@ -35,8 +35,8 @@ const FormGamblingComponent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let numberQuestions = Object.keys(gamblingQuestions).length;
-    if(Util.isFormComlete(formDetails, numberQuestions)){
+    let numberOfQuestions = Object.keys(gamblingQuestions).length;
+    if(Util.isFormComlete(formDetails, numberOfQuestions)){
       FormsUtilService.sendGamblingFormResults(formDetails, hasCompletedGamblingTest)
         .then((response) => {
           if(response.status === 200){

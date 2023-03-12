@@ -40,7 +40,6 @@ public class TechnicalAnalysisDataController {
 
     @GetMapping("/{userId}/tech-analysis")
     public ResponseEntity<?> getTechResults() {
-
         List<CoreBar> input = new ArrayList<>();
         try {
             //Resource resource = new ClassPathResource("/static/tech/data-eur-usd-29-days-REAL.json");

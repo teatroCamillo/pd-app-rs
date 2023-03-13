@@ -14,13 +14,11 @@ public final class Outcome {
     private Map<String, String> personalMap;
     private Map<String, String> techMap;
     private Map<String, String> macroMap;
-    private Map<String, String> recommendationMap;
 
     private Outcome(){
         this.personalMap = new HashMap<>();
         this.techMap = new HashMap<>();
         this.macroMap = new HashMap<>();
-        this.recommendationMap = new HashMap<>();
     }
 
     public static Outcome getInstance(){

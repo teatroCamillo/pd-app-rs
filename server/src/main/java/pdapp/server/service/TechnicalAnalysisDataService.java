@@ -35,7 +35,7 @@ public class TechnicalAnalysisDataService extends DataService {
     public Map<String, String> strategy(List<CoreBar> input){
         Map<String, String> resultMap = new HashMap<>();
 
-        // prepare data
+        //Prepare data
         TreeMap<LocalDate, CoreBar> barSortedByDateMap = getSortedRatesMapForEURUSD(input);
         BarSeries series = createBarSeriesFromRatesMap(barSortedByDateMap);
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
@@ -58,11 +58,11 @@ public class TechnicalAnalysisDataService extends DataService {
         //EMA9 - for MACD - Signal Line
         EMAIndicator ema9 = new EMAIndicator(macd, 9);
 
-        //RULE
+        //Rules
         Rule buyingRule = new CrossedUpIndicatorRule(macd, ema9)
                 .and(new BooleanRule(Double.parseDouble(rsiResult) < SELL_OUT_LINE_70_RSI));
 
-        //temp rule
+        //Temp rule - required for BarSeriesManager.run(buyRule, sellRule)
         Rule sellingRule = new StopLossRule(closePrice, series.numOf(3))
                 .or(new StopGainRule(closePrice, series.numOf(2)));
 
@@ -70,11 +70,12 @@ public class TechnicalAnalysisDataService extends DataService {
         BarSeriesManager seriesManager = new BarSeriesManager(series);
         TradingRecord tradingRecord = seriesManager.run(new BaseStrategy(buyingRule, sellingRule));
 
-        //IF BOTH match points max 20
+        //If both match points max 20
         int diff = series.getEndIndex() - tradingRecord.getLastEntry().getIndex();
         int strategyPoints = 0;
         if(diff <= 1) strategyPoints = 20;
 
+        //Scoring
         int techPoints = Math.min(rsi14Points + macdPoints + strategyPoints, 20);
         resultMap.put(STRATEGY_MET, strategyPoints > 0 ? "true" : "false");
         resultMap.put(STRATEGY_MET_POINTS, String.valueOf(strategyPoints));

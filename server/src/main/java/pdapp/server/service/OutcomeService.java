@@ -109,7 +109,6 @@ public class OutcomeService {
 
     public Map<String, String> prepareRecommendation(int points){
         Map<String, String> output = new HashMap<>();
-
         if(points >= 70){
             output.put(REC_DESCRIPTION, "The probability of success is very high. " +
                     "Approximate daily movement on that pair estimates around 80 - 120 pips. " +
@@ -129,8 +128,9 @@ public class OutcomeService {
             output.put(MAX_AMOUNT_TO_INVEST, "2% of your balance");
         }
         else {
-            output.put(REC_DESCRIPTION, "The probability of success is dangerously low. We recommend to do not invest " +
-                    "in that moment. Please notice that sometime the best investment is not investing.");
+            output.put(REC_DESCRIPTION, "The probability of success is dangerously low. " +
+                    "We recommend to do not invest in that moment. Please notice that" +
+                    " sometime the best investment is not investing.");
         }
         return output;
     }

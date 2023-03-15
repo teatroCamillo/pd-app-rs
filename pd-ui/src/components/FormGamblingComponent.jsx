@@ -9,19 +9,17 @@ import IncompleteForm from "./alerts/IncompleteForm";
 import FormsUtilService from "../api/FormsUtilService";
 import { useLocation } from "react-router-dom";
 import Util from "../utils/Util";
+import Constant from "../utils/Constant.js";
 
 const FormGamblingComponent = (props) => {
 
-  // get passed info from PersonalExaminationComponent about user completed risk test?
   const location = useLocation()
   const { hasCompletedGamblingTest, gamblingQuestions } = location.state;
 
-  // questions
   const data = {
     questions: gamblingQuestions
   };
 
-  // colect answers
   const [formDetails, setFormDetails] = useState({})
   const [showFormSendError, setShowFormSendError] = useState(false);
   const [showIncompleteForm, setShowIncompleteForm] = useState(false);
@@ -37,7 +35,9 @@ const FormGamblingComponent = (props) => {
     e.preventDefault();
     let numberOfQuestions = Object.keys(gamblingQuestions).length;
     if(Util.isFormComlete(formDetails, numberOfQuestions)){
-      FormsUtilService.sendGamblingFormResults(formDetails, hasCompletedGamblingTest)
+      let answers = Constant.ANSWERS_TEXT;
+      let formDetailsValueArray = { answers : Object.values(formDetails)};
+      FormsUtilService.sendGamblingFormResults(formDetailsValueArray, hasCompletedGamblingTest)
         .then((response) => {
           if(response.status === 200){
             props.navigate('/form-saved');

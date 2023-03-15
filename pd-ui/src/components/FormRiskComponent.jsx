@@ -9,13 +9,13 @@ import FormSendError from "./alerts/FormSendError";
 import IncompleteForm from "./alerts/IncompleteForm";
 import { useLocation } from "react-router-dom";
 import Util from "../utils/Util";
+import Constant from "../utils/Constant.js";
 
 const FormRiskComponent = (props) => {
 
   const location = useLocation()
   const { hasCompletedRiskTest, riskQuestions } = location.state;
 
-  // questions
   const data = {
     questions: riskQuestions
   };
@@ -29,13 +29,15 @@ const FormRiskComponent = (props) => {
     setFormDetails((prev) => {
       return {...prev, [name] : value };
     })
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let numberOfQuestions = Object.keys(riskQuestions).length;
     if(Util.isFormComlete(formDetails, numberOfQuestions)){
-      FormsUtilService.sendRiskFormResults(formDetails, hasCompletedRiskTest)
+      let answers = Constant.ANSWERS_TEXT;
+      let formDetailsValueArray = { answers : Object.values(formDetails)};
+      FormsUtilService.sendRiskFormResults(formDetailsValueArray, hasCompletedRiskTest)
         .then((response) => {
           if(response.status === 200){
             props.navigate('/form-saved');

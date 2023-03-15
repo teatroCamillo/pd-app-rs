@@ -26,9 +26,9 @@ public class Constant {
      */
 
     public final static String LOW_RISK_TOLERANCE = "low";
-    public final static String BELOW_AVERAGE_RISK_TOLERANCE = "below_average";
+    public final static String BELOW_AVERAGE_RISK_TOLERANCE = "below average";
     public final static String AVERAGE_RISK_TOLERANCE = "average";
-    public final static String ABOVE_AVERAGE_RISK_TOLERANCE = "above_average";
+    public final static String ABOVE_AVERAGE_RISK_TOLERANCE = "above average";
     public final static String HIGH_RISK_TOLERANCE = "high";
 
     /**

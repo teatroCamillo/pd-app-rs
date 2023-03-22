@@ -14,7 +14,6 @@ const ServiceWorkComponent = () => {
         </Container>
       </main>
     )
-
 }
 
 export default ServiceWorkComponent;

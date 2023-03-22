@@ -5,8 +5,9 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import WrongCredLogin from "./alerts/WrongCredLogin";
 import { Link } from "react-router-dom";
-import AuthenticationService from "./utils/AuthenticationService";
+import AuthenticationService from "../utils/AuthenticationService";
 import { Formik, Form, Field } from "formik";
+
 const SignInComponent = (props) => {
 
   const [username, setUsername] = useState("");

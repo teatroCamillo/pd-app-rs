@@ -1,10 +1,9 @@
 import axios from "axios";
-
+import Constant from "../utils/Constant.js";
 
 class SignUpService {
-
     signUp = (user) => {
-       return axios.post("http://localhost:8080/signup",
+       return axios.post(`${Constant.API_URL}/signup`,
             {
                 "username": user.username,
                 "password": user.password,
@@ -13,7 +12,6 @@ class SignUpService {
                 "lastName": user.lastName
             });
     };
-
 }
 
 export default new SignUpService();

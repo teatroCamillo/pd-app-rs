@@ -7,94 +7,37 @@ import Button from "react-bootstrap/Button";
 import FormsUtilService from "../api/FormsUtilService";
 import FormSendError from "./alerts/FormSendError";
 import IncompleteForm from "./alerts/IncompleteForm";
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom";
+import Util from "../utils/Util";
+import Constant from "../utils/Constant.js";
 
 const FormRiskComponent = (props) => {
 
   const location = useLocation()
   const { hasCompletedRiskTest, riskQuestions } = location.state;
 
-  // questions
   const data = {
     questions: riskQuestions
   };
 
-  // colect answers
-  const [a1, setA1] = useState('');
-  const [a2, setA2] = useState('');
-  const [a3, setA3] = useState('');
-  const [a4, setA4] = useState('');
-  const [a5, setA5] = useState('');
-  const [a6, setA6] = useState('');
-  const [a7, setA7] = useState('');
-  const [a8, setA8] = useState('');
-  const [a9, setA9] = useState('');
-  const [a10, setA10] = useState('');
-  const [a11, setA11] = useState('');
-  const [a12, setA12] = useState('');
-  const [a13, setA13] = useState('');
+  const [formDetails, setFormDetails] = useState({})
   const [showFormSendError, setShowFormSendError] = useState(false);
   const [showIncompleteForm, setShowIncompleteForm] = useState(false);
 
   const handleChange = (e) => {
-
-    if('a1' === e.target.id){
-      setA1(e.target.value);
-    }
-    if('a2' === e.target.id){
-      setA2(e.target.value);
-    }
-    if('a3' === e.target.id){
-      setA3(e.target.value);
-    }
-    if('a4' === e.target.id){
-      setA4(e.target.value);
-    }
-    if('a5' === e.target.id){
-      setA5(e.target.value);
-    }
-    if('a6' === e.target.id){
-      setA6(e.target.value);
-    }
-    if('a7' === e.target.id){
-      setA7(e.target.value);
-    }
-    if('a8' === e.target.id){
-      setA8(e.target.value);
-    }
-    if('a9' === e.target.id){
-      setA9(e.target.value);
-    }
-    if('a10' === e.target.id){
-      setA10(e.target.value);
-    }
-    if('a11' === e.target.id){
-      setA11(e.target.value);
-    }
-    if('a12' === e.target.id){
-      setA12(e.target.value);
-    }
-    if('a13' === e.target.id){
-      setA13(e.target.value);
-    }
+    const {name, value} = e.target;
+    setFormDetails((prev) => {
+      return {...prev, [name] : value };
+    })
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let isComplete = true;
-    let jsonAnswers = {a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13}
-
-    for(let e in jsonAnswers){
-      if(jsonAnswers[e].length === 0){
-        isComplete = false;
-      }
-    }
-
-    if(isComplete){
-
-      //perform POST
-      if(!hasCompletedRiskTest){
-        FormsUtilService.sendRiskFormResults(jsonAnswers)
+    let numberOfQuestions = Object.keys(riskQuestions).length;
+    if(Util.isFormComlete(formDetails, numberOfQuestions)){
+      let answers = Constant.ANSWERS_TEXT;
+      let formDetailsValueArray = { answers : Object.values(formDetails)};
+      FormsUtilService.sendRiskFormResults(formDetailsValueArray, hasCompletedRiskTest)
         .then((response) => {
           if(response.status === 200){
             props.navigate('/form-saved');
@@ -105,21 +48,6 @@ const FormRiskComponent = (props) => {
           console.log(error);
           window.scrollTo(0, 0);
         });
-      }
-      //perform PUT
-      else{
-        FormsUtilService.updateRiskFormResults(jsonAnswers)
-        .then((response) => {
-          if(response.status === 200){
-            props.navigate('/form-saved');
-          }
-        })
-        .catch((error) => {
-          setShowFormSendError(true);
-          console.log(error);
-          window.scrollTo(0, 0);
-        });
-      }
     }
     else{
       setShowIncompleteForm(true);
@@ -157,14 +85,14 @@ const FormRiskComponent = (props) => {
                       <Form.Check
                         type="radio"
                         label={question.a1}
-                        name={question.name}
+                        name={question.id}
                         value={question.a1}
                         onChange={handleChange}
                       />
                       <Form.Check
                         type="radio"
                         label={question.a2}
-                        name={question.name}
+                        name={question.id}
                         value={question.a2}
                         onChange={handleChange}
                       />
@@ -172,7 +100,7 @@ const FormRiskComponent = (props) => {
                       <Form.Check
                         type="radio"
                         label={question.a3}
-                        name={question.name}
+                        name={question.id}
                         value={question.a3}
                         onChange={handleChange}
                       />}
@@ -180,7 +108,7 @@ const FormRiskComponent = (props) => {
                       <Form.Check
                         type="radio"
                         label={question.a4}
-                        name={question.name}
+                        name={question.id}
                         value={question.a4}
                         onChange={handleChange}
                       />}

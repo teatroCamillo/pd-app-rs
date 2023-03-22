@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { Formik, Form, Field } from "formik";
-import util from "./utils/Util";
+import util from "../utils/Util";
 import SignUpService from "../api/SignUpService";
 import DifferentPasswords from "../components/alerts/DifferentPasswords";
 
@@ -16,27 +16,18 @@ const SignUpComponent = (props) => {
   const [repeatPassword, setRepeatPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [showDifferentPasswords, setDifferentPasswords] = useState(false);
+  const [differentPasswords, setDifferentPasswords] = useState(false);
 
   const handleSubmitionSignUp = () => {
-
-    let user = {};
-    if(password !== repeatPassword){
-      setDifferentPasswords(true);
-    }
+    if(password !== repeatPassword) setDifferentPasswords(true);
     else{
-      user = {username, password, mail, firstName, lastName};
-
+      let user = {username, password, mail, firstName, lastName};
       if(!util.isEmpty(user)){
-      SignUpService.signUp(user)
-        .then((resp) => {
-          if(resp.status === 200){
-            props.navigate('/signin');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        SignUpService.signUp(user)
+          .then(resp => {
+            if(resp.status === 200) props.navigate('/signin');
+          })
+          .catch(error => console.log(error));
       }
     }
   }
@@ -51,7 +42,7 @@ const SignUpComponent = (props) => {
           <Col className="bg-light text-dark rounded-4 p-4 shadow-lg" md="6">
             <div className="position-absolute start-50 translate-middle">
               <DifferentPasswords
-                    showDifferentPasswords={showDifferentPasswords}
+                    differentPasswords={differentPasswords}
                     setDifferentPasswords={setDifferentPasswords}
                 />
             </div>

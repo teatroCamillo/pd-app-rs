@@ -20,16 +20,14 @@ public class MacroAnalysisDataService extends DataService {
     }
 
     public Map<String, String> strategy(Map<String, Map<String, List<Float>>> gdp,
-                                             Map<String, Map<String, List<Float>>> inf){
+                                        Map<String, Map<String, List<Float>>> inf){
         Map<String, String> output = new HashMap<>();
-
         Map<String, String> gdpComp = scoreLatestQGDP(gdp);
         Map<String, String> infComp = compareInflation(inf);
         int macroPoints = Integer.parseInt(gdpComp.get(GDP_POINTS)) + Integer.parseInt(infComp.get(INF_POINTS));
         output.putAll(gdpComp);
         output.putAll(infComp);
         output.put(MACRO_POINTS, String.valueOf(macroPoints));
-
         return output;
     }
 

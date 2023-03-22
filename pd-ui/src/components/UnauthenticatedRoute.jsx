@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import AuthenticationService from "./utils/AuthenticationService";
+import AuthenticationService from "../utils/AuthenticationService";
 
 /**
  * @description

@@ -36,7 +36,7 @@ public class PersonalDataController {
     }
 
     @GetMapping("/{userId}/get-personal-result")
-    public ResponseEntity<?> getUserGamblingTestResult(@PathVariable String userId){
+    public ResponseEntity<?> getUserPersonalResults(@PathVariable String userId){
 
         String gamblingResult = gamblingTestService.getUserGamblingTestResult(userId);
         String riskResult = riskTestService.getUserRiskTestResult(userId);
@@ -46,7 +46,6 @@ public class PersonalDataController {
         results.put(RISK_RESULT, riskResult);
         results.put(PERSONAL_POINTS, String.valueOf(os.calculatePersonal(gamblingResult, riskResult)));
         os.setPersonal(results);
-
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 }

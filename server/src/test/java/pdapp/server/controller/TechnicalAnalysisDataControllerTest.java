@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pdapp.server.auth.SpringSecurityConfigurationBasicAuth;
 import pdapp.server.service.MacroAnalysisDataService;
+import pdapp.server.service.TechnicalAnalysisDataService;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,27 +23,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { SpringSecurityConfigurationBasicAuth.class })
-class MacroAnalysisDataControllerTest {
+class TechnicalAnalysisDataControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private MacroAnalysisDataService macroAnalysisDataService;
+    private TechnicalAnalysisDataService technicalAnalysisDataService;
 
     @MockBean
     private SpringSecurityConfigurationBasicAuth configurationBasicAuth;
 
     @MockBean
-    private MacroAnalysisDataController macroAnalysisDataController;
+    private TechnicalAnalysisDataController technicalAnalysisDataController;
 
     @Test
-    void should_return_status_ok_getting_macro_strategy() throws Exception {
-        given(macroAnalysisDataService.strategy(ArgumentMatchers.anyMap(), ArgumentMatchers.anyMap()))
+    void should_return_status_ok_getting_tech_strategy() throws Exception {
+        given(technicalAnalysisDataService.strategy(ArgumentMatchers.any()))
                 .willAnswer(i -> i.getArgument(0));
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/cf5202e6-45ec-440e-ae17-b5662ec69f26/macro-analysis"))
-                .andExpect(status().isOk());
+                        .get("/cf5202e6-45ec-440e-ae17-b5662ec69f26/tech-analysis"))
+                        .andExpect(status().isOk());
     }
 }

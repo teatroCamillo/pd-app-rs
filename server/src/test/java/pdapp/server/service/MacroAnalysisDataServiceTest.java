@@ -52,7 +52,7 @@ class MacroAnalysisDataServiceTest {
     }
 
     @Test
-    void strategy_returns_correct_result_for_custom_data() {
+    void strategy_return_correct_result_for_custom_data() {
         try{
             Resource resourceGDP = new ClassPathResource("/static/macro/GDP-growth-2020-22-Q-CUSTOM.json");
             File fileGDP = resourceGDP.getFile();
@@ -70,7 +70,7 @@ class MacroAnalysisDataServiceTest {
     }
 
     @Test
-    void strategy_returns_correct_result_for_real_data() {
+    void strategy_return_correct_result_for_real_data() {
         try{
             Resource resourceGDP = new ClassPathResource("/static/macro/GDP-growth-2020-22-Q-REAL.json");
             File fileGDP = resourceGDP.getFile();

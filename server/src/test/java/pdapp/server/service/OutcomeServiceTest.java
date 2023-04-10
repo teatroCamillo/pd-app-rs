@@ -17,7 +17,7 @@ class OutcomeServiceTest {
     private final OutcomeService os = new OutcomeService();
 
     @Test
-    void check_if_prepareRecommendation_correctly_returns_result_for_70_points() {
+    void should_correctly_return_recommendation_for_70_points() {
         Map<String, String> expected = new HashMap<>();
         expected.put(REC_DESCRIPTION, "The probability of success is very high. " +
                 "Approximate daily movement on that pair estimates around 80 - 120 pips. " +
@@ -36,7 +36,7 @@ class OutcomeServiceTest {
     }
 
     @Test
-    void check_if_prepareRecommendation_correctly_returns_result_for_more_than_50_and_less_than_70_points() {
+    void should_correctly_return_recommendation_for_more_than_50_and_less_than_70_points() {
         Map<String, String> expected = new HashMap<>();
         expected.put(REC_DESCRIPTION, "The probability of success is around 50%. " +
                 "Approximate daily movement on that pair estimates around 80 - 120 pips. " +
@@ -55,7 +55,7 @@ class OutcomeServiceTest {
     }
 
     @Test
-    void check_if_prepareRecommendation_correctly_returns_result_for_less_than_50_points() {
+    void should_correctly_return_recommendation_for_less_than_50_points() {
         Map<String, String> expected = new HashMap<>();
         expected.put(REC_DESCRIPTION, "The probability of success is dangerously low. We recommend to do not invest " +
                 "in that moment. Please notice that sometime the best investment is not investing.");
@@ -69,7 +69,7 @@ class OutcomeServiceTest {
     }
 
     @Test
-    void check_if_compareMacroGdpGrowth_returns_correct_results() {
+    void should_compareMacroGdpGrowth_and_return_correct_results() {
         assertEquals(0, os.compareMacroGdpGrowth(0.1f, 2.7f));
         assertEquals(5, os.compareMacroGdpGrowth(6.1f, 1.1f));
         assertEquals(17, os.compareMacroGdpGrowth(23.6f, 6.6f));
@@ -77,7 +77,7 @@ class OutcomeServiceTest {
     }
 
     @Test
-    void check_if_compareMacroInflation_returns_correct_results() {
+    void should_compareMacroInflation_and_return_correct_results() {
         assertEquals(0, os.compareMacroInflation(9.2f, 6.5f));
         assertEquals(11, os.compareMacroInflation(2.1f, 13.1f));
         assertEquals(20, os.compareMacroInflation(1.6f, 25.6f));

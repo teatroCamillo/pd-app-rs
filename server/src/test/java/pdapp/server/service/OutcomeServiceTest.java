@@ -1,7 +1,9 @@
 package pdapp.server.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,24 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static pdapp.server.util.Constant.*;
 import static pdapp.server.util.Constant.MAX_AMOUNT_TO_INVEST;
 
+@ExtendWith(SpringExtension.class)
 class OutcomeServiceTest {
 
-    private OutcomeService os;
-    @BeforeEach
-    void setup(){
-        os = new OutcomeService();
-    }
+    private final OutcomeService os = new OutcomeService();
 
     @Test
-    void calculateMacroInflation() {
-        float eaInf = 9.2f;
-        float usInf = 6.5f;
-        int result = os.compareMacroInflation(eaInf, usInf);
-        assertEquals(0, result);
-    }
-
-    @Test
-    void prepareRecommendation70Test() {
+    void should_correctly_return_recommendation_for_70_points() {
         Map<String, String> expected = new HashMap<>();
         expected.put(REC_DESCRIPTION, "The probability of success is very high. " +
                 "Approximate daily movement on that pair estimates around 80 - 120 pips. " +
@@ -45,7 +36,7 @@ class OutcomeServiceTest {
     }
 
     @Test
-    void prepareRecommendation50Test() {
+    void should_correctly_return_recommendation_for_more_than_50_and_less_than_70_points() {
         Map<String, String> expected = new HashMap<>();
         expected.put(REC_DESCRIPTION, "The probability of success is around 50%. " +
                 "Approximate daily movement on that pair estimates around 80 - 120 pips. " +
@@ -64,7 +55,7 @@ class OutcomeServiceTest {
     }
 
     @Test
-    void prepareRecommendationLessThan50Test() {
+    void should_correctly_return_recommendation_for_less_than_50_points() {
         Map<String, String> expected = new HashMap<>();
         expected.put(REC_DESCRIPTION, "The probability of success is dangerously low. We recommend to do not invest " +
                 "in that moment. Please notice that sometime the best investment is not investing.");
@@ -78,26 +69,17 @@ class OutcomeServiceTest {
     }
 
     @Test
-    void compareMacroGdpGrowthTest() {
-        int expected0 = 0;
-        int expected1 = 5;
-        int expected2 = 17;
-        int expected3 = 20;
-
-        assertEquals(expected0, os.compareMacroGdpGrowth(0.1f, 2.7f));
-        assertEquals(expected1, os.compareMacroGdpGrowth(6.1f, 1.1f));
-        assertEquals(expected2, os.compareMacroGdpGrowth(23.6f, 6.6f));
-        assertEquals(expected3, os.compareMacroGdpGrowth(23.6f, 3.6f));
+    void should_compareMacroGdpGrowth_and_return_correct_results() {
+        assertEquals(0, os.compareMacroGdpGrowth(0.1f, 2.7f));
+        assertEquals(5, os.compareMacroGdpGrowth(6.1f, 1.1f));
+        assertEquals(17, os.compareMacroGdpGrowth(23.6f, 6.6f));
+        assertEquals(20, os.compareMacroGdpGrowth(23.6f, 3.6f));
     }
 
     @Test
-    void compareMacroInflation() {
-        int expected0 = 0;
-        int expected1 = 11;
-        int expected2 = 20;
-
-        assertEquals(expected0, os.compareMacroInflation(9.2f, 6.5f));
-        assertEquals(expected1, os.compareMacroInflation(2.1f, 13.1f));
-        assertEquals(expected2, os.compareMacroInflation(1.6f, 25.6f));
+    void should_compareMacroInflation_and_return_correct_results() {
+        assertEquals(0, os.compareMacroInflation(9.2f, 6.5f));
+        assertEquals(11, os.compareMacroInflation(2.1f, 13.1f));
+        assertEquals(20, os.compareMacroInflation(1.6f, 25.6f));
     }
 }

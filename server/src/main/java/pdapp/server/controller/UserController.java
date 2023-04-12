@@ -15,9 +15,4 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/hello")
-    public String getString(){
-        return "hello get stirng meethod";
-    }
-
 }
